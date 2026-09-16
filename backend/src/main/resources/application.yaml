@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: nomad-games
+  datasource:
+    url: ${NOMAD_DATASOURCE_URL:jdbc:postgresql://localhost:5432/nomad}
+    username: ${NOMAD_DATASOURCE_USERNAME:nomad}
+    password: ${NOMAD_DATASOURCE_PASSWORD:nomad}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+  docker:
+    compose:
+      skip:
+        in-tests: true
+
+nomad:
+  jwt:
+    secret: ${NOMAD_JWT_SECRET}
+  guest:
+    mint-limit-per-minute: 20
+  identity:
+    login-limit-per-minute: 20
+  rooms:
+    join-limit-per-minute: 20
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never

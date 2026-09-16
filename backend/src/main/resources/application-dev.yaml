@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nomad
+    username: nomad
+    password: nomad
+
+nomad:
+  jwt:
+    secret: ${NOMAD_JWT_SECRET:dev-only-local-jwt-secret-32b!!!}

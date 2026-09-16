@@ -1,0 +1,164 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Alchiki proto harness                                              [jar]
+[INFO] Nomad Games backend                                                [jar]
+[INFO] 
+[INFO] ----------------< com.nomadgames:alchiki-proto-harness >----------------
+[INFO] Building Alchiki proto harness 0.1.0-SNAPSHOT                      [1/2]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alchiki-proto-harness ---
+[INFO] skip non existing resourceDirectory C:\Users\sergei.elistratov\Documents\проекты\nomad-game\harness\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ alchiki-proto-harness ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alchiki-proto-harness ---
+[INFO] skip non existing resourceDirectory C:\Users\sergei.elistratov\Documents\проекты\nomad-game\harness\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ alchiki-proto-harness ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ alchiki-proto-harness ---
+[INFO] 
+[INFO] -----------------< com.nomadgames:nomad-games-backend >-----------------
+[INFO] Building Nomad Games backend 0.1.0-SNAPSHOT                        [2/2]
+[INFO]   from C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ nomad-games-backend ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 8 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ nomad-games-backend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ nomad-games-backend ---
+[INFO] skip non existing resourceDirectory C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nomad-games-backend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ nomad-games-backend ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.nomadgames.economy.EconomyIT
+17:28:03.098 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+17:28:03.104 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+17:28:03.167 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+17:28:03.448 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+17:28:03.950 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+17:28:03.952 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+17:28:03.975 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.7.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 13643 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+17:28:04.155 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+17:28:04.463 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 28b849cd174e4023a821022028cb8c467f9d0920f97cd9c1e931e2c920cfee85
+17:28:04.856 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.7007521S
+17:28:04.864 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+17:28:04.865 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+17:28:04.865 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+17:28:05.077 [main] INFO tc.postgres:18 -- Creating container for image: postgres:18
+17:28:05.185 [main] INFO tc.postgres:18 -- Container postgres:18 is starting: 48f32a507a00ef8dae380867a90106dc60cc011eb48b043c941cea76c6409ecf
+17:28:06.850 [main] INFO tc.postgres:18 -- Container postgres:18 started in PT1.7732119S
+17:28:06.851 [main] INFO tc.postgres:18 -- Container is started (JDBC URL: jdbc:postgresql://localhost:56236/test?loggerLevel=OFF)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-10T17:28:07.349+05:00  INFO 43972 --- [nomad-games] [           main] com.nomadgames.economy.EconomyIT         : Starting EconomyIT using Java 21.0.11 with PID 43972 (started by sergei.elistratov in C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend)
+2026-09-10T17:28:07.351+05:00  INFO 43972 --- [nomad-games] [           main] com.nomadgames.economy.EconomyIT         : No active profile set, falling back to 1 default profile: "default"
+2026-09-10T17:28:08.766+05:00  INFO 43972 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-10T17:28:08.894+05:00  INFO 43972 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 111 ms. Found 4 JPA repository interfaces.
+2026-09-10T17:28:10.533+05:00  INFO 43972 --- [nomad-games] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:56236/test?loggerLevel=OFF (PostgreSQL 18.6)
+2026-09-10T17:28:10.625+05:00  INFO 43972 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-10T17:28:10.631+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 8 migrations (execution time 00:00.034s)
+2026-09-10T17:28:10.656+05:00  INFO 43972 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-10T17:28:10.741+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-09-10T17:28:10.760+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - identity"
+2026-09-10T17:28:10.811+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - matches"
+2026-09-10T17:28:10.842+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - rooms"
+2026-09-10T17:28:10.868+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - match seats"
+2026-09-10T17:28:10.893+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - reconnect tokens"
+2026-09-10T17:28:10.917+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - room version"
+2026-09-10T17:28:10.943+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "7 - economy ledger shop"
+2026-09-10T17:28:10.983+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "8 - soft purchase sku unique"
+2026-09-10T17:28:11.004+05:00  INFO 43972 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 8 migrations to schema "public", now at version v8 (execution time 00:00.093s)
+2026-09-10T17:28:11.170+05:00  INFO 43972 --- [nomad-games] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-10T17:28:11.303+05:00  INFO 43972 --- [nomad-games] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-09-10T17:28:11.899+05:00  INFO 43972 --- [nomad-games] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-10T17:28:11.934+05:00  INFO 43972 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-10T17:28:11.966+05:00  INFO 43972 --- [nomad-games] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@633dce39
+2026-09-10T17:28:11.968+05:00  INFO 43972 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-09-10T17:28:12.044+05:00  INFO 43972 --- [nomad-games] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:56236/test?loggerLevel=OFF]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.6
+	Default catalog/schema: test/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-10T17:28:13.186+05:00  INFO 43972 --- [nomad-games] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-10T17:28:13.244+05:00  INFO 43972 --- [nomad-games] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-10T17:28:13.442+05:00  INFO 43972 --- [nomad-games] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-10T17:28:16.247+05:00  INFO 43972 --- [nomad-games] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-10T17:28:16.248+05:00  INFO 43972 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-10T17:28:16.266+05:00  INFO 43972 --- [nomad-games] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-09-10T17:28:16.279+05:00  INFO 43972 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 31 ms
+2026-09-10T17:28:16.458+05:00  INFO 43972 --- [nomad-games] [           main] com.nomadgames.economy.EconomyIT         : Started EconomyIT in 9.554 seconds (process running for 14.531)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\sergei.elistratov\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 17.56 s -- in com.nomadgames.economy.EconomyIT
+[INFO] Running com.nomadgames.ModularityTest
+2026-09-10T17:28:20.413+05:00  INFO 43972 --- [nomad-games] [           main] com.tngtech.archunit.core.PluginLoader   : Detected Java version 21.0.11
+2026-09-10T17:28:20.470+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@62ac1835 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-10T17:28:20.474+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@633dce39 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-10T17:28:20.474+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6400cf20 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-10T17:28:20.475+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@66ef1e25 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-10T17:28:20.475+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@59848fe2 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-10T17:28:20.476+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6aff8582 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-10T17:28:20.477+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@8e43e32 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-10T17:28:20.478+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1664173d (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-10T17:28:20.478+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6b62618c (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-10T17:28:20.480+05:00  WARN 43972 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7d272af7 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.206 s -- in com.nomadgames.ModularityTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Alchiki proto harness 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] Alchiki proto harness .............................. SUCCESS [  0.839 s]
+[INFO] Nomad Games backend ................................ SUCCESS [ 51.183 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  52.438 s
+[INFO] Finished at: 2026-09-10T17:28:51+05:00
+[INFO] ------------------------------------------------------------------------

@@ -1,0 +1,405 @@
+{
+  "@@locale": "ru",
+  "playAlchiki": "Играть в Альчики",
+  "playStickPull": "Играть в Перетягивание",
+  "createStickPullRoom": "Создать комнату палки",
+  "holdThrow": "Держать бросок",
+  "skip": "Пропустить",
+  "next": "Далее",
+  "backToMatch": "К матчу",
+  "pause": "Пауза",
+  "resume": "Продолжить",
+  "howToPlay": "Как играть",
+  "leaveMatch": "Покинуть матч",
+  "stay": "Остаться",
+  "backToCatalog": "В каталог",
+  "retry": "Повторить",
+  "appTitle": "Nomad Games",
+  "langEn": "EN",
+  "langRu": "RU",
+  "alchikiTitle": "Альчики",
+  "stickPullTitle": "Перетягивание палки",
+  "moreGamesTitle": "Ещё игры",
+  "comingSoon": "Скоро",
+  "diffEasy": "Легко",
+  "diffNormal": "Норма",
+  "diffHard": "Сложно",
+  "howtoCircleTitle": "Круг",
+  "howtoCircleBody": "Выбей светлые кости своим ярким сакой полностью за зелёный круг.",
+  "howtoAimTitle": "Прицел",
+  "howtoAimBody": "Веди пальцем вокруг саки, чтобы повернуть стрелку. Длина стрелки не меняется.",
+  "howtoHoldTitle": "Удерживай бросок",
+  "howtoHoldBody": "Зажми «Держать бросок», чтобы набрать силу, затем отпусти. Чем дольше держишь — тем сильнее бросок.",
+  "howtoScoreTitle": "За кругом — одно очко",
+  "howtoScoreBody": "Когда кости остановились, каждая цель полностью за кругом даёт 1 и уходит со стола. Если сака вышла — 0, и она вернётся.",
+  "howtoWinTitle": "До пяти",
+  "howtoWinBody": "Набери 5 очков, чтобы победить. Если закончилось время или ходы — побеждает больший счёт.",
+  "howtoStickSitTitle": "Напротив",
+  "howtoStickSitBody": "Сядьте напротив. У вас одна общая палка.",
+  "howtoStickGoTitle": "Жди GO",
+  "howtoStickGoBody": "Жди 3-2-1-GO. Нажатия до GO не тянут.",
+  "howtoStickTapTitle": "Ритм",
+  "howtoStickTapBody": "Жми зону палки ровным ритмом, чтобы тянуть маркер к себе.",
+  "howtoStickStaminaTitle": "Выносливость",
+  "howtoStickStaminaBody": "Не долби без паузы. Без выносливости тяга слабеет, и маркер ускользает.",
+  "howtoStickWinTitle": "Перетяни",
+  "howtoStickWinBody": "Перетяни маркер за свою черту — или веди, когда часы дойдут до 0.",
+  "countdown3": "3",
+  "countdown2": "2",
+  "countdown1": "1",
+  "countdownGo": "GO",
+  "stickClock": "{ss}с",
+  "@stickClock": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "falseStartToast": "Рано — жди GO",
+  "stickTapHint": "Жми",
+  "errorStickPullStart": "Не удалось начать Перетягивание. Нажми «Повторить».",
+  "you": "Ты",
+  "bot": "Бот",
+  "firstToFive": "До пяти",
+  "yourTurn": "Твой ход",
+  "botsTurn": "Ход бота",
+  "previewHud": "оценка {n}",
+  "@previewHud": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "scoredHud": "счёт {n}",
+  "@scoredHud": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "scoredDash": "счёт —",
+  "sakaOutLine": "сака за кругом · 0",
+  "plusOne": "+1",
+  "turnClock": "ход {ss}",
+  "@turnClock": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "matchClock": "матч {m}:{ss}",
+  "@matchClock": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      },
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "turnTimeout": "Время вышло. Этот бросок даёт 0.",
+  "emptyCatalogTitle": "Игр пока нет",
+  "emptyCatalogBody": "Каталог не показал столы. Нажми «Повторить».",
+  "errorGuestMint": "Не удалось войти как гость. Проверь связь и нажми «Повторить».",
+  "errorCatalog": "Каталог не загрузился. Нажми «Повторить».",
+  "errorMatchStart": "Матч не начался. Нажми «Повторить» или вернись в каталог.",
+  "errorThrow": "Бросок не засчитан. Нажми «Повторить», чтобы отправить снова.",
+  "youWin": "Победа",
+  "botWins": "Поражение",
+  "draw": "Ничья",
+  "leaveTitle": "Покинуть матч?",
+  "leaveBody": "Ты вернёшься в каталог. Эта партия с ботом закончится.",
+  "createRoom": "Создать комнату",
+  "joinByCode": "Войти по коду",
+  "joinRoom": "Войти в комнату",
+  "ready": "Готов",
+  "shareCode": "Поделиться кодом",
+  "copyCode": "Копировать код",
+  "copied": "Скопировано",
+  "leaveLobby": "Покинуть комнату",
+  "playAgain": "Играть снова",
+  "rematchAgain": "Ещё раз?",
+  "rejoinMatch": "Вернуться в матч",
+  "shareSheetText": "Код Nomad Альчики: {code}",
+  "@shareSheetText": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "privateRoomTitle": "Комната",
+  "roomCodeLabel": "Код комнаты",
+  "guestLabel": "Guest-{xxxx}",
+  "@guestLabel": {
+    "placeholders": {
+      "xxxx": {
+        "type": "String"
+      }
+    }
+  },
+  "waitingForFriend": "Ждём друга",
+  "waitingForName": "Ждём {name}",
+  "@waitingForName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youAreReady": "Ты готов",
+  "theyAreReady": "{name} готов",
+  "@theyAreReady": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "startingMatch": "Начинаем…",
+  "opponent": "Соперник",
+  "opponentsTurn": "Ход соперника",
+  "opponentWins": "Соперник победил",
+  "reconnecting": "Переподключение… {ss}",
+  "@reconnecting": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "opponentReconnecting": "Соперник переподключается… {ss}",
+  "@opponentReconnecting": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "opponentDisconnected": "Соперник отключился",
+  "staminaA11y": "Выносливость {n} процентов",
+  "@staminaA11y": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "rematchClock": "ещё {ss}",
+  "@rematchClock": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "emptyLobbyBody": "Ждём друга. Поделись кодом или скопируй его.",
+  "emptyJoinBody": "Введи код из 4–6 символов.",
+  "errorNoSuchRoom": "Нет такой комнаты. Проверь код и попробуй снова.",
+  "errorAlreadyStarted": "Комната уже играет. Введи другой код.",
+  "errorHostLeft": "Хост вышел. Код больше не действует.",
+  "hostLeftTitle": "Хост вышел",
+  "hostLeftBody": "Комната закрыта. Нажми «В каталог».",
+  "roomClosedTitle": "Комната закрыта",
+  "roomClosedBody": "Никто не нажал «Готов» вовремя. Нажми «В каталог».",
+  "errorRoomCreate": "Комната не создалась. Нажми «Повторить».",
+  "errorReady": "Готовность не отправилась. Нажми «Повторить».",
+  "errorRematch": "Не удалось начать ещё одну партию. Нажми «Повторить» или вернись в каталог.",
+  "errorRejoin": "Не удалось вернуться. Нажми «Вернуться в матч» или дождись таймера.",
+  "leaveBodyPrivate": "Ты вернёшься в каталог. Соперник победит.",
+  "leaveRankedBody": "Покинуть матч? Это рейтинговое поражение.",
+  "pauseBudgetGone": "Переподключений не осталось — отключение = поражение",
+  "leaveLobbyTitle": "Покинуть комнату?",
+  "leaveLobbyBodyHost": "Код сразу перестанет работать.",
+  "shop": "Магазин",
+  "owned": "Моё",
+  "buyItem": "Купить",
+  "equipItem": "Надеть",
+  "equipped": "Надето",
+  "backToShop": "В магазин",
+  "coins": "МОНЕТЫ",
+  "gems": "САМОЦВЕТЫ",
+  "walletA11y": "{coins} МОНЕТЫ, {gems} САМОЦВЕТЫ",
+  "@walletA11y": {
+    "placeholders": {
+      "coins": {
+        "type": "int"
+      },
+      "gems": {
+        "type": "int"
+      }
+    }
+  },
+  "rewardCoins": "+{n} МОНЕТЫ",
+  "@rewardCoins": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "rewardGems": "+{m} САМОЦВЕТЫ",
+  "@rewardGems": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "priceCoins": "{n} МОНЕТЫ",
+  "@priceCoins": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "priceGems": "{m} САМОЦВЕТЫ",
+  "@priceGems": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "priceFree": "Бесплатно",
+  "shopTitle": "Магазин",
+  "catSakaColor": "Цвет саки",
+  "catSakaMaterial": "Материал саки",
+  "catSakaOrnament": "Орнамент саки",
+  "catTrail": "След",
+  "catTableFx": "Эффекты стола",
+  "catVictory": "Победа",
+  "catStickPull": "Скины палки",
+  "emptyShopTitle": "Здесь пока пусто",
+  "emptyShopBody": "Магазин не показал товары. Нажми «Повторить».",
+  "emptyOwnedTitle": "Пока ничего нет",
+  "emptyOwnedBody": "Выиграй партии за МОНЕТЫ, затем купи вещь в «Магазин».",
+  "errorWallet": "Баланс не загрузился. Нажми «Повторить».",
+  "errorShop": "Магазин не загрузился. Нажми «Повторить».",
+  "errorPurchase": "Покупка не завершилась. Нажми «Повторить».",
+  "errorInsufficientFunds": "Не хватает МОНЕТ или САМОЦВЕТОВ. Сыграй партию, чтобы заработать.",
+  "errorEquip": "Не удалось надеть. Нажми «Повторить».",
+  "alreadyOwned": "Уже куплено",
+  "skuSakaColorDefault": "Цвет по умолчанию",
+  "skuSakaColorGold": "Золотой цвет",
+  "skuSakaColorNeon": "Неоновый цвет",
+  "skuSakaMaterialDefault": "Материал по умолчанию",
+  "skuSakaMaterialIce": "Ледяной материал",
+  "skuSakaMaterialFire": "Огненный материал",
+  "skuSakaOrnamentDefault": "Орнамент по умолчанию",
+  "skuSakaOrnamentSpace": "Космический орнамент",
+  "skuSakaOrnamentKnot": "Узор-узел",
+  "skuTrailDefault": "След по умолчанию",
+  "skuTrailGold": "Золотой след",
+  "skuTableFxDefault": "Эффект стола по умолчанию",
+  "skuTableFxNeon": "Неоновый эффект стола",
+  "skuVictoryDefault": "Победа по умолчанию",
+  "skuVictoryFire": "Огненная победа",
+  "skuStickPullDefault": "Палка по умолчанию",
+  "skuStickPullIce": "Ледяная палка",
+  "quickMatch": "Быстрая игра",
+  "cancelSearch": "Отменить поиск",
+  "searchingTitle": "Ищем…",
+  "searchingBody": "Ищем соперника",
+  "errorQuickMatch": "Быстрая игра не началась. Нажми «Повторить».",
+  "fallbackTitle": "Пока нет соперника",
+  "fallbackBody": "Сыграй с ботом или пригласи друга",
+  "playVsBot": "Играть с ботом",
+  "inviteFriend": "Пригласить друга",
+  "errorQueueLeft": "Очередь покинута. Нажми «Повторить» или вернись в каталог.",
+  "rematchWaitingTitle": "Ждём реванш",
+  "cancelRematch": "Отменить реванш",
+  "openProfileA11y": "Открыть профиль",
+  "profileTitle": "Профиль",
+  "guestDisplay": "Guest",
+  "saveAvatar": "Сохранить аватар",
+  "levelLabel": "Уровень {n}",
+  "@levelLabel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "xpProgress": "{current} / {next} опыта",
+  "@xpProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "next": {
+        "type": "int"
+      }
+    }
+  },
+  "statMatches": "Партии",
+  "statWins": "Победы",
+  "statLosses": "Поражения",
+  "statWinRate": "Винрейт",
+  "statWinRateValue": "{n}%",
+  "@statWinRateValue": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "statRating": "Рейтинг",
+  "statBestRating": "Лучший",
+  "cosmeticsSection": "Выбранные косметики",
+  "cosmeticsDefault": "Стандартный набор",
+  "avatarSection": "Аватар",
+  "statsAlchiki": "Альчики",
+  "statsStickPull": "Тяни палку",
+  "noMatchesYet": "Пока нет партий",
+  "errorProfileTitle": "Профиль не загрузился",
+  "errorProfileBody": "Нажми «Повторить», чтобы загрузить статистику.",
+  "errorAvatarSave": "Аватар не сохранился. Нажми «Повторить».",
+  "bindNow": "Привязать аккаунт",
+  "notNow": "Не сейчас",
+  "bindAccount": "Привязать аккаунт",
+  "signIn": "Войти",
+  "signInInstead": "Войти вместо этого",
+  "bindThisGuest": "Привязать этого гостя",
+  "bindSheetTitle": "Сохрани прогресс",
+  "bindSheetBody": "Привяжи имя и пароль, чтобы сохранить косметику, кошельки и статистику на этом аккаунте.",
+  "usernameLabel": "Имя",
+  "passwordLabel": "Пароль",
+  "passwordRule": "Не меньше 8 символов",
+  "usernameTakenTitle": "Имя занято",
+  "usernameTakenBody": "Войди в тот аккаунт или выбери другое имя. Прогресс аккаунтов никогда не суммируется.",
+  "signInTitle": "Войти",
+  "signInBody": "Введи привязанные имя и пароль.",
+  "guestBindHelper": "Гость — привяжи аккаунт для Рейтинга и Таблицы",
+  "boundLabel": "Привязан",
+  "errorBind": "Не удалось привязать. Проверь имя и пароль, затем нажми «Повторить».",
+  "logOut": "Выйти",
+  "logOutTitle": "Выйти?",
+  "logOutBody": "Вернёшься к гостевой игре на этом устройстве. Привязанный прогресс останется на сервере.",
+  "replaceGuestTitle": "Заменить гостевой прогресс?",
+  "replaceGuestBody": "Вход сохраняет привязанный аккаунт как есть. Гостевой прогресс на этом устройстве будет удалён.",
+  "signInAnyway": "Всё равно войти",
+  "errorSignIn": "Не удалось войти. Проверь имя и пароль, затем нажми «Повторить».",
+  "ranked": "Рейтинг",
+  "boards": "Таблица",
+  "rankedLockTitle": "Для рейтинга нужен аккаунт",
+  "rankedLockBody": "Привяжи имя, чтобы играть рейтинг. Казуал, боты и комнаты остаются открытыми.",
+  "boardsLockTitle": "Для таблицы нужен аккаунт",
+  "boardsLockBody": "Привяжи имя, чтобы смотреть таблицу. Гости не попадают в рейтинг.",
+  "rankedSearchingBody": "Ищем рейтингового соперника",
+  "findRankedMatch": "Искать рейтинговый матч",
+  "boardsTitle": "Таблица",
+  "boardsSeason": "Сезон",
+  "boardsAllTime": "За всё время",
+  "boardsRank": "Место",
+  "boardsPlayer": "Игрок",
+  "boardsEmptyTitle": "Пока нет игроков рейтинга",
+  "boardsEmptyBody": "Сыграй рейтинговый матч, чтобы появиться здесь.",
+  "errorBoards": "Таблица не загрузилась. Нажми «Повторить»."
+}

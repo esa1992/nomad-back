@@ -1,0 +1,2047 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Alchiki proto harness                                              [jar]
+[INFO] Nomad Games backend                                                [jar]
+[INFO] 
+[INFO] ----------------< com.nomadgames:alchiki-proto-harness >----------------
+[INFO] Building Alchiki proto harness 0.1.0-SNAPSHOT                      [1/2]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alchiki-proto-harness ---
+[INFO] skip non existing resourceDirectory C:\Users\sergei.elistratov\Documents\проекты\nomad-game\harness\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ alchiki-proto-harness ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alchiki-proto-harness ---
+[INFO] skip non existing resourceDirectory C:\Users\sergei.elistratov\Documents\проекты\nomad-game\harness\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ alchiki-proto-harness ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ alchiki-proto-harness ---
+[INFO] 
+[INFO] -----------------< com.nomadgames:nomad-games-backend >-----------------
+[INFO] Building Nomad Games backend 0.1.0-SNAPSHOT                        [2/2]
+[INFO]   from C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ nomad-games-backend ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 9 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ nomad-games-backend ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 80 source files with javac [debug parameters release 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] Extracting Javadoc into C:\Users\sergei.elistratov\Documents\проекты\nomad-game\.\target\generated-spring-modulith\javadoc.json.
+[INFO] /C:/Users/sergei.elistratov/Documents/проекты/nomad-game/backend/src/main/java/com/nomadgames/session/internal/MatchWebSocketHandler.java: C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend\src\main\java\com\nomadgames\session\internal\MatchWebSocketHandler.java uses or overrides a deprecated API.
+[INFO] /C:/Users/sergei.elistratov/Documents/проекты/nomad-game/backend/src/main/java/com/nomadgames/session/internal/MatchWebSocketHandler.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ nomad-games-backend ---
+[INFO] skip non existing resourceDirectory C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nomad-games-backend ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 21 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ nomad-games-backend ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.nomadgames.catalog.CatalogIT
+10:56:46.715 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+10:56:46.723 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+10:56:46.796 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+10:56:47.172 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+10:56:47.864 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+10:56:47.865 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+10:56:47.892 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.7.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 13643 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+10:56:48.107 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+10:56:49.219 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 23decfd098b825b5cb747a07c4c9525c42802459c3e71b0d78647695b52b2672
+10:56:49.852 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT1.7442118S
+10:56:49.877 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+10:56:49.877 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+10:56:49.878 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+10:56:50.152 [main] INFO tc.postgres:18 -- Creating container for image: postgres:18
+10:56:50.289 [main] INFO tc.postgres:18 -- Container postgres:18 is starting: 10424a59323183071a6a6e801d3061caddf3cb0710873c626dcdc0e2795c1cd3
+10:56:52.199 [main] INFO tc.postgres:18 -- Container postgres:18 started in PT2.0466247S
+10:56:52.200 [main] INFO tc.postgres:18 -- Container is started (JDBC URL: jdbc:postgresql://localhost:62189/test?loggerLevel=OFF)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-14T10:56:52.761+05:00  INFO 24632 --- [nomad-games] [           main] com.nomadgames.catalog.CatalogIT         : Starting CatalogIT using Java 21.0.11 with PID 24632 (started by sergei.elistratov in C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend)
+2026-09-14T10:56:52.764+05:00  INFO 24632 --- [nomad-games] [           main] com.nomadgames.catalog.CatalogIT         : No active profile set, falling back to 1 default profile: "default"
+2026-09-14T10:56:54.529+05:00  INFO 24632 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-14T10:56:54.653+05:00  INFO 24632 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 106 ms. Found 4 JPA repository interfaces.
+2026-09-14T10:56:56.632+05:00  INFO 24632 --- [nomad-games] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:62189/test?loggerLevel=OFF (PostgreSQL 18.6)
+2026-09-14T10:56:56.734+05:00  INFO 24632 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-14T10:56:56.742+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.039s)
+2026-09-14T10:56:56.768+05:00  INFO 24632 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-14T10:56:56.847+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-09-14T10:56:56.865+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - identity"
+2026-09-14T10:56:56.919+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - matches"
+2026-09-14T10:56:56.949+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - rooms"
+2026-09-14T10:56:56.979+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - match seats"
+2026-09-14T10:56:57.006+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - reconnect tokens"
+2026-09-14T10:56:57.034+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - room version"
+2026-09-14T10:56:57.068+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "7 - economy ledger shop"
+2026-09-14T10:56:57.118+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "8 - soft purchase sku unique"
+2026-09-14T10:56:57.148+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "9 - profile casual"
+2026-09-14T10:56:57.187+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 9 migrations to schema "public", now at version v9 (execution time 00:00.130s)
+2026-09-14T10:56:57.416+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-14T10:56:57.538+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-09-14T10:56:58.324+05:00  INFO 24632 --- [nomad-games] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-14T10:56:58.388+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-14T10:56:58.431+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2fe152aa
+2026-09-14T10:56:58.436+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-09-14T10:56:58.576+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:62189/test?loggerLevel=OFF]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.6
+	Default catalog/schema: test/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-14T10:56:59.962+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-14T10:57:00.033+05:00  INFO 24632 --- [nomad-games] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-14T10:57:00.261+05:00  INFO 24632 --- [nomad-games] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-14T10:57:03.766+05:00  INFO 24632 --- [nomad-games] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-14T10:57:03.767+05:00  INFO 24632 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-14T10:57:03.783+05:00  INFO 24632 --- [nomad-games] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-09-14T10:57:03.795+05:00  INFO 24632 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 28 ms
+2026-09-14T10:57:03.998+05:00  INFO 24632 --- [nomad-games] [           main] com.nomadgames.catalog.CatalogIT         : Started CatalogIT in 11.733 seconds (process running for 18.927)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\sergei.elistratov\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"40e87820-0be8-4a38-9247-7f30dd86ef0c","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI0MGU4NzgyMC0wYmU4LTRhMzgtOTI0Ny03ZjMwZGQ4NmVmMGMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzI1LCJpYXQiOjE3ODkzNjU0MjUsImp0aSI6IjBiZGFkM2RlLThlNGEtNDZiOC1iOGUzLTNmM2UyZGI1ZThjNSJ9.6TrD9Cs872_YJprYovMidq9i4KaJKQ9XvpjJa_RPCrY","refreshToken":"5amaNPTSrVr4Boq-mbHND_7YQLMdvRIe46RraKq6EFQ","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /v1/catalog
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI0MGU4NzgyMC0wYmU4LTRhMzgtOTI0Ny03ZjMwZGQ4NmVmMGMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzI1LCJpYXQiOjE3ODkzNjU0MjUsImp0aSI6IjBiZGFkM2RlLThlNGEtNDZiOC1iOGUzLTNmM2UyZGI1ZThjNSJ9.6TrD9Cs872_YJprYovMidq9i4KaJKQ9XvpjJa_RPCrY"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.catalog.CatalogController
+           Method = com.nomadgames.catalog.CatalogController#catalog()
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"tiles":[{"id":"alchiki","status":"PLAYABLE"},{"id":"stick_pull","status":"COMING_SOON"},{"id":"more_games","status":"COMING_SOON"}]}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 19.34 s <<< FAILURE! -- in com.nomadgames.catalog.CatalogIT
+[ERROR] com.nomadgames.catalog.CatalogIT.stickPullTileIsPlayable -- Time elapsed: 0.075 s <<< FAILURE!
+java.lang.AssertionError: 
+JSON path "$.tiles[?(@.id=='stick_pull')].status"
+Expected: a collection containing "PLAYABLE"
+     but: mismatches were: [was "COMING_SOON"]
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:107)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$0(JsonPathResultMatchers.java:87)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at com.nomadgames.catalog.CatalogIT.stickPullTileIsPlayable(CatalogIT.java:60)
+
+[INFO] Running com.nomadgames.games.stickpull.StickPullBotTest
+[ERROR] Tests run: 4, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.034 s <<< FAILURE! -- in com.nomadgames.games.stickpull.StickPullBotTest
+[ERROR] com.nomadgames.games.stickpull.StickPullBotTest.easyMeanTpsInBand -- Time elapsed: 0.010 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullBot easyMeanTpsInBand greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullBotTest.easyMeanTpsInBand(StickPullBotTest.java:16)
+
+[ERROR] com.nomadgames.games.stickpull.StickPullBotTest.hardMeanTpsInBand -- Time elapsed: 0.006 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullBot hardMeanTpsInBand greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullBotTest.hardMeanTpsInBand(StickPullBotTest.java:28)
+
+[ERROR] com.nomadgames.games.stickpull.StickPullBotTest.easyPausesPresent -- Time elapsed: 0.004 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullBot easyPausesPresent greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullBotTest.easyPausesPresent(StickPullBotTest.java:34)
+
+[ERROR] com.nomadgames.games.stickpull.StickPullBotTest.normalMeanTpsInBand -- Time elapsed: 0.003 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullBot normalMeanTpsInBand greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullBotTest.normalMeanTpsInBand(StickPullBotTest.java:22)
+
+[INFO] Running com.nomadgames.games.stickpull.StickPullSimTest
+[ERROR] Tests run: 7, Failures: 7, Errors: 0, Skipped: 0, Time elapsed: 0.050 s <<< FAILURE! -- in com.nomadgames.games.stickpull.StickPullSimTest
+[ERROR] com.nomadgames.games.stickpull.StickPullSimTest.suspectRegularityLogsOnly -- Time elapsed: 0.005 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullSim suspectRegularityLogsOnly greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullSimTest.suspectRegularityLogsOnly(StickPullSimTest.java:52)
+
+[ERROR] com.nomadgames.games.stickpull.StickPullSimTest.recoveryAfterIdleGap -- Time elapsed: 0.001 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullSim recoveryAfterIdleGap greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullSimTest.recoveryAfterIdleGap(StickPullSimTest.java:40)
+
+[ERROR] com.nomadgames.games.stickpull.StickPullSimTest.thresholdOrClockSettle -- Time elapsed: 0.006 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullSim thresholdOrClockSettle greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullSimTest.thresholdOrClockSettle(StickPullSimTest.java:46)
+
+[ERROR] com.nomadgames.games.stickpull.StickPullSimTest.burstWindowReducesForce -- Time elapsed: 0.004 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullSim burstWindowReducesForce greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullSimTest.burstWindowReducesForce(StickPullSimTest.java:28)
+
+[ERROR] com.nomadgames.games.stickpull.StickPullSimTest.hardClampDropsExtras -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullSim hardClampDropsExtras greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullSimTest.hardClampDropsExtras(StickPullSimTest.java:22)
+
+[ERROR] com.nomadgames.games.stickpull.StickPullSimTest.softBandFullForce -- Time elapsed: 0.004 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullSim softBandFullForce greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullSimTest.softBandFullForce(StickPullSimTest.java:16)
+
+[ERROR] com.nomadgames.games.stickpull.StickPullSimTest.exhaustWeakForceUntilRecovery -- Time elapsed: 0.004 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Wave 0 RED — StickPullSim exhaustWeakForceUntilRecovery greens in 06-03
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:42)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:143)
+	at com.nomadgames.games.stickpull.StickPullSimTest.exhaustWeakForceUntilRecovery(StickPullSimTest.java:34)
+
+[INFO] Running com.nomadgames.matchmaking.CasualQueueIT
+2026-09-14T10:57:05.647+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Creating container for image: postgres:18
+2026-09-14T10:57:05.817+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Container postgres:18 is starting: d3237356b2047e3dc3380442edb4dcfd095c965a20453c7935bcd65d7141975e
+2026-09-14T10:57:06.024+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2fe152aa (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:06.029+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@72d6873c (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:06.030+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@12cc5292 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:06.033+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@502ef7fb (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:06.034+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@47ac3699 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:06.035+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@105a637 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:06.037+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@71ad2c47 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:06.039+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@561b9ca6 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:06.040+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@70a57002 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:06.042+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5c3d443f (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:07.513+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Container postgres:18 started in PT1.8661186S
+2026-09-14T10:57:07.514+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Container is started (JDBC URL: jdbc:postgresql://localhost:62210/test?loggerLevel=OFF)
+2026-09-14T10:57:36.015+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-09-14T10:57:36.015+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30001ms (total=0, active=0, idle=0, waiting=0)
+2026-09-14T10:57:36.015+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-09-14T10:57:36.015+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HikariPool-1 - Connection is not available, request timed out after 30001ms (total=0, active=0, idle=0, waiting=0)
+2026-09-14T10:57:36.017+05:00 ERROR 24632 --- [nomad-games] [   scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+org.springframework.transaction.CannotCreateTransactionException: Could not open JPA EntityManager for transaction
+	at org.springframework.orm.jpa.JpaTransactionManager.doBegin(JpaTransactionManager.java:457) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.startTransaction(AbstractPlatformTransactionManager.java:532) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:405) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.createTransactionIfNecessary(TransactionAspectSupport.java:628) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:365) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.9.jar:7.0.9]
+	at com.nomadgames.session.MatchService$$SpringCGLIB$$0.expireReconnectGraces(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:128) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$1(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at io.micrometer.observation.Observation.observe(Observation.java:569) ~[micrometer-observation-1.17.1.jar:1.17.1]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:88) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection [HikariPool-1 - Connection is not available, request timed out after 30001ms (total=0, active=0, idle=0, waiting=0)] [n/a]
+	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:49) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:101) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.acquire(LogicalConnectionManagedImpl.java:190) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.acquireConnectionIfNeeded(LogicalConnectionManagedImpl.java:87) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.getPhysicalConnection(LogicalConnectionManagedImpl.java:126) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.getConnectionForTransactionManagement(LogicalConnectionManagedImpl.java:281) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.begin(LogicalConnectionManagedImpl.java:290) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.begin(JdbcResourceLocalTransactionCoordinatorImpl.java:226) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.transaction.internal.TransactionImpl.begin(TransactionImpl.java:75) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.beginTransaction(HibernateJpaDialect.java:147) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.JpaTransactionManager.doBegin(JpaTransactionManager.java:411) ~[spring-orm-7.0.9.jar:7.0.9]
+	... 22 common frames omitted
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-1 - Connection is not available, request timed out after 30001ms (total=0, active=0, idle=0, waiting=0)
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:714) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:184) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:142) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:127) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DataSourceConnectionProvider.getConnection(DataSourceConnectionProvider.java:149) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.internal.NonContextualJdbcConnectionAccess.obtainConnection(NonContextualJdbcConnectionAccess.java:62) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.acquire(LogicalConnectionManagedImpl.java:187) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	... 30 common frames omitted
+Caused by: org.postgresql.util.PSQLException: Подключение по адресу localhost:62189 отклонено. Проверьте, что хост и порт указаны правильно и что postmaster принимает TCP/IP-соединения.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:427) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:295) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.makeConnection(Driver.java:437) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.connect(Driver.java:305) ~[postgresql-42.7.13.jar:42.7.13]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	... 3 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:694) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:270) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:131) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:221) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:367) ~[postgresql-42.7.13.jar:42.7.13]
+	... 14 common frames omitted
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-14T10:57:36.056+05:00  INFO 24632 --- [nomad-games] [           main] c.nomadgames.matchmaking.CasualQueueIT   : Starting CasualQueueIT using Java 21.0.11 with PID 24632 (started by sergei.elistratov in C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend)
+2026-09-14T10:57:36.057+05:00  INFO 24632 --- [nomad-games] [           main] c.nomadgames.matchmaking.CasualQueueIT   : No active profile set, falling back to 1 default profile: "default"
+2026-09-14T10:57:36.523+05:00  INFO 24632 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-14T10:57:36.563+05:00  INFO 24632 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 4 JPA repository interfaces.
+2026-09-14T10:57:36.856+05:00  INFO 24632 --- [nomad-games] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:62210/test?loggerLevel=OFF (PostgreSQL 18.6)
+2026-09-14T10:57:36.892+05:00  INFO 24632 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-14T10:57:36.893+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.012s)
+2026-09-14T10:57:36.910+05:00  INFO 24632 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-14T10:57:36.953+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-09-14T10:57:36.959+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - identity"
+2026-09-14T10:57:36.991+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - matches"
+2026-09-14T10:57:37.016+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - rooms"
+2026-09-14T10:57:37.042+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - match seats"
+2026-09-14T10:57:37.066+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - reconnect tokens"
+2026-09-14T10:57:37.088+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - room version"
+2026-09-14T10:57:37.112+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "7 - economy ledger shop"
+2026-09-14T10:57:37.152+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "8 - soft purchase sku unique"
+2026-09-14T10:57:37.177+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "9 - profile casual"
+2026-09-14T10:57:37.205+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 9 migrations to schema "public", now at version v9 (execution time 00:00.103s)
+2026-09-14T10:57:37.240+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-14T10:57:37.275+05:00  INFO 24632 --- [nomad-games] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-14T10:57:37.277+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-09-14T10:57:37.295+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@12c4b985
+2026-09-14T10:57:37.295+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-09-14T10:57:37.305+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:62210/test?loggerLevel=OFF]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.6
+	Default catalog/schema: test/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-14T10:57:37.443+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-14T10:57:37.466+05:00  INFO 24632 --- [nomad-games] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-14T10:57:37.861+05:00  INFO 24632 --- [nomad-games] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-14T10:57:37.862+05:00  INFO 24632 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-14T10:57:37.867+05:00  INFO 24632 --- [nomad-games] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-09-14T10:57:37.873+05:00  INFO 24632 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 11 ms
+2026-09-14T10:57:37.912+05:00  INFO 24632 --- [nomad-games] [           main] c.nomadgames.matchmaking.CasualQueueIT   : Started CasualQueueIT in 1.886 seconds (process running for 52.842)
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"38ae5f4a-311d-4be4-aceb-b5e3a9da571b","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiIzOGFlNWY0YS0zMTFkLTRiZTQtYWNlYi1iNWUzYTlkYTU3MWIiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzU5LCJpYXQiOjE3ODkzNjU0NTksImp0aSI6IjA3MDdjZDgxLThlMmEtNDQwMy04MTlmLWVmMmI1ZmZmNmNmNCJ9.Ddc1PM1MH72HNOALBFT7_UuCnNavHYVKh8p55SNTDyI","refreshToken":"aQxFJgflNnDwoJrc6geHKZz4HQcSNU--VDYaEGTykhI","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"873fa1b4-74d8-4a08-9609-a5384a2e9c33","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI4NzNmYTFiNC03NGQ4LTRhMDgtOTYwOS1hNTM4NGEyZTljMzMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzU5LCJpYXQiOjE3ODkzNjU0NTksImp0aSI6ImE0M2Y1YjlhLWFhNWQtNGVhZC05YTM2LWVlMDQ4YWRmNjBiMCJ9.AJJ3jZftQz_jZos3K_ElAKL3mdcrbFjLs9DydY58O-8","refreshToken":"BKSDu_OnD3YDCsSZU9Khq1LCSeQ6lGjH6ciebo7_yzg","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/matchmaking/casual
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiIzOGFlNWY0YS0zMTFkLTRiZTQtYWNlYi1iNWUzYTlkYTU3MWIiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzU5LCJpYXQiOjE3ODkzNjU0NTksImp0aSI6IjA3MDdjZDgxLThlMmEtNDQwMy04MTlmLWVmMmI1ZmZmNmNmNCJ9.Ddc1PM1MH72HNOALBFT7_UuCnNavHYVKh8p55SNTDyI", Content-Length:"18"]
+             Body = {"game":"ALCHIKI"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.matchmaking.CasualMatchmakingController
+           Method = com.nomadgames.matchmaking.CasualMatchmakingController#enqueue(Jwt, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"status":"SEARCHING","matchId":null,"mode":null,"ticketId":"beab72d4-3186-4249-8267-0aae3e8bf056"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/matchmaking/casual
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI4NzNmYTFiNC03NGQ4LTRhMDgtOTYwOS1hNTM4NGEyZTljMzMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzU5LCJpYXQiOjE3ODkzNjU0NTksImp0aSI6ImE0M2Y1YjlhLWFhNWQtNGVhZC05YTM2LWVlMDQ4YWRmNjBiMCJ9.AJJ3jZftQz_jZos3K_ElAKL3mdcrbFjLs9DydY58O-8", Content-Length:"21"]
+             Body = {"game":"STICK_PULL"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.matchmaking.CasualMatchmakingController
+           Method = com.nomadgames.matchmaking.CasualMatchmakingController#enqueue(Jwt, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"status":"MATCHED","matchId":"4c803f5d-c589-4c8e-a9da-a62b5342cbf5","mode":"CASUAL","ticketId":"0be9bdeb-2465-4b6f-8a96-0532d4da54b4"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2026-09-14T10:57:39.916+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@12c4b985 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:39.922+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.ProxyConnection   : HikariPool-2 - Connection org.postgresql.jdbc.PgConnection@3215a5ff marked as broken because of SQLSTATE(08006), ErrorCode(0)
+
+org.postgresql.util.PSQLException: Ошибка ввода/вывода при отправке бэкенду.
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:474) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:197) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:140) ~[postgresql-42.7.13.jar:42.7.13]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeQuery(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.sql.results.jdbc.internal.DeferredResultSetAccess.executeQuery(DeferredResultSetAccess.java:269) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.results.jdbc.internal.DeferredResultSetAccess.getResultSet(DeferredResultSetAccess.java:188) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.results.jdbc.internal.JdbcValuesResultSetImpl.<init>(JdbcValuesResultSetImpl.java:71) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.resolveJdbcValues(JdbcSelectExecutorStandardImpl.java:422) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.resolveJdbcValuesSource(JdbcSelectExecutorStandardImpl.java:349) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.doExecuteQuery(JdbcSelectExecutorStandardImpl.java:143) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.executeQuery(JdbcSelectExecutorStandardImpl.java:100) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.executeQuery(JdbcSelectExecutor.java:63) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.list(JdbcSelectExecutor.java:137) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$1(ConcreteSqmSelectQueryPlan.java:136) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:484) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:411) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.sqm.internal.SqmQueryImpl.doList(SqmQueryImpl.java:379) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:153) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.Query.getResultList(Query.java:121) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution$CollectionExecution.doExecute(JpaQueryExecution.java:141) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution.execute(JpaQueryExecution.java:100) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.doExecute(AbstractJpaQuery.java:166) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.execute(AbstractJpaQuery.java:156) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:169) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:167) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:146) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:135) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:137) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:222) ~[spring-aop-7.0.9.jar:7.0.9]
+	at jdk.proxy2/jdk.proxy2.$Proxy202.findByStatusAndIdleExpiresAtBefore(Unknown Source) ~[na:na]
+	at com.nomadgames.matchmaking.RoomService.lambda$closeExpiredLobbies$7(RoomService.java:151) ~[classes/:na]
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137) ~[spring-tx-7.0.9.jar:7.0.9]
+	at com.nomadgames.matchmaking.RoomService.closeExpiredLobbies(RoomService.java:150) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:128) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$1(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at io.micrometer.observation.Observation.observe(Observation.java:569) ~[micrometer-observation-1.17.1.jar:1.17.1]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:88) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.SocketException: Программа на вашем хост-компьютере разорвала установленное подключение
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:47) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(NioSocketImpl.java:256) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:307) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[na:na]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[na:na]
+	at org.postgresql.core.VisibleBufferedInputStream.readMore(VisibleBufferedInputStream.java:192) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:159) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:144) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.VisibleBufferedInputStream.read(VisibleBufferedInputStream.java:76) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:480) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2383) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446) ~[postgresql-42.7.13.jar:42.7.13]
+	... 59 common frames omitted
+
+2026-09-14T10:57:39.925+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08006
+2026-09-14T10:57:39.925+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : Ошибка ввода/вывода при отправке бэкенду.
+2026-09-14T10:57:39.936+05:00 ERROR 24632 --- [nomad-games] [   scheduling-1] o.s.t.support.TransactionTemplate        : Application exception overridden by rollback exception
+
+org.springframework.dao.DataAccessResourceFailureException: JDBC exception executing SQL [Ошибка ввода/вывода при отправке бэкенду.] [select re1_0.id,re1_0.code,re1_0.created_at,re1_0.host_id,re1_0.host_ready,re1_0.idle_expires_at,re1_0.joiner_id,re1_0.joiner_ready,re1_0.match_id,re1_0.status,re1_0.version from rooms re1_0 where re1_0.status=? and re1_0.idle_expires_at<?]
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:153) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:131) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.translateExceptionIfPossible(HibernateExceptionTranslator.java:105) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:223) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:577) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:61) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:346) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:157) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:137) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:222) ~[spring-aop-7.0.9.jar:7.0.9]
+	at jdk.proxy2/jdk.proxy2.$Proxy202.findByStatusAndIdleExpiresAtBefore(Unknown Source) ~[na:na]
+	at com.nomadgames.matchmaking.RoomService.lambda$closeExpiredLobbies$7(RoomService.java:151) ~[classes/:na]
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137) ~[spring-tx-7.0.9.jar:7.0.9]
+	at com.nomadgames.matchmaking.RoomService.closeExpiredLobbies(RoomService.java:150) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:128) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$1(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at io.micrometer.observation.Observation.observe(Observation.java:569) ~[micrometer-observation-1.17.1.jar:1.17.1]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:88) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.hibernate.exception.JDBCConnectionException: JDBC exception executing SQL [Ошибка ввода/вывода при отправке бэкенду.] [select re1_0.id,re1_0.code,re1_0.created_at,re1_0.host_id,re1_0.host_ready,re1_0.idle_expires_at,re1_0.joiner_id,re1_0.joiner_ready,re1_0.match_id,re1_0.status,re1_0.version from rooms re1_0 where re1_0.status=? and re1_0.idle_expires_at<?]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:80) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.results.jdbc.internal.DeferredResultSetAccess.executeQuery(DeferredResultSetAccess.java:292) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.results.jdbc.internal.DeferredResultSetAccess.getResultSet(DeferredResultSetAccess.java:188) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.results.jdbc.internal.JdbcValuesResultSetImpl.<init>(JdbcValuesResultSetImpl.java:71) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.resolveJdbcValues(JdbcSelectExecutorStandardImpl.java:422) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.resolveJdbcValuesSource(JdbcSelectExecutorStandardImpl.java:349) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.doExecuteQuery(JdbcSelectExecutorStandardImpl.java:143) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.executeQuery(JdbcSelectExecutorStandardImpl.java:100) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.executeQuery(JdbcSelectExecutor.java:63) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.sql.exec.spi.JdbcSelectExecutor.list(JdbcSelectExecutor.java:137) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$1(ConcreteSqmSelectQueryPlan.java:136) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:484) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:411) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.sqm.internal.SqmQueryImpl.doList(SqmQueryImpl.java:379) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:153) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.query.Query.getResultList(Query.java:121) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution$CollectionExecution.doExecute(JpaQueryExecution.java:141) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution.execute(JpaQueryExecution.java:100) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.doExecute(AbstractJpaQuery.java:166) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.execute(AbstractJpaQuery.java:156) ~[spring-data-jpa-4.1.1.jar:4.1.1]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:169) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:167) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:146) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69) ~[spring-data-commons-4.1.1.jar:4.1.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:135) ~[spring-tx-7.0.9.jar:7.0.9]
+	... 22 common frames omitted
+Caused by: org.postgresql.util.PSQLException: Ошибка ввода/вывода при отправке бэкенду.
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:474) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:197) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgPreparedStatement.executeQuery(PgPreparedStatement.java:140) ~[postgresql-42.7.13.jar:42.7.13]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeQuery(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.sql.results.jdbc.internal.DeferredResultSetAccess.executeQuery(DeferredResultSetAccess.java:269) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	... 52 common frames omitted
+Caused by: java.net.SocketException: Программа на вашем хост-компьютере разорвала установленное подключение
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:47) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.tryRead(NioSocketImpl.java:256) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:307) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[na:na]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[na:na]
+	at org.postgresql.core.VisibleBufferedInputStream.readMore(VisibleBufferedInputStream.java:192) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:159) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:144) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.VisibleBufferedInputStream.read(VisibleBufferedInputStream.java:76) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:480) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2383) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446) ~[postgresql-42.7.13.jar:42.7.13]
+	... 59 common frames omitted
+
+2026-09-14T10:57:39.939+05:00 ERROR 24632 --- [nomad-games] [   scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+org.springframework.orm.jpa.JpaSystemException: Unable to rollback against JDBC Connection
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:223) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.convertHibernateAccessException(HibernateExceptionTranslator.java:131) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.hibernate.HibernateExceptionTranslator.translateExceptionIfPossible(HibernateExceptionTranslator.java:105) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:223) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.JpaTransactionManager.doRollback(JpaTransactionManager.java:583) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.processRollback(AbstractPlatformTransactionManager.java:896) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.rollback(AbstractPlatformTransactionManager.java:865) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.TransactionTemplate.rollbackOnException(TransactionTemplate.java:165) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:141) ~[spring-tx-7.0.9.jar:7.0.9]
+	at com.nomadgames.matchmaking.RoomService.closeExpiredLobbies(RoomService.java:150) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:128) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$1(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at io.micrometer.observation.Observation.observe(Observation.java:569) ~[micrometer-observation-1.17.1.jar:1.17.1]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:88) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.hibernate.TransactionException: Unable to rollback against JDBC Connection
+	at org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor.rollback(AbstractLogicalConnectionImplementor.java:151) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.rollback(JdbcResourceLocalTransactionCoordinatorImpl.java:300) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.transaction.internal.TransactionImpl.rollback(TransactionImpl.java:123) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.springframework.orm.jpa.JpaTransactionManager.doRollback(JpaTransactionManager.java:579) ~[spring-orm-7.0.9.jar:7.0.9]
+	... 19 common frames omitted
+Caused by: java.sql.SQLException: Connection is closed
+	at com.zaxxer.hikari.pool.ProxyConnection$ClosedConnection.lambda$getClosedConnection$0(ProxyConnection.java:559) ~[HikariCP-7.0.2.jar:na]
+	at jdk.proxy3/jdk.proxy3.$Proxy162.rollback(Unknown Source) ~[na:na]
+	at com.zaxxer.hikari.pool.ProxyConnection.rollback(ProxyConnection.java:386) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyConnection.rollback(HikariProxyConnection.java) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.resource.jdbc.internal.AbstractLogicalConnectionImplementor.rollback(AbstractLogicalConnectionImplementor.java:141) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	... 22 common frames omitted
+
+[ERROR] Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 34.35 s <<< FAILURE! -- in com.nomadgames.matchmaking.CasualQueueIT
+[ERROR] com.nomadgames.matchmaking.CasualQueueIT.stickPullEnqueueIsolatedFromAlchiki -- Time elapsed: 0.096 s <<< FAILURE!
+java.lang.AssertionError: JSON path "$.status" expected:<SEARCHING> but was:<MATCHED>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:62)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:129)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:172)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$2(JsonPathResultMatchers.java:111)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at com.nomadgames.matchmaking.CasualQueueIT.stickPullEnqueueIsolatedFromAlchiki(CasualQueueIT.java:238)
+
+[INFO] Running com.nomadgames.session.StickPullIT
+2026-09-14T10:57:39.998+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Creating container for image: postgres:18
+2026-09-14T10:57:40.133+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Container postgres:18 is starting: 2459552d8af1b62d603122d944d2f0a56b298f21f7d7055df179b346f0e24cf9
+2026-09-14T10:57:40.919+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@681c4a1f (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:40.920+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@3a8ec280 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:40.921+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@35f59fb (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:40.922+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@6da549cf (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:40.922+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@67e3aad6 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:40.923+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@2b35ee68 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:40.924+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@525cea74 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:40.924+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Failed to validate connection org.postgresql.jdbc.PgConnection@15703ac1 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:57:41.846+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Container postgres:18 started in PT1.8484748S
+2026-09-14T10:57:41.847+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Container is started (JDBC URL: jdbc:postgresql://localhost:62258/test?loggerLevel=OFF)
+2026-09-14T10:58:06.341+05:00  WARN 24632 --- [nomad-games] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Pool is empty, failed to create/setup connection (c202aec7-8c0f-4c26-9cd8-c680334d145c)
+
+org.postgresql.util.PSQLException: Подключение по адресу localhost:62189 отклонено. Проверьте, что хост и порт указаны правильно и что postmaster принимает TCP/IP-соединения.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:427) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:295) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.makeConnection(Driver.java:437) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.connect(Driver.java:305) ~[postgresql-42.7.13.jar:42.7.13]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:694) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:270) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:131) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:221) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:367) ~[postgresql-42.7.13.jar:42.7.13]
+	... 14 common frames omitted
+
+2026-09-14T10:58:10.922+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-09-14T10:58:10.922+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HikariPool-2 - Connection is not available, request timed out after 30003ms (total=0, active=0, idle=0, waiting=0)
+2026-09-14T10:58:10.922+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-09-14T10:58:10.922+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HikariPool-2 - Connection is not available, request timed out after 30003ms (total=0, active=0, idle=0, waiting=0)
+2026-09-14T10:58:10.922+05:00 ERROR 24632 --- [nomad-games] [   scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+org.springframework.transaction.CannotCreateTransactionException: Could not open JPA EntityManager for transaction
+	at org.springframework.orm.jpa.JpaTransactionManager.doBegin(JpaTransactionManager.java:457) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.startTransaction(AbstractPlatformTransactionManager.java:532) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:405) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.createTransactionIfNecessary(TransactionAspectSupport.java:628) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:365) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.9.jar:7.0.9]
+	at com.nomadgames.session.MatchService$$SpringCGLIB$$0.expireReconnectGraces(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:128) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$1(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at io.micrometer.observation.Observation.observe(Observation.java:569) ~[micrometer-observation-1.17.1.jar:1.17.1]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:88) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection [HikariPool-2 - Connection is not available, request timed out after 30003ms (total=0, active=0, idle=0, waiting=0)] [n/a]
+	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:49) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:101) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.acquire(LogicalConnectionManagedImpl.java:190) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.acquireConnectionIfNeeded(LogicalConnectionManagedImpl.java:87) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.getPhysicalConnection(LogicalConnectionManagedImpl.java:126) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.getConnectionForTransactionManagement(LogicalConnectionManagedImpl.java:281) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.begin(LogicalConnectionManagedImpl.java:290) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.begin(JdbcResourceLocalTransactionCoordinatorImpl.java:226) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.transaction.internal.TransactionImpl.begin(TransactionImpl.java:75) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.beginTransaction(HibernateJpaDialect.java:147) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.JpaTransactionManager.doBegin(JpaTransactionManager.java:411) ~[spring-orm-7.0.9.jar:7.0.9]
+	... 22 common frames omitted
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-2 - Connection is not available, request timed out after 30003ms (total=0, active=0, idle=0, waiting=0)
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:714) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:184) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:142) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:127) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DataSourceConnectionProvider.getConnection(DataSourceConnectionProvider.java:149) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.internal.NonContextualJdbcConnectionAccess.obtainConnection(NonContextualJdbcConnectionAccess.java:62) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.acquire(LogicalConnectionManagedImpl.java:187) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	... 30 common frames omitted
+Caused by: org.postgresql.util.PSQLException: Подключение по адресу localhost:62210 отклонено. Проверьте, что хост и порт указаны правильно и что postmaster принимает TCP/IP-соединения.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:427) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:295) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.makeConnection(Driver.java:437) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.connect(Driver.java:305) ~[postgresql-42.7.13.jar:42.7.13]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	... 3 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:694) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:270) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:131) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:221) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:367) ~[postgresql-42.7.13.jar:42.7.13]
+	... 14 common frames omitted
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-14T10:58:10.957+05:00  INFO 24632 --- [nomad-games] [           main] com.nomadgames.session.StickPullIT       : Starting StickPullIT using Java 21.0.11 with PID 24632 (started by sergei.elistratov in C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend)
+2026-09-14T10:58:10.957+05:00  INFO 24632 --- [nomad-games] [           main] com.nomadgames.session.StickPullIT       : No active profile set, falling back to 1 default profile: "default"
+2026-09-14T10:58:11.262+05:00  INFO 24632 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-14T10:58:11.309+05:00  INFO 24632 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 44 ms. Found 4 JPA repository interfaces.
+2026-09-14T10:58:11.619+05:00  INFO 24632 --- [nomad-games] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-09-14T10:58:11.643+05:00  INFO 24632 --- [nomad-games] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-14T10:58:11.643+05:00  INFO 24632 --- [nomad-games] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-09-14T10:58:11.743+05:00  INFO 24632 --- [nomad-games] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 783 ms
+2026-09-14T10:58:11.987+05:00  INFO 24632 --- [nomad-games] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:62258/test?loggerLevel=OFF (PostgreSQL 18.6)
+2026-09-14T10:58:12.021+05:00  INFO 24632 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-14T10:58:12.022+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.012s)
+2026-09-14T10:58:12.037+05:00  INFO 24632 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-14T10:58:12.075+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-09-14T10:58:12.081+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - identity"
+2026-09-14T10:58:12.110+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - matches"
+2026-09-14T10:58:12.133+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - rooms"
+2026-09-14T10:58:12.158+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - match seats"
+2026-09-14T10:58:12.178+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - reconnect tokens"
+2026-09-14T10:58:12.203+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - room version"
+2026-09-14T10:58:12.227+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "7 - economy ledger shop"
+2026-09-14T10:58:12.271+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "8 - soft purchase sku unique"
+2026-09-14T10:58:12.294+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "9 - profile casual"
+2026-09-14T10:58:12.323+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 9 migrations to schema "public", now at version v9 (execution time 00:00.105s)
+2026-09-14T10:58:12.358+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-14T10:58:12.395+05:00  INFO 24632 --- [nomad-games] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-14T10:58:12.397+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-09-14T10:58:12.416+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@14696841
+2026-09-14T10:58:12.416+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-09-14T10:58:12.427+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:62258/test?loggerLevel=OFF]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.6
+	Default catalog/schema: test/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-14T10:58:12.520+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-14T10:58:12.545+05:00  INFO 24632 --- [nomad-games] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-14T10:58:12.866+05:00  INFO 24632 --- [nomad-games] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring TestDispatcherServlet ''
+2026-09-14T10:58:12.867+05:00  INFO 24632 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-14T10:58:12.872+05:00  INFO 24632 --- [nomad-games] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-09-14T10:58:12.878+05:00  INFO 24632 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 11 ms
+2026-09-14T10:58:12.932+05:00  INFO 24632 --- [nomad-games] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 61664 (http) with context path '/'
+2026-09-14T10:58:12.938+05:00  INFO 24632 --- [nomad-games] [           main] com.nomadgames.session.StickPullIT       : Started StickPullIT in 2.012 seconds (process running for 87.867)
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"fdac9904-df9f-41d1-bd33-567a67212444","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJmZGFjOTkwNC1kZjlmLTQxZDEtYmQzMy01NjdhNjcyMTI0NDQiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzkyLCJpYXQiOjE3ODkzNjU0OTIsImp0aSI6IjIzODM4YjBjLWMxYzYtNGZmMS1hYzAzLTc5NWQ3YzIyMzMyNyJ9.WNbiqCrrQ6j4bJcD1jOKX8OhNZWv0rSkVoze6KuSvyk","refreshToken":"ROtaN-njIeZ3QJO_sf6FlV78Ms9u3cknBwGlLjfKbnQ","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/matches
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJmZGFjOTkwNC1kZjlmLTQxZDEtYmQzMy01NjdhNjcyMTI0NDQiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzkyLCJpYXQiOjE3ODkzNjU0OTIsImp0aSI6IjIzODM4YjBjLWMxYzYtNGZmMS1hYzAzLTc5NWQ3YzIyMzMyNyJ9.WNbiqCrrQ6j4bJcD1jOKX8OhNZWv0rSkVoze6KuSvyk", Content-Length:"54"]
+             Body = {"game":"STICK_PULL","mode":"BOT","difficulty":"EASY"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.session.MatchController
+           Method = com.nomadgames.session.MatchController#create(Jwt, CreateMatchRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = java.lang.IllegalArgumentException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"797aeaff-33e3-41a0-8568-fa583939de92","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI3OTdhZWFmZi0zM2UzLTQxYTAtODU2OC1mYTU4MzkzOWRlOTIiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzkzLCJpYXQiOjE3ODkzNjU0OTMsImp0aSI6IjgyNWM5NGUzLTU5ODctNDk2OS1hOGVjLWY1MDIzYTUyMTQ5MiJ9.qPCqMFkMtHcpIMWT3i3uyPE8E8QyQlM1ttGiUcIzXkI","refreshToken":"beGSibzZ4gzWfrdUKHpeziWMWJoM-skiSWw3_YRC6ho","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/matches
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI3OTdhZWFmZi0zM2UzLTQxYTAtODU2OC1mYTU4MzkzOWRlOTIiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzkzLCJpYXQiOjE3ODkzNjU0OTMsImp0aSI6IjgyNWM5NGUzLTU5ODctNDk2OS1hOGVjLWY1MDIzYTUyMTQ5MiJ9.qPCqMFkMtHcpIMWT3i3uyPE8E8QyQlM1ttGiUcIzXkI", Content-Length:"54"]
+             Body = {"game":"STICK_PULL","mode":"BOT","difficulty":"EASY"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.session.MatchController
+           Method = com.nomadgames.session.MatchController#create(Jwt, CreateMatchRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = java.lang.IllegalArgumentException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"453901b2-a5f8-4c39-90ec-9b4300be854d","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI0NTM5MDFiMi1hNWY4LTRjMzktOTBlYy05YjQzMDBiZTg1NGQiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzkzLCJpYXQiOjE3ODkzNjU0OTMsImp0aSI6ImRkMmQ4OWViLTEyNTctNGVmZi1iOWI0LWM2ZjI5MDNkMzU3YyJ9.MPTSg01uBP4Dp-VB7AO1NIVnFr5GmOOo6q7QyD_Lco8","refreshToken":"r_G5l_kQpt24ATIWEPgo6nspyhAUrq_pdHXs6AII950","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/matches
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI0NTM5MDFiMi1hNWY4LTRjMzktOTBlYy05YjQzMDBiZTg1NGQiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2MzkzLCJpYXQiOjE3ODkzNjU0OTMsImp0aSI6ImRkMmQ4OWViLTEyNTctNGVmZi1iOWI0LWM2ZjI5MDNkMzU3YyJ9.MPTSg01uBP4Dp-VB7AO1NIVnFr5GmOOo6q7QyD_Lco8", Content-Length:"54"]
+             Body = {"game":"STICK_PULL","mode":"BOT","difficulty":"EASY"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.session.MatchController
+           Method = com.nomadgames.session.MatchController#create(Jwt, CreateMatchRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = java.lang.IllegalArgumentException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 33.50 s <<< FAILURE! -- in com.nomadgames.session.StickPullIT
+[ERROR] com.nomadgames.session.StickPullIT.botMatchSettles -- Time elapsed: 0.067 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<201> but was:<400>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:62)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:129)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$0(StatusResultMatchers.java:600)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at com.nomadgames.session.StickPullIT.createStickPullBot(StickPullIT.java:117)
+	at com.nomadgames.session.StickPullIT.botMatchSettles(StickPullIT.java:94)
+
+[ERROR] com.nomadgames.session.StickPullIT.preGoTapIgnored -- Time elapsed: 0.044 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<201> but was:<400>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:62)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:129)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$0(StatusResultMatchers.java:600)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at com.nomadgames.session.StickPullIT.createStickPullBot(StickPullIT.java:117)
+	at com.nomadgames.session.StickPullIT.preGoTapIgnored(StickPullIT.java:78)
+
+[ERROR] com.nomadgames.session.StickPullIT.countdownThenTapMovesMarker -- Time elapsed: 0.045 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<201> but was:<400>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:62)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:129)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$0(StatusResultMatchers.java:600)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at com.nomadgames.session.StickPullIT.createStickPullBot(StickPullIT.java:117)
+	at com.nomadgames.session.StickPullIT.countdownThenTapMovesMarker(StickPullIT.java:60)
+
+[INFO] Running com.nomadgames.session.StickPullReconnectIT
+2026-09-14T10:58:13.491+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Creating container for image: postgres:18
+2026-09-14T10:58:13.610+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Container postgres:18 is starting: 28d3595cc487d00fac0d0d04fb1bd47ce1b3a8d5097709a15d65309048358675
+2026-09-14T10:58:13.950+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@14696841 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:13.953+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@17c2d6a9 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:13.953+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@6556a89c (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:13.955+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@2a85544b (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:13.956+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@2dd13fc7 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:13.957+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@2ca7d34a (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:13.958+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@7c658c0a (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:13.958+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@7cc2b8c1 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:13.959+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@58499f99 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:13.961+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-3 - Failed to validate connection org.postgresql.jdbc.PgConnection@4a663a59 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:15.177+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Container postgres:18 started in PT1.6858541S
+2026-09-14T10:58:15.178+05:00  INFO 24632 --- [nomad-games] [           main] tc.postgres:18                           : Container is started (JDBC URL: jdbc:postgresql://localhost:61668/test?loggerLevel=OFF)
+2026-09-14T10:58:40.275+05:00  WARN 24632 --- [nomad-games] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-2 - Pool is empty, failed to create/setup connection (c07ba7d4-4190-47d0-a376-d02220654cd7)
+
+org.postgresql.util.PSQLException: Подключение по адресу localhost:62210 отклонено. Проверьте, что хост и порт указаны правильно и что postmaster принимает TCP/IP-соединения.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:427) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:295) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.makeConnection(Driver.java:437) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.connect(Driver.java:305) ~[postgresql-42.7.13.jar:42.7.13]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:694) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:270) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:131) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:221) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:367) ~[postgresql-42.7.13.jar:42.7.13]
+	... 14 common frames omitted
+
+2026-09-14T10:58:43.958+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-09-14T10:58:43.959+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HikariPool-3 - Connection is not available, request timed out after 30009ms (total=0, active=0, idle=0, waiting=0)
+2026-09-14T10:58:43.959+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HHH000247: ErrorCode: 0, SQLState: 08001
+2026-09-14T10:58:43.959+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] org.hibernate.orm.jdbc.error             : HikariPool-3 - Connection is not available, request timed out after 30009ms (total=0, active=0, idle=0, waiting=0)
+2026-09-14T10:58:43.959+05:00 ERROR 24632 --- [nomad-games] [   scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
+
+org.springframework.transaction.CannotCreateTransactionException: Could not open JPA EntityManager for transaction
+	at org.springframework.orm.jpa.JpaTransactionManager.doBegin(JpaTransactionManager.java:457) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.startTransaction(AbstractPlatformTransactionManager.java:532) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:405) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.createTransactionIfNecessary(TransactionAspectSupport.java:628) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:365) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.9.jar:7.0.9]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:719) ~[spring-aop-7.0.9.jar:7.0.9]
+	at com.nomadgames.session.MatchService$$SpringCGLIB$$0.expireReconnectGraces(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:128) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$1(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at io.micrometer.observation.Observation.observe(Observation.java:569) ~[micrometer-observation-1.17.1.jar:1.17.1]
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:122) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.config.Task$OutcomeTrackingRunnable.run(Task.java:88) ~[spring-context-7.0.9.jar:7.0.9]
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-7.0.9.jar:7.0.9]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection [HikariPool-3 - Connection is not available, request timed out after 30009ms (total=0, active=0, idle=0, waiting=0)] [n/a]
+	at org.hibernate.exception.internal.SQLExceptionTypeDelegate.convert(SQLExceptionTypeDelegate.java:49) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:101) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.acquire(LogicalConnectionManagedImpl.java:190) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.acquireConnectionIfNeeded(LogicalConnectionManagedImpl.java:87) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.getPhysicalConnection(LogicalConnectionManagedImpl.java:126) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.getConnectionForTransactionManagement(LogicalConnectionManagedImpl.java:281) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.begin(LogicalConnectionManagedImpl.java:290) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.begin(JdbcResourceLocalTransactionCoordinatorImpl.java:226) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.engine.transaction.internal.TransactionImpl.begin(TransactionImpl.java:75) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.beginTransaction(HibernateJpaDialect.java:147) ~[spring-orm-7.0.9.jar:7.0.9]
+	at org.springframework.orm.jpa.JpaTransactionManager.doBegin(JpaTransactionManager.java:411) ~[spring-orm-7.0.9.jar:7.0.9]
+	... 22 common frames omitted
+Caused by: java.sql.SQLTransientConnectionException: HikariPool-3 - Connection is not available, request timed out after 30009ms (total=0, active=0, idle=0, waiting=0)
+	at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:714) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:184) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:142) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:127) ~[HikariCP-7.0.2.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DataSourceConnectionProvider.getConnection(DataSourceConnectionProvider.java:149) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.internal.NonContextualJdbcConnectionAccess.obtainConnection(NonContextualJdbcConnectionAccess.java:62) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	at org.hibernate.resource.jdbc.internal.LogicalConnectionManagedImpl.acquire(LogicalConnectionManagedImpl.java:187) ~[hibernate-core-7.4.5.Final.jar:7.4.5.Final]
+	... 30 common frames omitted
+Caused by: org.postgresql.util.PSQLException: Подключение по адресу localhost:62258 отклонено. Проверьте, что хост и порт указаны правильно и что postmaster принимает TCP/IP-соединения.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:427) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:52) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:295) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.makeConnection(Driver.java:437) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.Driver.connect(Driver.java:305) ~[postgresql-42.7.13.jar:42.7.13]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:752) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:731) ~[HikariCP-7.0.2.jar:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	... 3 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:694) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:751) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:270) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:131) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:221) ~[postgresql-42.7.13.jar:42.7.13]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:367) ~[postgresql-42.7.13.jar:42.7.13]
+	... 14 common frames omitted
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-14T10:58:43.995+05:00  INFO 24632 --- [nomad-games] [           main] c.n.session.StickPullReconnectIT         : Starting StickPullReconnectIT using Java 21.0.11 with PID 24632 (started by sergei.elistratov in C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend)
+2026-09-14T10:58:43.995+05:00  INFO 24632 --- [nomad-games] [           main] c.n.session.StickPullReconnectIT         : No active profile set, falling back to 1 default profile: "default"
+2026-09-14T10:58:44.462+05:00  INFO 24632 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-14T10:58:44.515+05:00  INFO 24632 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 4 JPA repository interfaces.
+2026-09-14T10:58:44.725+05:00  INFO 24632 --- [nomad-games] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-09-14T10:58:44.727+05:00  INFO 24632 --- [nomad-games] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-09-14T10:58:44.728+05:00  INFO 24632 --- [nomad-games] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-09-14T10:58:44.798+05:00  INFO 24632 --- [nomad-games] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 797 ms
+2026-09-14T10:58:45.000+05:00  INFO 24632 --- [nomad-games] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:61668/test?loggerLevel=OFF (PostgreSQL 18.6)
+2026-09-14T10:58:45.037+05:00  INFO 24632 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-14T10:58:45.039+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.013s)
+2026-09-14T10:58:45.055+05:00  INFO 24632 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-14T10:58:45.106+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-09-14T10:58:45.113+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - identity"
+2026-09-14T10:58:45.150+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - matches"
+2026-09-14T10:58:45.178+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - rooms"
+2026-09-14T10:58:45.204+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - match seats"
+2026-09-14T10:58:45.232+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - reconnect tokens"
+2026-09-14T10:58:45.256+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - room version"
+2026-09-14T10:58:45.286+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "7 - economy ledger shop"
+2026-09-14T10:58:45.339+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "8 - soft purchase sku unique"
+2026-09-14T10:58:45.364+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "9 - profile casual"
+2026-09-14T10:58:45.394+05:00  INFO 24632 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 9 migrations to schema "public", now at version v9 (execution time 00:00.120s)
+2026-09-14T10:58:45.424+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-14T10:58:45.461+05:00  INFO 24632 --- [nomad-games] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-14T10:58:45.463+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2026-09-14T10:58:45.480+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection org.postgresql.jdbc.PgConnection@b37956f
+2026-09-14T10:58:45.481+05:00  INFO 24632 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2026-09-14T10:58:45.493+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:61668/test?loggerLevel=OFF]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.6
+	Default catalog/schema: test/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-14T10:58:45.599+05:00  INFO 24632 --- [nomad-games] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-14T10:58:45.621+05:00  INFO 24632 --- [nomad-games] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-14T10:58:45.912+05:00  INFO 24632 --- [nomad-games] [           main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring TestDispatcherServlet ''
+2026-09-14T10:58:45.913+05:00  INFO 24632 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-14T10:58:45.921+05:00  INFO 24632 --- [nomad-games] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-09-14T10:58:45.928+05:00  INFO 24632 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 15 ms
+2026-09-14T10:58:45.962+05:00  INFO 24632 --- [nomad-games] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 61974 (http) with context path '/'
+2026-09-14T10:58:45.973+05:00  INFO 24632 --- [nomad-games] [           main] c.n.session.StickPullReconnectIT         : Started StickPullReconnectIT in 2.01 seconds (process running for 120.902)
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"3a11826f-14f3-413c-9055-27231c2417dc","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiIzYTExODI2Zi0xNGYzLTQxM2MtOTA1NS0yNzIzMWMyNDE3ZGMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjU3MzY2Y2JlLTc1NWEtNGNmYy04NDA4LTk3ZWQzMGVjNDY4YSJ9.ycIg5zBjgcdUCUXR8FPP18M10oKhUXY3h3sN1zjXYSs","refreshToken":"boVKy1OQhAqI39x4uCJ-kyOv6n4cHVYNo_voq8AZtkc","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/rooms
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiIzYTExODI2Zi0xNGYzLTQxM2MtOTA1NS0yNzIzMWMyNDE3ZGMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjU3MzY2Y2JlLTc1NWEtNGNmYy04NDA4LTk3ZWQzMGVjNDY4YSJ9.ycIg5zBjgcdUCUXR8FPP18M10oKhUXY3h3sN1zjXYSs", Content-Length:"21"]
+             Body = {"game":"STICK_PULL"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.matchmaking.RoomController
+           Method = com.nomadgames.matchmaking.RoomController#create(Jwt)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"roomId":"10a55417-7fab-4ecc-ac39-c6253d6c526b","code":"QY9BY","hostLabel":"Guest-17dc","idleExpiresAt":"2026-09-14T06:08:46.039569700Z"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"fdb91751-c1ed-4d43-b0fe-1727c73974a5","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJmZGI5MTc1MS1jMWVkLTRkNDMtYjBmZS0xNzI3YzczOTc0YTUiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6Ijg2ZjJkMzMyLTYyZTQtNDI0NC05ZWFlLTE2N2E2Y2YwYzM1OCJ9.vwi689MQoQafHTlfR8SyKRG3JiFO2BPlCteUdofOPRw","refreshToken":"GG7fvFUu4IJv4YiqEEkQIsxMfhhrrKoZe7BT8Muefa0","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/rooms
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJmZGI5MTc1MS1jMWVkLTRkNDMtYjBmZS0xNzI3YzczOTc0YTUiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6Ijg2ZjJkMzMyLTYyZTQtNDI0NC05ZWFlLTE2N2E2Y2YwYzM1OCJ9.vwi689MQoQafHTlfR8SyKRG3JiFO2BPlCteUdofOPRw", Content-Length:"21"]
+             Body = {"game":"STICK_PULL"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.matchmaking.RoomController
+           Method = com.nomadgames.matchmaking.RoomController#create(Jwt)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"roomId":"55a236ab-54d4-4873-a102-c26bcad2cf75","code":"GJG4V","hostLabel":"Guest-74a5","idleExpiresAt":"2026-09-14T06:08:46.105072200Z"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2026-09-14T10:58:46.717+05:00  INFO 24632 --- [nomad-games] [o-auto-2-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-09-14T10:58:46.717+05:00  INFO 24632 --- [nomad-games] [o-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-09-14T10:58:46.719+05:00  INFO 24632 --- [nomad-games] [o-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"f6894dc5-42bf-4b04-860a-fc04f1524a08","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJmNjg5NGRjNS00MmJmLTRiMDQtODYwYS1mYzA0ZjE1MjRhMDgiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjkyZWMxMzRiLWQ5YmQtNDFmOS05OGQ1LWFiZjhiNzQ4MjQxZiJ9.tu2_0KJMxE2F8UI2VmcZ11Hs7fJS_D7mSTrtTumu-L8","refreshToken":"WbSDuF3qDgIRDCASFmrfXVZyRKBD_PQgZXhBV6Uyx2s","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/rooms
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJmNjg5NGRjNS00MmJmLTRiMDQtODYwYS1mYzA0ZjE1MjRhMDgiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjkyZWMxMzRiLWQ5YmQtNDFmOS05OGQ1LWFiZjhiNzQ4MjQxZiJ9.tu2_0KJMxE2F8UI2VmcZ11Hs7fJS_D7mSTrtTumu-L8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.matchmaking.RoomController
+           Method = com.nomadgames.matchmaking.RoomController#create(Jwt)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"roomId":"01e08257-c3f7-4a44-bac3-c3d796020b89","code":"X3DX9","hostLabel":"Guest-4a08","idleExpiresAt":"2026-09-14T06:08:46.177231Z"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"d3113dac-1489-432e-8f47-b509d830c593","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJkMzExM2RhYy0xNDg5LTQzMmUtOGY0Ny1iNTA5ZDgzMGM1OTMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjAxYjM4ZTc0LWFlMmQtNGQ0MS1hZjhiLWYwZmRjOGFlNWY1ZCJ9.dUaBkukvJ5VEfJfvUF0XT1y27-Juq91TCNDtvpjFOc8","refreshToken":"oVehDLcNFdXpHIRAKAEOKZPeYBqK7NQetW44yHxd3d8","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/rooms/join
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJkMzExM2RhYy0xNDg5LTQzMmUtOGY0Ny1iNTA5ZDgzMGM1OTMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjAxYjM4ZTc0LWFlMmQtNGQ0MS1hZjhiLWYwZmRjOGFlNWY1ZCJ9.dUaBkukvJ5VEfJfvUF0XT1y27-Juq91TCNDtvpjFOc8", Content-Length:"16"]
+             Body = {"code":"X3DX9"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.matchmaking.RoomController
+           Method = com.nomadgames.matchmaking.RoomController#join(Jwt, JoinRoomRequest, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"roomId":"01e08257-c3f7-4a44-bac3-c3d796020b89","hostLabel":"Guest-4a08","joinerLabel":"Guest-c593","hostReady":false,"joinerReady":false,"status":"LOBBY","idleExpiresAt":"2026-09-14T06:08:46.177231Z","matchId":null,"bothReady":false}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/rooms/01e08257-c3f7-4a44-bac3-c3d796020b89/ready
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJmNjg5NGRjNS00MmJmLTRiMDQtODYwYS1mYzA0ZjE1MjRhMDgiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjkyZWMxMzRiLWQ5YmQtNDFmOS05OGQ1LWFiZjhiNzQ4MjQxZiJ9.tu2_0KJMxE2F8UI2VmcZ11Hs7fJS_D7mSTrtTumu-L8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.matchmaking.RoomController
+           Method = com.nomadgames.matchmaking.RoomController#ready(Jwt, UUID)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"roomId":"01e08257-c3f7-4a44-bac3-c3d796020b89","code":"X3DX9","hostLabel":"Guest-4a08","joinerLabel":"Guest-c593","hostReady":true,"joinerReady":false,"status":"LOBBY","idleExpiresAt":"2026-09-14T06:08:46.177231Z","matchId":null,"bothReady":false}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/rooms/01e08257-c3f7-4a44-bac3-c3d796020b89/ready
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJkMzExM2RhYy0xNDg5LTQzMmUtOGY0Ny1iNTA5ZDgzMGM1OTMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjAxYjM4ZTc0LWFlMmQtNGQ0MS1hZjhiLWYwZmRjOGFlNWY1ZCJ9.dUaBkukvJ5VEfJfvUF0XT1y27-Juq91TCNDtvpjFOc8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.matchmaking.RoomController
+           Method = com.nomadgames.matchmaking.RoomController#ready(Jwt, UUID)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"roomId":"01e08257-c3f7-4a44-bac3-c3d796020b89","hostLabel":"Guest-4a08","joinerLabel":"Guest-c593","hostReady":true,"joinerReady":true,"status":"STARTED","idleExpiresAt":"2026-09-14T06:08:46.177231Z","matchId":"dbad54d4-3c32-4edd-8463-87b52693656a","bothReady":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/matches/dbad54d4-3c32-4edd-8463-87b52693656a/ws-ticket
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJmNjg5NGRjNS00MmJmLTRiMDQtODYwYS1mYzA0ZjE1MjRhMDgiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjkyZWMxMzRiLWQ5YmQtNDFmOS05OGQ1LWFiZjhiNzQ4MjQxZiJ9.tu2_0KJMxE2F8UI2VmcZ11Hs7fJS_D7mSTrtTumu-L8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.session.MatchController
+           Method = com.nomadgames.session.MatchController#wsTicket(Jwt, UUID)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"ticket":"ZvvqzdCnDglmO7Y0L4DgcPS6erWOab4adfDQ_Mp_Tu0","expiresAt":"2026-09-14T05:59:46.349811400Z","reconnectToken":"Fb0u2gpiP_6gf2j9pCrbF_E0z306SUKABsWkQHqRqxw"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/matches/dbad54d4-3c32-4edd-8463-87b52693656a/ws-ticket
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJkMzExM2RhYy0xNDg5LTQzMmUtOGY0Ny1iNTA5ZDgzMGM1OTMiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjAxYjM4ZTc0LWFlMmQtNGQ0MS1hZjhiLWYwZmRjOGFlNWY1ZCJ9.dUaBkukvJ5VEfJfvUF0XT1y27-Juq91TCNDtvpjFOc8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.session.MatchController
+           Method = com.nomadgames.session.MatchController#wsTicket(Jwt, UUID)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"ticket":"6U9WTQ4AXxP44LaxMrx4UFzf2SGKb_SZYE6pUvqo0Y8","expiresAt":"2026-09-14T05:59:46.368701100Z","reconnectToken":"AVnAaxLmwV73eLxi90ENYLG_uK4pmBDef_yy9QT68Cc"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /v1/matches/dbad54d4-3c32-4edd-8463-87b52693656a
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJmNjg5NGRjNS00MmJmLTRiMDQtODYwYS1mYzA0ZjE1MjRhMDgiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MzY2NDI2LCJpYXQiOjE3ODkzNjU1MjYsImp0aSI6IjkyZWMxMzRiLWQ5YmQtNDFmOS05OGQ1LWFiZjhiNzQ4MjQxZiJ9.tu2_0KJMxE2F8UI2VmcZ11Hs7fJS_D7mSTrtTumu-L8"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.session.MatchController
+           Method = com.nomadgames.session.MatchController#get(Jwt, UUID)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"status":"IN_PLAY","playerScore":0,"botScore":0,"turn":"JOINER","bonesLeft":["b1","b2","b3","b4","b5","b6"],"playerTurns":0,"botTurns":0,"turnDeadlineEpochMs":1789365546319,"matchDeadlineEpochMs":1789365766319,"hardCapEpochMs":1789365826319,"mode":"PRIVATE","difficulty":"NORMAL","hostId":"f6894dc5-42bf-4b04-860a-fc04f1524a08","joinerId":"d3113dac-1489-432e-8f47-b509d830c593","hostLabel":"Guest-4a08","joinerLabel":"Guest-c593","reconnectSecondsLeft":null,"coinsGranted":0,"gemsGranted":0,"localLoadout":{"saka_ornament":"saka_ornament_default","saka_material":"saka_material_default","trail":"trail_default","table_fx":"table_fx_default","victory":"victory_default","saka_color":"saka_color_default","stick_pull":"stick_pull_default"},"hostLoadout":{"saka_ornament":"saka_ornament_default","saka_material":"saka_material_default","trail":"trail_default","table_fx":"table_fx_default","victory":"victory_default","saka_color":"saka_color_default","stick_pull":"stick_pull_default"},"joinerLoadout":{"saka_ornament":"saka_ornament_default","saka_material":"saka_material_default","trail":"trail_default","table_fx":"table_fx_default","victory":"victory_default","saka_color":"saka_color_default","stick_pull":"stick_pull_default"}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 33.96 s <<< FAILURE! -- in com.nomadgames.session.StickPullReconnectIT
+[ERROR] com.nomadgames.session.StickPullReconnectIT.graceExpiryForfeitsNoBotFill -- Time elapsed: 0.080 s <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.game"
+	at org.springframework.test.util.JsonPathExpectationsHelper.evaluateJsonPath(JsonPathExpectationsHelper.java:350)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:148)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$2(JsonPathResultMatchers.java:111)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at com.nomadgames.session.StickPullReconnectIT.bothReadyStickPull(StickPullReconnectIT.java:135)
+	at com.nomadgames.session.StickPullReconnectIT.graceExpiryForfeitsNoBotFill(StickPullReconnectIT.java:85)
+Caused by: com.jayway.jsonpath.PathNotFoundException: No results for path: $['game']
+
+[ERROR] com.nomadgames.session.StickPullReconnectIT.stickPullGraceIsEightSeconds -- Time elapsed: 0.063 s <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.game"
+	at org.springframework.test.util.JsonPathExpectationsHelper.evaluateJsonPath(JsonPathExpectationsHelper.java:350)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:148)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$2(JsonPathResultMatchers.java:111)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at com.nomadgames.session.StickPullReconnectIT.bothReadyStickPull(StickPullReconnectIT.java:135)
+	at com.nomadgames.session.StickPullReconnectIT.stickPullGraceIsEightSeconds(StickPullReconnectIT.java:61)
+Caused by: com.jayway.jsonpath.PathNotFoundException: No results for path: $['game']
+
+[ERROR] com.nomadgames.session.StickPullReconnectIT.alchikiGraceStillThirty -- Time elapsed: 0.845 s <<< FAILURE!
+java.lang.AssertionError: No value at JSON path "$.reconnectSecondsLeft"
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:40)
+	at org.springframework.test.util.AssertionErrors.assertTrue(AssertionErrors.java:74)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertExistsAndReturn(JsonPathExpectationsHelper.java:388)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValueIsNumber(JsonPathExpectationsHelper.java:204)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$isNumber$0(JsonPathResultMatchers.java:218)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at com.nomadgames.session.StickPullReconnectIT.alchikiGraceStillThirty(StickPullReconnectIT.java:121)
+
+2026-09-14T10:58:47.492+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-09-14T10:58:47.497+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-09-14T10:58:47.987+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@b37956f (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:47.989+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@21823f93 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:47.990+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@73e9031e (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:47.991+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@6b866689 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:47.992+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@1793bd4f (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:47.993+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@27dd6689 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:47.993+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@1c97609f (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:47.994+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@447defaa (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:47.996+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@2ab85d9 (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:47.997+05:00  WARN 24632 --- [nomad-games] [   scheduling-1] com.zaxxer.hikari.pool.PoolBase          : HikariPool-4 - Failed to validate connection org.postgresql.jdbc.PgConnection@251f9e8b (Соединение закрыто.). Possibly consider using a shorter maxLifetime value.
+2026-09-14T10:58:51.460+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-09-14T10:58:51.464+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-09-14T10:58:51.464+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2026-09-14T10:58:55.288+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2026-09-14T10:58:55.291+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-09-14T10:58:55.313+05:00  INFO 24632 --- [nomad-games] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-09-14T10:58:55.317+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-09-14T10:58:55.318+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-09-14T10:58:59.295+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2026-09-14T10:58:59.312+05:00  INFO 24632 --- [nomad-games] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-09-14T10:58:59.331+05:00  INFO 24632 --- [nomad-games] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+[ERROR] Surefire is going to kill self fork JVM. The exit has elapsed 30 seconds after System.exit(0).
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   CatalogIT.stickPullTileIsPlayable:60 JSON path "$.tiles[?(@.id=='stick_pull')].status"
+Expected: a collection containing "PLAYABLE"
+     but: mismatches were: [was "COMING_SOON"]
+[ERROR]   StickPullBotTest.easyMeanTpsInBand:16 Wave 0 RED — StickPullBot easyMeanTpsInBand greens in 06-03
+[ERROR]   StickPullBotTest.easyPausesPresent:34 Wave 0 RED — StickPullBot easyPausesPresent greens in 06-03
+[ERROR]   StickPullBotTest.hardMeanTpsInBand:28 Wave 0 RED — StickPullBot hardMeanTpsInBand greens in 06-03
+[ERROR]   StickPullBotTest.normalMeanTpsInBand:22 Wave 0 RED — StickPullBot normalMeanTpsInBand greens in 06-03
+[ERROR]   StickPullSimTest.burstWindowReducesForce:28 Wave 0 RED — StickPullSim burstWindowReducesForce greens in 06-03
+[ERROR]   StickPullSimTest.exhaustWeakForceUntilRecovery:34 Wave 0 RED — StickPullSim exhaustWeakForceUntilRecovery greens in 06-03
+[ERROR]   StickPullSimTest.hardClampDropsExtras:22 Wave 0 RED — StickPullSim hardClampDropsExtras greens in 06-03
+[ERROR]   StickPullSimTest.recoveryAfterIdleGap:40 Wave 0 RED — StickPullSim recoveryAfterIdleGap greens in 06-03
+[ERROR]   StickPullSimTest.softBandFullForce:16 Wave 0 RED — StickPullSim softBandFullForce greens in 06-03
+[ERROR]   StickPullSimTest.suspectRegularityLogsOnly:52 Wave 0 RED — StickPullSim suspectRegularityLogsOnly greens in 06-03
+[ERROR]   StickPullSimTest.thresholdOrClockSettle:46 Wave 0 RED — StickPullSim thresholdOrClockSettle greens in 06-03
+[ERROR]   CasualQueueIT.stickPullEnqueueIsolatedFromAlchiki:238 JSON path "$.status" expected:<SEARCHING> but was:<MATCHED>
+[ERROR]   StickPullIT.botMatchSettles:94->createStickPullBot:117 Status expected:<201> but was:<400>
+[ERROR]   StickPullIT.countdownThenTapMovesMarker:60->createStickPullBot:117 Status expected:<201> but was:<400>
+[ERROR]   StickPullIT.preGoTapIgnored:78->createStickPullBot:117 Status expected:<201> but was:<400>
+[ERROR]   StickPullReconnectIT.alchikiGraceStillThirty:121 No value at JSON path "$.reconnectSecondsLeft"
+[ERROR]   StickPullReconnectIT.graceExpiryForfeitsNoBotFill:85->bothReadyStickPull:135 No value at JSON path "$.game"
+[ERROR]   StickPullReconnectIT.stickPullGraceIsEightSeconds:61->bothReadyStickPull:135 No value at JSON path "$.game"
+[INFO] 
+[ERROR] Tests run: 29, Failures: 19, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Alchiki proto harness 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] Alchiki proto harness .............................. SUCCESS [  1.924 s]
+[INFO] Nomad Games backend ................................ FAILURE [02:45 min]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:48 min
+[INFO] Finished at: 2026-09-14T10:59:18+05:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project nomad-games-backend: There are test failures.
+[ERROR] 
+[ERROR] See C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :nomad-games-backend

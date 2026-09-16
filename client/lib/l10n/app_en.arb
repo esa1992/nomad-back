@@ -1,0 +1,405 @@
+{
+  "@@locale": "en",
+  "playAlchiki": "Play Alchiki",
+  "playStickPull": "Play Stick Pull",
+  "createStickPullRoom": "Create Stick Pull room",
+  "holdThrow": "Hold Throw",
+  "skip": "Skip",
+  "next": "Next",
+  "backToMatch": "Back to match",
+  "pause": "Pause",
+  "resume": "Resume",
+  "howToPlay": "How to play",
+  "leaveMatch": "Leave match",
+  "stay": "Stay",
+  "backToCatalog": "Back to catalog",
+  "retry": "Retry",
+  "appTitle": "Nomad Games",
+  "langEn": "EN",
+  "langRu": "RU",
+  "alchikiTitle": "Alchiki",
+  "stickPullTitle": "Stick Pull",
+  "moreGamesTitle": "More games",
+  "comingSoon": "Coming Soon",
+  "diffEasy": "Easy",
+  "diffNormal": "Normal",
+  "diffHard": "Hard",
+  "howtoCircleTitle": "The circle",
+  "howtoCircleBody": "Knock the tan bones fully outside the green circle with your bright saka.",
+  "howtoAimTitle": "Aim",
+  "howtoAimBody": "Drag around the saka to rotate the arrow. The arrow length does not change.",
+  "howtoHoldTitle": "Hold to throw",
+  "howtoHoldBody": "Press Hold Throw to charge power, then release. A longer hold is a stronger throw.",
+  "howtoScoreTitle": "Out is one point",
+  "howtoScoreBody": "After the bones stop, each target fully outside the circle scores 1 and leaves the table. If the saka leaves, you score 0 and it comes back.",
+  "howtoWinTitle": "First to 5",
+  "howtoWinBody": "Reach 5 points to win. If time or turns run out, the higher score wins.",
+  "howtoStickSitTitle": "Sit opposite",
+  "howtoStickSitBody": "Sit across from your opponent. You share one stick.",
+  "howtoStickGoTitle": "Wait for GO",
+  "howtoStickGoBody": "Wait for 3-2-1-GO. Taps before GO do not pull.",
+  "howtoStickTapTitle": "Tap in rhythm",
+  "howtoStickTapBody": "Tap the stick zone in a steady rhythm to pull the marker your way.",
+  "howtoStickStaminaTitle": "Watch stamina",
+  "howtoStickStaminaBody": "Do not mash. When stamina empties, your pull weakens and the marker slips.",
+  "howtoStickWinTitle": "Pull it over",
+  "howtoStickWinBody": "Pull the marker past the line on your side — or lead when the clock hits 0.",
+  "countdown3": "3",
+  "countdown2": "2",
+  "countdown1": "1",
+  "countdownGo": "GO",
+  "stickClock": "{ss}s",
+  "@stickClock": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "falseStartToast": "Too early — wait for GO",
+  "stickTapHint": "Tap",
+  "errorStickPullStart": "Stick Pull did not start. Tap Retry.",
+  "you": "You",
+  "bot": "Bot",
+  "firstToFive": "First to 5",
+  "yourTurn": "Your turn",
+  "botsTurn": "Bot's turn",
+  "previewHud": "preview {n}",
+  "@previewHud": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "scoredHud": "scored {n}",
+  "@scoredHud": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "scoredDash": "scored —",
+  "sakaOutLine": "saka out · 0",
+  "plusOne": "+1",
+  "turnClock": "turn {ss}",
+  "@turnClock": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "matchClock": "match {m}:{ss}",
+  "@matchClock": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      },
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "turnTimeout": "Time is up. This throw scores 0.",
+  "emptyCatalogTitle": "No games yet",
+  "emptyCatalogBody": "Catalog did not list any tables. Tap Retry.",
+  "errorGuestMint": "Can't start as guest. Check the connection, then tap Retry.",
+  "errorCatalog": "Catalog did not load. Tap Retry.",
+  "errorMatchStart": "Match did not start. Tap Retry or return to the catalog.",
+  "errorThrow": "Throw was not scored. Tap Retry to send it again.",
+  "youWin": "You win",
+  "botWins": "Bot wins",
+  "draw": "Draw",
+  "leaveTitle": "Leave this match?",
+  "leaveBody": "You will return to the catalog. This bot match will end.",
+  "createRoom": "Create room",
+  "joinByCode": "Join by code",
+  "joinRoom": "Join room",
+  "ready": "Ready",
+  "shareCode": "Share code",
+  "copyCode": "Copy code",
+  "copied": "Copied",
+  "leaveLobby": "Leave lobby",
+  "playAgain": "Play again",
+  "rematchAgain": "Again?",
+  "rejoinMatch": "Rejoin match",
+  "shareSheetText": "Nomad Alchiki code: {code}",
+  "@shareSheetText": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "privateRoomTitle": "Private room",
+  "roomCodeLabel": "Room code",
+  "guestLabel": "Guest-{xxxx}",
+  "@guestLabel": {
+    "placeholders": {
+      "xxxx": {
+        "type": "String"
+      }
+    }
+  },
+  "waitingForFriend": "Waiting for a friend",
+  "waitingForName": "Waiting for {name}",
+  "@waitingForName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "youAreReady": "You are ready",
+  "theyAreReady": "{name} is ready",
+  "@theyAreReady": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "startingMatch": "Starting…",
+  "opponent": "Opponent",
+  "opponentsTurn": "Opponent's turn",
+  "opponentWins": "Opponent wins",
+  "reconnecting": "Reconnecting… {ss}",
+  "@reconnecting": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "opponentReconnecting": "Opponent reconnecting… {ss}",
+  "@opponentReconnecting": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "opponentDisconnected": "Opponent disconnected",
+  "staminaA11y": "Stamina {n} percent",
+  "@staminaA11y": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "rematchClock": "again {ss}",
+  "@rematchClock": {
+    "placeholders": {
+      "ss": {
+        "type": "String"
+      }
+    }
+  },
+  "emptyLobbyBody": "Waiting for a friend. Share or copy the code.",
+  "emptyJoinBody": "Enter the 4–6 character code.",
+  "errorNoSuchRoom": "No such room. Check the code and try again.",
+  "errorAlreadyStarted": "That room already started. Enter another code.",
+  "errorHostLeft": "Host left. That code no longer works.",
+  "hostLeftTitle": "Host left",
+  "hostLeftBody": "The room closed. Tap Back to catalog.",
+  "roomClosedTitle": "Room closed",
+  "roomClosedBody": "Nobody was ready in time. Tap Back to catalog.",
+  "errorRoomCreate": "Room did not create. Tap Retry.",
+  "errorReady": "Ready did not send. Tap Retry.",
+  "errorRematch": "Rematch did not start. Tap Retry or return to the catalog.",
+  "errorRejoin": "Could not rejoin. Tap Rejoin match or wait for the timer.",
+  "leaveBodyPrivate": "You will return to the catalog. Your opponent will win.",
+  "leaveRankedBody": "Leave this match? It counts as a rated loss.",
+  "pauseBudgetGone": "No reconnect left — forfeit if you drop",
+  "leaveLobbyTitle": "Leave this room?",
+  "leaveLobbyBodyHost": "The join code will stop working.",
+  "shop": "Shop",
+  "owned": "Owned",
+  "buyItem": "Buy item",
+  "equipItem": "Equip item",
+  "equipped": "Equipped",
+  "backToShop": "Back to shop",
+  "coins": "COINS",
+  "gems": "GEMS",
+  "walletA11y": "{coins} COINS, {gems} GEMS",
+  "@walletA11y": {
+    "placeholders": {
+      "coins": {
+        "type": "int"
+      },
+      "gems": {
+        "type": "int"
+      }
+    }
+  },
+  "rewardCoins": "+{n} COINS",
+  "@rewardCoins": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "rewardGems": "+{m} GEMS",
+  "@rewardGems": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "priceCoins": "{n} COINS",
+  "@priceCoins": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "priceGems": "{m} GEMS",
+  "@priceGems": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "priceFree": "Free",
+  "shopTitle": "Shop",
+  "catSakaColor": "Saka color",
+  "catSakaMaterial": "Saka material",
+  "catSakaOrnament": "Saka ornament",
+  "catTrail": "Trail",
+  "catTableFx": "Table effects",
+  "catVictory": "Victory animation",
+  "catStickPull": "Stick Pull skins",
+  "emptyShopTitle": "No items here",
+  "emptyShopBody": "The shop did not list items. Tap Retry.",
+  "emptyOwnedTitle": "Nothing owned yet",
+  "emptyOwnedBody": "Win matches for COINS, then buy an item in Shop.",
+  "errorWallet": "Balances did not load. Tap Retry.",
+  "errorShop": "Shop did not load. Tap Retry.",
+  "errorPurchase": "Purchase did not finish. Tap Retry.",
+  "errorInsufficientFunds": "Not enough COINS or GEMS. Play a match to earn more.",
+  "errorEquip": "Equip did not save. Tap Retry.",
+  "alreadyOwned": "You already own this",
+  "skuSakaColorDefault": "Default color",
+  "skuSakaColorGold": "Gold color",
+  "skuSakaColorNeon": "Neon color",
+  "skuSakaMaterialDefault": "Default material",
+  "skuSakaMaterialIce": "Ice material",
+  "skuSakaMaterialFire": "Fire material",
+  "skuSakaOrnamentDefault": "Default ornament",
+  "skuSakaOrnamentSpace": "Space ornament",
+  "skuSakaOrnamentKnot": "Knot ornament",
+  "skuTrailDefault": "Default trail",
+  "skuTrailGold": "Gold trail",
+  "skuTableFxDefault": "Default table FX",
+  "skuTableFxNeon": "Neon table FX",
+  "skuVictoryDefault": "Default victory",
+  "skuVictoryFire": "Fire victory",
+  "skuStickPullDefault": "Default Stick Pull",
+  "skuStickPullIce": "Ice Stick Pull",
+  "quickMatch": "Quick Match",
+  "cancelSearch": "Cancel search",
+  "searchingTitle": "Searching…",
+  "searchingBody": "Looking for an opponent",
+  "errorQuickMatch": "Quick Match did not start. Tap Retry.",
+  "fallbackTitle": "No opponent yet",
+  "fallbackBody": "Play a bot or invite a friend",
+  "playVsBot": "Play vs bot",
+  "inviteFriend": "Invite friend",
+  "errorQueueLeft": "Left the queue. Tap Retry or return to the catalog.",
+  "rematchWaitingTitle": "Waiting for rematch",
+  "cancelRematch": "Cancel rematch",
+  "openProfileA11y": "Open profile",
+  "profileTitle": "Profile",
+  "guestDisplay": "Guest",
+  "saveAvatar": "Save avatar",
+  "levelLabel": "Level {n}",
+  "@levelLabel": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "xpProgress": "{current} / {next} XP",
+  "@xpProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "next": {
+        "type": "int"
+      }
+    }
+  },
+  "statMatches": "Matches",
+  "statWins": "Wins",
+  "statLosses": "Losses",
+  "statWinRate": "Win rate",
+  "statWinRateValue": "{n}%",
+  "@statWinRateValue": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "statRating": "Rating",
+  "statBestRating": "Best",
+  "cosmeticsSection": "Selected cosmetics",
+  "cosmeticsDefault": "Default loadout",
+  "avatarSection": "Avatar",
+  "statsAlchiki": "Alchiki",
+  "statsStickPull": "Stick Pull",
+  "noMatchesYet": "No matches yet",
+  "errorProfileTitle": "Profile did not load",
+  "errorProfileBody": "Tap Retry to load your stats.",
+  "errorAvatarSave": "Avatar did not save. Tap Retry.",
+  "bindNow": "Bind now",
+  "notNow": "Not now",
+  "bindAccount": "Bind account",
+  "signIn": "Sign in",
+  "signInInstead": "Sign in instead",
+  "bindThisGuest": "Bind this guest",
+  "bindSheetTitle": "Keep your progress",
+  "bindSheetBody": "Bind a username and password to keep cosmetics, wallets, and stats on this account.",
+  "usernameLabel": "Username",
+  "passwordLabel": "Password",
+  "passwordRule": "At least 8 characters",
+  "usernameTakenTitle": "Username taken",
+  "usernameTakenBody": "Sign in to that account, or choose another username. Progress is never summed across accounts.",
+  "signInTitle": "Sign in",
+  "signInBody": "Use your bound username and password.",
+  "guestBindHelper": "Guest — bind to unlock Ranked and Boards",
+  "boundLabel": "Bound",
+  "errorBind": "Could not bind. Check username and password, then tap Retry.",
+  "logOut": "Log out",
+  "logOutTitle": "Log out?",
+  "logOutBody": "You will return to guest play on this device. Bound progress stays on the server.",
+  "replaceGuestTitle": "Replace guest progress?",
+  "replaceGuestBody": "Signing in keeps the bound account as-is. Guest progress on this device will be dropped.",
+  "signInAnyway": "Sign in anyway",
+  "errorSignIn": "Could not sign in. Check username and password, then tap Retry.",
+  "ranked": "Ranked",
+  "boards": "Boards",
+  "rankedLockTitle": "Ranked needs an account",
+  "rankedLockBody": "Bind a username to play Ranked. Casual, bots, and private rooms stay open.",
+  "boardsLockTitle": "Boards need an account",
+  "boardsLockBody": "Bind a username to view skill boards. Guests are not ranked.",
+  "rankedSearchingBody": "Looking for a Ranked opponent",
+  "findRankedMatch": "Find Ranked match",
+  "boardsTitle": "Boards",
+  "boardsSeason": "Season",
+  "boardsAllTime": "All-time",
+  "boardsRank": "Rank",
+  "boardsPlayer": "Player",
+  "boardsEmptyTitle": "No ranked players yet",
+  "boardsEmptyBody": "Play a Ranked match to appear here.",
+  "errorBoards": "Boards did not load. Tap Retry."
+}

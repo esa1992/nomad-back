@@ -1,0 +1,1 @@
+{"content":"PROD compose pattern: postgres service + app service running Spring Boot JAR; healthcheck via actuator/health; env for JDBC and JWT secret; separate from spring-boot-docker-compose DEV.","source":"web","provider":"websearch","confidence":"LOW","fetched_at":"2026-09-14T10:43:08.744Z","ttl":86400000,"kind":"web"}

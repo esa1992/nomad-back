@@ -1,0 +1,339 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Alchiki proto harness                                              [jar]
+[INFO] Nomad Games backend                                                [jar]
+[INFO] 
+[INFO] ----------------< com.nomadgames:alchiki-proto-harness >----------------
+[INFO] Building Alchiki proto harness 0.1.0-SNAPSHOT                      [1/2]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ alchiki-proto-harness ---
+[INFO] skip non existing resourceDirectory C:\Users\sergei.elistratov\Documents\проекты\nomad-game\harness\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ alchiki-proto-harness ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ alchiki-proto-harness ---
+[INFO] skip non existing resourceDirectory C:\Users\sergei.elistratov\Documents\проекты\nomad-game\harness\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ alchiki-proto-harness ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ alchiki-proto-harness ---
+[INFO] 
+[INFO] -----------------< com.nomadgames:nomad-games-backend >-----------------
+[INFO] Building Nomad Games backend 0.1.0-SNAPSHOT                        [2/2]
+[INFO]   from C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ nomad-games-backend ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 8 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ nomad-games-backend ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ nomad-games-backend ---
+[INFO] skip non existing resourceDirectory C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ nomad-games-backend ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 17 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ nomad-games-backend ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.nomadgames.profile.ProfileIT
+15:23:06.771 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+15:23:06.777 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+15:23:06.868 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+15:23:07.162 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+15:23:07.658 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+15:23:07.659 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+15:23:07.681 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.7.2
+  API Version: 1.55
+  Operating System: Docker Desktop
+  Total Memory: 13643 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+15:23:07.879 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+15:23:08.173 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 44f51640efb0f24595761ea0877b6484c6ac1806be0bb17a6b33b5551e3259b9
+15:23:08.650 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.7713256S
+15:23:08.664 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+15:23:08.664 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+15:23:08.665 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+15:23:08.916 [main] INFO tc.postgres:18 -- Creating container for image: postgres:18
+15:23:09.021 [main] INFO tc.postgres:18 -- Container postgres:18 is starting: aa314a146dffa0fde45728ac196fb2d1532587162a0d5e70d38e071a486312d8
+15:23:10.629 [main] INFO tc.postgres:18 -- Container postgres:18 started in PT1.7128918S
+15:23:10.630 [main] INFO tc.postgres:18 -- Container is started (JDBC URL: jdbc:postgresql://localhost:60767/test?loggerLevel=OFF)
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-09-11T15:23:11.205+05:00  INFO 6356 --- [nomad-games] [           main] com.nomadgames.profile.ProfileIT         : Starting ProfileIT using Java 21.0.11 with PID 6356 (started by sergei.elistratov in C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend)
+2026-09-11T15:23:11.212+05:00  INFO 6356 --- [nomad-games] [           main] com.nomadgames.profile.ProfileIT         : No active profile set, falling back to 1 default profile: "default"
+2026-09-11T15:23:12.849+05:00  INFO 6356 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-09-11T15:23:12.967+05:00  INFO 6356 --- [nomad-games] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 102 ms. Found 4 JPA repository interfaces.
+2026-09-11T15:23:14.749+05:00  INFO 6356 --- [nomad-games] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:60767/test?loggerLevel=OFF (PostgreSQL 18.6)
+2026-09-11T15:23:14.908+05:00  INFO 6356 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-11T15:23:14.921+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 8 migrations (execution time 00:00.056s)
+2026-09-11T15:23:14.954+05:00  INFO 6356 --- [nomad-games] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-11T15:23:15.057+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+2026-09-11T15:23:15.078+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - identity"
+2026-09-11T15:23:15.132+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "2 - matches"
+2026-09-11T15:23:15.161+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - rooms"
+2026-09-11T15:23:15.188+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "4 - match seats"
+2026-09-11T15:23:15.213+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - reconnect tokens"
+2026-09-11T15:23:15.236+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "6 - room version"
+2026-09-11T15:23:15.264+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "7 - economy ledger shop"
+2026-09-11T15:23:15.304+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "8 - soft purchase sku unique"
+2026-09-11T15:23:15.324+05:00  INFO 6356 --- [nomad-games] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 8 migrations to schema "public", now at version v8 (execution time 00:00.093s)
+2026-09-11T15:23:15.488+05:00  INFO 6356 --- [nomad-games] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-09-11T15:23:15.588+05:00  INFO 6356 --- [nomad-games] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-09-11T15:23:16.188+05:00  INFO 6356 --- [nomad-games] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-09-11T15:23:16.225+05:00  INFO 6356 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-09-11T15:23:16.257+05:00  INFO 6356 --- [nomad-games] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6e6ec9c
+2026-09-11T15:23:16.258+05:00  INFO 6356 --- [nomad-games] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-09-11T15:23:16.341+05:00  INFO 6356 --- [nomad-games] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:60767/test?loggerLevel=OFF]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.6
+	Default catalog/schema: test/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-09-11T15:23:17.563+05:00  INFO 6356 --- [nomad-games] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-09-11T15:23:17.624+05:00  INFO 6356 --- [nomad-games] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-09-11T15:23:17.817+05:00  INFO 6356 --- [nomad-games] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-09-11T15:23:20.499+05:00  INFO 6356 --- [nomad-games] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-11T15:23:20.500+05:00  INFO 6356 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-11T15:23:20.514+05:00  INFO 6356 --- [nomad-games] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-09-11T15:23:20.526+05:00  INFO 6356 --- [nomad-games] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 26 ms
+2026-09-11T15:23:20.746+05:00  INFO 6356 --- [nomad-games] [           main] com.nomadgames.profile.ProfileIT         : Started ProfileIT in 10.04 seconds (process running for 15.132)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\sergei.elistratov\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.11\byte-buddy-agent-1.18.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/identity/guest
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"2"]
+             Body = {}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.identity.GuestController
+           Method = com.nomadgames.identity.GuestController#createGuest(HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerId":"502f7d87-cab3-4415-b36b-f7fd279a6ba2","accessToken":"eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1MDJmN2Q4Ny1jYWIzLTQ0MTUtYjM2Yi1mN2ZkMjc5YTZiYTIiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MTIzMTAxLCJpYXQiOjE3ODkxMjIyMDEsImp0aSI6IjgwNzNhN2RiLWZmY2UtNDE1Mi1hOTk5LTgxNTFlYmFjNDE0NiJ9.1iXxsf95Q0-4qxZzLk7HGIa7hUMJv6Ukcueif1NtXeE","refreshToken":"DAOAVkBy22h-qu5uUdJ7qwsQ7TzF6F6RFsD53TmOQHE","guest":true}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/matches
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1MDJmN2Q4Ny1jYWIzLTQ0MTUtYjM2Yi1mN2ZkMjc5YTZiYTIiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MTIzMTAxLCJpYXQiOjE3ODkxMjIyMDEsImp0aSI6IjgwNzNhN2RiLWZmY2UtNDE1Mi1hOTk5LTgxNTFlYmFjNDE0NiJ9.1iXxsf95Q0-4qxZzLk7HGIa7hUMJv6Ukcueif1NtXeE", Content-Length:"51"]
+             Body = {"game":"ALCHIKI","mode":"BOT","difficulty":"EASY"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.session.MatchController
+           Method = com.nomadgames.session.MatchController#create(Jwt, CreateMatchRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"matchId":"81abc1fe-a4f1-4f21-9f5a-1feab9cd9ff6","status":"IN_PLAY","difficulty":"EASY","boneIds":["b1","b2","b3","b4","b5"],"playerScore":0,"botScore":0,"turn":"PLAYER","turnDeadlineEpochMs":1789122221819,"matchDeadlineEpochMs":1789122441819,"hardCapEpochMs":1789122501819,"localLoadout":{"stick_pull":"stick_pull_default","saka_color":"saka_color_default","victory":"victory_default","table_fx":"table_fx_default","trail":"trail_default","saka_material":"saka_material_default","saka_ornament":"saka_ornament_default"}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /v1/matches/81abc1fe-a4f1-4f21-9f5a-1feab9cd9ff6/throws
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1MDJmN2Q4Ny1jYWIzLTQ0MTUtYjM2Yi1mN2ZkMjc5YTZiYTIiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MTIzMTAxLCJpYXQiOjE3ODkxMjIyMDEsImp0aSI6IjgwNzNhN2RiLWZmY2UtNDE1Mi1hOTk5LTgxNTFlYmFjNDE0NiJ9.1iXxsf95Q0-4qxZzLk7HGIa7hUMJv6Ukcueif1NtXeE", Content-Length:"140"]
+             Body = {
+  "schemaVersion": 1,
+  "yUp": true,
+  "aimAngleRad": 1.3962634015954636,
+  "holdMs": 640,
+  "seed": 1,
+  "tableId": "alchiki-match-v1"
+}
+
+    Session Attrs = {}
+
+Handler:
+             Type = com.nomadgames.session.MatchController
+           Method = com.nomadgames.session.MatchController#applyThrow(Jwt, UUID, String)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"playerThrow":{"schemaVersion":1,"yUp":true,"settled":true,"settleReason":"timeout","simMs":1200,"pocketedCount":1,"sakaOut":false,"displayedScore":1,"pocketedIds":["b1"],"keyframes":[{"tMs":0,"bodies":[{"id":"saka","x":0.0,"y":-1.15,"angle":0.0},{"id":"b1","x":0.22,"y":0.0,"angle":0.0},{"id":"b2","x":0.11,"y":0.19053,"angle":0.0},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":50,"bodies":[{"id":"saka","x":0.04700120463578961,"y":-0.8834429226489147,"angle":0.0},{"id":"b1","x":0.22,"y":0.0,"angle":0.0},{"id":"b2","x":0.11,"y":0.19053,"angle":0.0},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":100,"bodies":[{"id":"saka","x":0.09135130830968081,"y":-0.631920985985015,"angle":0.0},{"id":"b1","x":0.22,"y":0.0,"angle":0.0},{"id":"b2","x":0.11,"y":0.19053,"angle":0.0},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":150,"bodies":[{"id":"saka","x":0.13319984625943274,"y":-0.39458613353300515,"angle":0.0},{"id":"b1","x":0.22,"y":0.0,"angle":0.0},{"id":"b2","x":0.11,"y":0.19053,"angle":0.0},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":200,"bodies":[{"id":"saka","x":0.17268791919403587,"y":-0.17063814340725222,"angle":0.0},{"id":"b1","x":0.22,"y":0.0,"angle":0.0},{"id":"b2","x":0.11,"y":0.19053,"angle":0.0},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":250,"bodies":[{"id":"saka","x":0.19301697710173443,"y":-0.01763372278748633,"angle":-0.09494585587799753},{"id":"b1","x":0.25694187332629065,"y":0.12722572927354847,"angle":-0.1664848518735999},{"id":"b2","x":0.11,"y":0.19053,"angle":0.0},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":300,"bodies":[{"id":"saka","x":0.20397613742916595,"y":0.09842012208241904,"angle":-0.2323799353518315},{"id":"b1","x":0.3097416518725082,"y":0.309065190193461,"angle":-0.40747159270604333},{"id":"b2","x":0.11,"y":0.19053,"angle":0.0},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":350,"bodies":[{"id":"saka","x":0.22147039747742944,"y":0.20070495579697523,"angle":-0.2843707062345897},{"id":"b1","x":0.3595632611403725,"y":0.48064800400206126,"angle":-0.6383608059867332},{"id":"b2","x":0.09439152327674288,"y":0.20628680495528048,"angle":0.17117098238728337},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":400,"bodies":[{"id":"saka","x":0.24083216298469318,"y":0.29406151332315333,"angle":-0.29510840708410746},{"id":"b1","x":0.40657468464221536,"y":0.6425526964463669,"angle":-0.8595755857925726},{"id":"b2","x":0.07343725342050719,"y":0.22804932957782195,"angle":0.4152490316431379},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":450,"bodies":[{"id":"saka","x":0.25910182892646466,"y":0.38215229816594976,"angle":-0.30539619010911767},{"id":"b1","x":0.4509344307874517,"y":0.7953251615530752,"angle":-1.0715212982371598},{"id":"b2","x":0.053664908270291585,"y":0.24858433991839485,"angle":0.6491000251754045},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":500,"bodies":[{"id":"saka","x":0.27634099513259935,"y":0.465274326011116,"angle":-0.31525290720833193},{"id":"b1","x":0.4927920673253599,"y":0.9394805022193689,"angle":-1.2745863242859203},{"id":"b2","x":0.03500782141298385,"y":0.2679610738682168,"angle":0.8731524843898066},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":550,"bodies":[{"id":"saka","x":0.29260778689715194,"y":0.5437078593871966,"angle":-0.32469662037158115},{"id":"b1","x":0.5322887256426386,"y":1.075504766985276,"angle":-1.4691427714467222},{"id":"b2","x":0.017403086751687016,"y":0.28624486395817644,"angle":1.087816975319561},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":600,"bodies":[{"id":"saka","x":0.3079570509594216,"y":0.617717352626653,"angle":-0.33374463477759786},{"id":"b1","x":0.5695575766160823,"y":1.2038565888434576,"angle":-1.655547155640112},{"id":"b2","x":7.913464052420917E-4,"y":0.30349735764051733,"angle":1.2934868609691292},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":650,"bodies":[{"id":"saka","x":0.3224405404306943,"y":0.6875523435264963,"angle":-0.34241353050497836},{"id":"b1","x":0.6047242796248053,"y":1.3249687316119987,"angle":-1.834141054498671},{"id":"b2","x":-0.01488340942873073,"y":0.3197767251455438,"angle":1.4905390221341934},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":700,"bodies":[{"id":"saka","x":0.3361070892902002,"y":0.753448294714839,"angle":-0.3507191929144254},{"id":"b1","x":0.6379074062359518,"y":1.4392495490841075,"angle":-2.0052517332926323},{"id":"b2","x":-0.029674031322074176,"y":0.33513785561417714,"angle":1.679334548018729},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":750,"bodies":[{"id":"saka","x":0.34900277703863414,"y":0.815627387560202,"angle":-0.358676841757959},{"id":"b1","x":0.6692188399924299,"y":1.5470843618745376,"angle":-2.1691927446287367},{"id":"b2","x":-0.04363038881235889,"y":0.3496325421676639,"angle":1.8602193979146944},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":800,"bodies":[{"id":"saka","x":0.36117108406440074,"y":0.8742992713004013,"angle":-0.36630105906842475},{"id":"b1","x":0.6987641536506369,"y":1.648836756605045,"angle":-2.3262645030212545},{"id":"b2","x":-0.05679953854799559,"y":0.3633096565384346,"angle":2.033525035156843},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":850,"bodies":[{"id":"saka","x":0.3726530382464336,"y":0.9296617699168501,"angle":-0.37360581588041236},{"id":"b1","x":0.7266429651401056,"y":1.7448498118093458,"angle":-2.4767548353880406},{"id":"b2","x":-0.06922588294912932,"y":0.3762153138509168,"angle":2.1995690345143433},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":900,"bodies":[{"id":"saka","x":0.3834873532878883,"y":0.9819015491376474,"angle":-0.3806044978315466},{"id":"b1","x":0.7529492734452615,"y":1.835447254690955,"angle":-2.620939508480391},{"id":"b2","x":-0.08095131991927261,"y":0.3883930281078926,"angle":2.35865566413223},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":950,"bodies":[{"id":"saka","x":0.3937105592471294,"y":1.0311947458183846,"angle":-0.38730992969106404},{"id":"b1","x":0.7777717755417849,"y":1.9209345526341495,"angle":-2.759082734213184},{"id":"b2","x":-0.0920153841124604,"y":0.3998838589066558,"angle":2.511076443089066},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":1000,"bodies":[{"id":"saka","x":0.40335712570612264,"y":1.0777075618227538,"angle":-0.39373439886062583},{"id":"b1","x":0.8011941654561896,"y":2.001599943148301,"angle":-2.891437653821305},{"id":"b2","x":-0.10245538023223691,"y":0.4107265498796492,"angle":2.657110675592517},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":1050,"bodies":[{"id":"saka","x":0.41245957799151917,"y":1.1215968244053478,"angle":-0.3998896778904273},{"id":"b1","x":0.8232954164569599,"y":2.0777154057182408,"angle":-3.0182468017295534},{"id":"b2","x":-0.11230650881191895,"y":0.42095765932636436,"angle":2.7970259627917193},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":1100,"bodies":[{"id":"saka","x":0.4210486068402943,"y":1.1630105149860885,"angle":-0.4057870460518655},{"id":"b1","x":0.8441500473287072,"y":2.149537578837449,"angle":-3.139742549985998},{"id":"b2","x":-0.12160198490022858,"y":0.43061168347695455,"angle":2.931078693144328},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":1150,"bodies":[{"id":"saka","x":0.42915317187970103,"y":1.2020882680991596,"angle":-0.4114373100062951},{"id":"b1","x":0.8638283736271453,"y":2.2173086253160226,"angle":3.0270377731060867},{"id":"b2","x":-0.13037315005246797,"y":0.4397211728031686,"angle":3.059514512236803},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]},{"tMs":1200,"bodies":[{"id":"saka","x":0.43680059927044035,"y":1.238961842198742,"angle":-0.41685082360774883},{"id":"b1","x":0.882396744762038,"y":2.2812570487809856,"angle":2.9155102463008165},{"id":"b2","x":-0.1386495780048364,"y":0.4483168417687712,"angle":-3.1006165342606575},{"id":"b3","x":-0.11,"y":0.19053,"angle":0.0},{"id":"b4","x":-0.22,"y":0.0,"angle":0.0},{"id":"b5","x":-0.11,"y":-0.19053,"angle":0.0}]}]},"botThrow":null,"match":{"status":"PLAYER_WIN","playerScore":6,"botScore":0,"turn":"PLAYER","bonesLeft":["b2","b3","b4","b5"],"playerTurns":1,"botTurns":0,"turnDeadlineEpochMs":1789122221895,"matchDeadlineEpochMs":1789122441819,"hardCapEpochMs":1789122501819,"mode":"BOT","difficulty":"EASY","hostId":null,"joinerId":null,"hostLabel":null,"joinerLabel":null,"reconnectSecondsLeft":null,"coinsGranted":24,"gemsGranted":0,"localLoadout":{"stick_pull":"stick_pull_default","saka_color":"saka_color_default","victory":"victory_default","table_fx":"table_fx_default","trail":"trail_default","saka_material":"saka_material_default","saka_ornament":"saka_ornament_default"},"hostLoadout":{},"joinerLoadout":{}}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /v1/profile
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJraWQiOiJKR2U3VHBLalVQZmNlWFJBdjZ3a2FERndXV3ZDR18tVjY3SFNyb2NhRU04IiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1MDJmN2Q4Ny1jYWIzLTQ0MTUtYjM2Yi1mN2ZkMjc5YTZiYTIiLCJndWVzdCI6dHJ1ZSwiZXhwIjoxNzg5MTIzMTAxLCJpYXQiOjE3ODkxMjIyMDEsImp0aSI6IjgwNzNhN2RiLWZmY2UtNDE1Mi1hOTk5LTgxNTFlYmFjNDE0NiJ9.1iXxsf95Q0-4qxZzLk7HGIa7hUMJv6Ukcueif1NtXeE"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = org.springframework.web.servlet.resource.ResourceHttpRequestHandler
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = org.springframework.web.servlet.resource.NoResourceFoundException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 404
+    Error message = No static resource v1/profile.
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 16.04 s <<< FAILURE! -- in com.nomadgames.profile.ProfileIT
+[ERROR] com.nomadgames.profile.ProfileIT.xpIncrementsOnBotSettleRatingUnchanged -- Time elapsed: 1.139 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<404>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:62)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:129)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$0(StatusResultMatchers.java:600)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:212)
+	at com.nomadgames.profile.ProfileIT.xpIncrementsOnBotSettleRatingUnchanged(ProfileIT.java:117)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   ProfileIT.xpIncrementsOnBotSettleRatingUnchanged:117 Status expected:<200> but was:<404>
+[INFO] 
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Alchiki proto harness 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] Alchiki proto harness .............................. SUCCESS [  0.982 s]
+[INFO] Nomad Games backend ................................ FAILURE [ 23.751 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  25.192 s
+[INFO] Finished at: 2026-09-11T15:23:23+05:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project nomad-games-backend: There are test failures.
+[ERROR] 
+[ERROR] See C:\Users\sergei.elistratov\Documents\проекты\nomad-game\backend\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :nomad-games-backend

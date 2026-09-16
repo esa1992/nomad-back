@@ -1,0 +1,19 @@
+00:00 +0: loading C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart
+00:00 +0: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:00 +1: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:00 +2: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:00 +3: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:00 +4: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:00 +5: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:00 +6: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:00 +7: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:00 +8: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:01 +9: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:01 +10: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows wallet chip COINS/GEMS after fake fetchWallet
+00:01 +11: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: catalog shows Shop entry label
+00:01 +12: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: wallet failure shows errorWallet without blocking tiles
+00:01 +13: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: tap Shop opens /shop with Owned segment and category label
+00:01 +14: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: shop error shows Retry when fetchShopCatalog throws
+00:01 +15: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: shop empty shows Retry when catalog has no SKUs
+00:01 +16: C:/Users/sergei.elistratov/Documents/проекты/nomad-game/client/test/shop_wallet_test.dart: detail Equip calls equipSku then shows Equipped
+00:01 +17: All tests passed!

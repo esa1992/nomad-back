@@ -24,7 +24,7 @@ class BurstSimTest {
             {
               "schemaVersion": 1,
               "yUp": true,
-              "aimAngleRad": 1.3962634015954636,
+              "aimAngleRad": 1.5707963267948966,
               "holdMs": 640,
               "seed": 1,
               "tableId": "alchiki-match-v1"
@@ -119,7 +119,7 @@ class BurstSimTest {
         assertBoneFamilyRadii(seven);
         Vector2 b7 = seven.get("b7").getWorldCenter();
         assertEquals(0.0, b7.x, 1e-9);
-        assertEquals(0.0, b7.y, 1e-9);
+        assertEquals(0.30, b7.y, 1e-9);
     }
 
     @Test

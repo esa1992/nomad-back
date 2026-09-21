@@ -235,6 +235,17 @@
       }
     }
   },
+  "walletHint": "Золотой · монеты (мягкая валюта): {coins}\nСиний · самоцветы (премиум): {gems}\nПотратить можно в Магазине.",
+  "@walletHint": {
+    "placeholders": {
+      "coins": {
+        "type": "int"
+      },
+      "gems": {
+        "type": "int"
+      }
+    }
+  },
   "rewardCoins": "+{n} МОНЕТЫ",
   "@rewardCoins": {
     "placeholders": {
@@ -355,6 +366,8 @@
   "cosmeticsSection": "Выбранные косметики",
   "cosmeticsDefault": "Стандартный набор",
   "avatarSection": "Аватар",
+  "avatarCustomA11y": "Добавить фото из галереи",
+  "errorAvatarPick": "Не удалось открыть галерею. Проверь доступ и попробуй снова.",
   "statsAlchiki": "Альчики",
   "statsStickPull": "Тяни палку",
   "noMatchesYet": "Пока нет партий",

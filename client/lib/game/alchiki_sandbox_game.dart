@@ -44,15 +44,15 @@ class AlchikiSandboxGame extends Forge2DGame {
         zoom: 100,
       );
 
-  /// Seed-1 hex (meters, Y-up). Locked so 01-04 Dyn4jBurstSim matches.
+  /// Seed-1 line (meters, Y-up). Sohi in one row facing the south rim saka.
   static const int boneCount = TableConstants.boneCount;
   static final Map<String, Vector2> seed1Bones = {
-    'b1': Vector2(0.22, 0.0),
-    'b2': Vector2(0.11, 0.19053),
-    'b3': Vector2(-0.11, 0.19053),
-    'b4': Vector2(-0.22, 0.0),
-    'b5': Vector2(-0.11, -0.19053),
-    'b6': Vector2(0.11, -0.19053),
+    'b1': Vector2(-0.28, 0.12),
+    'b2': Vector2(-0.14, 0.12),
+    'b3': Vector2(0.0, 0.12),
+    'b4': Vector2(0.14, 0.12),
+    'b5': Vector2(0.28, 0.12),
+    'b6': Vector2(0.42, 0.12),
   };
 
   final AimController aim = AimController();

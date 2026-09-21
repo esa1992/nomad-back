@@ -1,8 +1,9 @@
+import 'package:client/theme/steppe_ops.dart';
+import 'package:flutter/material.dart';
 import 'package:client/l10n/app_localizations.dart';
 import 'package:client/profile/avatar_assets.dart';
-import 'package:flutter/material.dart';
 
-/// Catalog header entry to `/profile` (D-74). Wood chrome like [WalletChip]; not a buy authority.
+/// Catalog header entry to `/profile` (D-74).
 class AvatarChip extends StatelessWidget {
   const AvatarChip({
     super.key,
@@ -12,9 +13,6 @@ class AvatarChip extends StatelessWidget {
 
   final String avatarPreset;
   final VoidCallback? onTap;
-
-  static const Color _wood = Color(0xFF241810);
-  static const Color _cream = Color(0xFFF4E8C8);
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +30,21 @@ class AvatarChip extends StatelessWidget {
               height: 48,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: _wood,
-                  border: Border.all(color: _cream, width: 1),
+                  color: SteppeOps.panelSolid,
+                  border: Border.all(
+                    color: SteppeOps.accent.withValues(alpha: 0.7),
+                  ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(4),
+                  padding: const EdgeInsets.all(3),
                   child: ClipOval(
                     child: Image.asset(
                       avatarAssetPath(avatarPreset),
-                      width: 40,
-                      height: 40,
+                      width: 42,
+                      height: 42,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const ColoredBox(
-                        color: Color(0xFF1B6B3A),
-                      ),
+                      errorBuilder: (_, _, _) =>
+                          const ColoredBox(color: SteppeOps.felt),
                     ),
                   ),
                 ),

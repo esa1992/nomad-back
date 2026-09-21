@@ -1,6 +1,7 @@
 import 'package:client/l10n/app_localizations.dart';
 import 'package:client/platform/locale_controller.dart';
 import 'package:client/platform/router.dart';
+import 'package:client/theme/steppe_ops.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,6 +24,7 @@ class _NomadAppState extends ConsumerState<NomadApp> {
   Widget build(BuildContext context) {
     final Locale? localeOverride = ref.watch(localeOverrideProvider);
     return MaterialApp.router(
+      theme: SteppeOps.theme(),
       locale: localeOverride,
       localeListResolutionCallback: (locales, supported) {
         for (final Locale locale in locales ?? const <Locale>[]) {

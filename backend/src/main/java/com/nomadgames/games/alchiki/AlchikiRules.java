@@ -23,6 +23,19 @@ public final class AlchikiRules {
             Instant now,
             Instant matchDeadline,
             Instant hardCap) {
+        return resolve(
+                playerScore, botScore, playerTurns, botTurns, now, matchDeadline, hardCap, -1);
+    }
+
+    public static MatchStatus resolve(
+            int playerScore,
+            int botScore,
+            int playerTurns,
+            int botTurns,
+            Instant now,
+            Instant matchDeadline,
+            Instant hardCap,
+            int bonesRemaining) {
         if (hardCap != null && !now.isBefore(hardCap)) {
             return byScore(playerScore, botScore);
         }
@@ -31,6 +44,10 @@ public final class AlchikiRules {
         }
         if (botScore >= FIRST_TO) {
             return MatchStatus.BOT_WIN;
+        }
+        // No sohi left on the table — nothing left to throw at; settle by score.
+        if (bonesRemaining == 0) {
+            return byScore(playerScore, botScore);
         }
         if (playerTurns >= TURNS_EACH && botTurns >= TURNS_EACH) {
             return byScore(playerScore, botScore);
@@ -49,7 +66,8 @@ public final class AlchikiRules {
                 snapshot.botTurns(),
                 now,
                 Instant.ofEpochMilli(snapshot.matchDeadlineEpochMs()),
-                Instant.ofEpochMilli(snapshot.hardCapEpochMs()));
+                Instant.ofEpochMilli(snapshot.hardCapEpochMs()),
+                snapshot.bonesRemaining());
     }
 
     public static boolean forfeitThrowIfExpired(Instant now, Instant turnDeadline) {
@@ -72,5 +90,6 @@ public final class AlchikiRules {
             int playerTurns,
             int botTurns,
             long matchDeadlineEpochMs,
-            long hardCapEpochMs) {}
+            long hardCapEpochMs,
+            int bonesRemaining) {}
 }

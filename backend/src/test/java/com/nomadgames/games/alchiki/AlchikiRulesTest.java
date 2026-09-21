@@ -100,6 +100,26 @@ class AlchikiRulesTest {
                         "in play when scores and clocks remain",
                         snap(4, 4, 3, 3),
                         T0.plusSeconds(30),
+                        MatchStatus.IN_PLAY),
+                Arguments.of(
+                        "empty board 3 vs 1 is PLAYER_WIN",
+                        snap(3, 1, 2, 2, 0),
+                        T0.plusSeconds(30),
+                        MatchStatus.PLAYER_WIN),
+                Arguments.of(
+                        "empty board 1 vs 2 is BOT_WIN",
+                        snap(1, 2, 2, 2, 0),
+                        T0.plusSeconds(30),
+                        MatchStatus.BOT_WIN),
+                Arguments.of(
+                        "empty board 2 vs 2 is DRAW",
+                        snap(2, 2, 2, 2, 0),
+                        T0.plusSeconds(30),
+                        MatchStatus.DRAW),
+                Arguments.of(
+                        "bones remain keeps IN_PLAY under first-to",
+                        snap(2, 1, 2, 2, 3),
+                        T0.plusSeconds(30),
                         MatchStatus.IN_PLAY));
     }
 
@@ -112,12 +132,18 @@ class AlchikiRulesTest {
 
     private static AlchikiRules.MatchClockState snap(
             int playerScore, int botScore, int playerTurns, int botTurns) {
+        return snap(playerScore, botScore, playerTurns, botTurns, 6);
+    }
+
+    private static AlchikiRules.MatchClockState snap(
+            int playerScore, int botScore, int playerTurns, int botTurns, int bonesRemaining) {
         return new AlchikiRules.MatchClockState(
                 playerScore,
                 botScore,
                 playerTurns,
                 botTurns,
                 MATCH_DEADLINE.toEpochMilli(),
-                HARD_CAP.toEpochMilli());
+                HARD_CAP.toEpochMilli(),
+                bonesRemaining);
     }
 }

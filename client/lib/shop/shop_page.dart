@@ -2,6 +2,9 @@ import 'package:client/l10n/app_localizations.dart';
 import 'package:client/platform/api/nomad_api.dart';
 import 'package:client/shop/shop_detail_page.dart';
 import 'package:client/shop/wallet_chip.dart';
+import 'package:client/theme/steppe_backdrop.dart';
+import 'package:client/theme/steppe_ops.dart';
+import 'package:client/theme/steppe_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,31 +18,6 @@ class ShopPage extends ConsumerStatefulWidget {
 }
 
 class _ShopPageState extends ConsumerState<ShopPage> {
-  static const Color _wood = Color(0xFF241810);
-  static const Color _cream = Color(0xFFF4E8C8);
-  static const Color _accent = Color(0xFFF0B429);
-  static const Color _onAccent = Color(0xFF241810);
-  static const Color _destructive = Color(0xFFC43C2C);
-
-  static const TextStyle _label = TextStyle(
-    color: _cream,
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    height: 1.2,
-  );
-  static const TextStyle _body = TextStyle(
-    color: _cream,
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    height: 1.5,
-  );
-  static const TextStyle _heading = TextStyle(
-    color: _cream,
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    height: 1.2,
-  );
-
   static const List<String> _slotOrder = <String>[
     'saka_color',
     'saka_material',
@@ -101,7 +79,8 @@ class _ShopPageState extends ConsumerState<ShopPage> {
 
   List<ShopSku> get _visibleSkus {
     final List<ShopSku> all = _skus ?? const <ShopSku>[];
-    Iterable<ShopSku> filtered = all.where((ShopSku s) => s.slot == _selectedSlot);
+    Iterable<ShopSku> filtered =
+        all.where((ShopSku s) => s.slot == _selectedSlot);
     if (_ownedSegment) {
       filtered = filtered.where((ShopSku s) => s.owned);
     }
@@ -126,73 +105,81 @@ class _ShopPageState extends ConsumerState<ShopPage> {
     final AppLocalizations l10n = AppLocalizations.of(context);
     final List<ShopSku> visible = _visibleSkus;
     final bool emptyCatalog = !_loading && !_error && (_skus?.isEmpty ?? true);
-    final bool emptyOwned =
-        !_loading &&
+    final bool emptyOwned = !_loading &&
         !_error &&
         !emptyCatalog &&
         _ownedSegment &&
         visible.isEmpty;
 
     return Scaffold(
-      backgroundColor: _wood,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  _OutlineButton(
-                    label: l10n.backToCatalog,
-                    onTap: () => context.pop(),
-                  ),
-                  const Spacer(),
-                  Text(l10n.shopTitle, style: _heading),
-                ],
-              ),
-              const SizedBox(height: 16),
-              if (_coins != null && _gems != null)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: WalletChip(coins: _coins!, gems: _gems!),
+      backgroundColor: SteppeOps.voidBg,
+      body: SteppeBackdrop(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    SteppeGhostButton(
+                      label: l10n.backToCatalog,
+                      onTap: () => context.pop(),
+                      minWidth: 88,
+                    ),
+                    const Spacer(),
+                    Text(
+                      l10n.shopTitle.toUpperCase(),
+                      style: SteppeOps.heading,
+                    ),
+                  ],
                 ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  _SegmentChip(
-                    label: l10n.shop,
-                    selected: !_ownedSegment,
-                    onTap: () => setState(() => _ownedSegment = false),
+                const SizedBox(height: 16),
+                if (_coins != null && _gems != null)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: WalletChip(coins: _coins!, gems: _gems!),
                   ),
-                  const SizedBox(width: 8),
-                  _SegmentChip(
-                    label: l10n.owned,
-                    selected: _ownedSegment,
-                    onTap: () => setState(() => _ownedSegment = true),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                height: 48,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _slotOrder.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 8),
-                  itemBuilder: (BuildContext context, int index) {
-                    final String slot = _slotOrder[index];
-                    return _SegmentChip(
-                      label: _categoryLabel(l10n, slot),
-                      selected: _selectedSlot == slot,
-                      onTap: () => setState(() => _selectedSlot = slot),
-                    );
-                  },
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    SteppeChip(
+                      label: l10n.shop,
+                      selected: !_ownedSegment,
+                      onSelected: () => setState(() => _ownedSegment = false),
+                    ),
+                    const SizedBox(width: 8),
+                    SteppeChip(
+                      label: l10n.owned,
+                      selected: _ownedSegment,
+                      onSelected: () => setState(() => _ownedSegment = true),
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 24),
-              Expanded(child: _buildBody(l10n, visible, emptyCatalog, emptyOwned)),
-            ],
+                const SizedBox(height: 16),
+                SizedBox(
+                  height: 40,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _slotOrder.length,
+                    separatorBuilder: (_, _) => const SizedBox(width: 8),
+                    itemBuilder: (BuildContext context, int index) {
+                      final String slot = _slotOrder[index];
+                      return SteppeChip(
+                        label: _categoryLabel(l10n, slot),
+                        selected: _selectedSlot == slot,
+                        onSelected: () =>
+                            setState(() => _selectedSlot = slot),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: _buildBody(l10n, visible, emptyCatalog, emptyOwned),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -206,36 +193,35 @@ class _ShopPageState extends ConsumerState<ShopPage> {
     bool emptyOwned,
   ) {
     if (_loading) {
-      return const SizedBox.shrink();
+      return const Center(
+        child: CircularProgressIndicator(color: SteppeOps.accent),
+      );
     }
     if (_error) {
-      return _MessagePanel(
-        title: l10n.errorShop,
-        body: null,
+      return SteppeBanner(
+        message: l10n.errorShop,
         retryLabel: l10n.retry,
         onRetry: _load,
       );
     }
     if (emptyCatalog) {
-      return _MessagePanel(
-        title: l10n.emptyShopTitle,
-        body: l10n.emptyShopBody,
+      return SteppeBanner(
+        message: '${l10n.emptyShopTitle}\n${l10n.emptyShopBody}',
         retryLabel: l10n.retry,
         onRetry: _load,
       );
     }
     if (emptyOwned) {
-      return _MessagePanel(
-        title: l10n.emptyOwnedTitle,
-        body: l10n.emptyOwnedBody,
-        retryLabel: null,
-        onRetry: null,
+      return HudPanel(
+        child: Text(
+          '${l10n.emptyOwnedTitle}\n${l10n.emptyOwnedBody}',
+          style: SteppeOps.label,
+        ),
       );
     }
     if (visible.isEmpty) {
-      return _MessagePanel(
-        title: l10n.emptyShopTitle,
-        body: l10n.emptyShopBody,
+      return SteppeBanner(
+        message: '${l10n.emptyShopTitle}\n${l10n.emptyShopBody}',
         retryLabel: l10n.retry,
         onRetry: _load,
       );
@@ -243,9 +229,9 @@ class _ShopPageState extends ConsumerState<ShopPage> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        mainAxisExtent: 96,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        mainAxisExtent: 104,
       ),
       itemCount: visible.length,
       itemBuilder: (BuildContext context, int index) {
@@ -316,7 +302,7 @@ String skuDisplayName(AppLocalizations l10n, String nameKey) {
 Color skuThemeSwatch(String idOrKey) {
   final String key = idOrKey.toLowerCase();
   if (key.contains('gold')) {
-    return const Color(0xFFF0B429);
+    return SteppeOps.accent;
   }
   if (key.contains('neon')) {
     return const Color(0xFF7CFF6B);
@@ -333,136 +319,7 @@ Color skuThemeSwatch(String idOrKey) {
   if (key.contains('knot')) {
     return const Color(0xFF8B4513);
   }
-  return const Color(0xFFFFF6D6);
-}
-
-class _SegmentChip extends StatelessWidget {
-  const _SegmentChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      child: Material(
-        color: selected
-            ? _ShopPageState._accent
-            : _ShopPageState._wood,
-        child: InkWell(
-          onTap: onTap,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: selected
-                    ? _ShopPageState._accent
-                    : _ShopPageState._cream,
-                width: 1,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Center(
-                child: Text(
-                  label,
-                  style: _ShopPageState._label.copyWith(
-                    color: selected
-                        ? _ShopPageState._onAccent
-                        : _ShopPageState._cream,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _OutlineButton extends StatelessWidget {
-  const _OutlineButton({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      child: Material(
-        color: _ShopPageState._wood,
-        child: InkWell(
-          onTap: onTap,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(color: _ShopPageState._cream, width: 1),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Center(
-                child: Text(label, style: _ShopPageState._label),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _MessagePanel extends StatelessWidget {
-  const _MessagePanel({
-    required this.title,
-    required this.body,
-    required this.retryLabel,
-    required this.onRetry,
-  });
-
-  final String title;
-  final String? body;
-  final String? retryLabel;
-  final VoidCallback? onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(color: _ShopPageState._destructive, width: 1),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: _ShopPageState._body),
-                if (body != null) ...[
-                  const SizedBox(height: 8),
-                  Text(body!, style: _ShopPageState._body),
-                ],
-              ],
-            ),
-          ),
-        ),
-        if (retryLabel != null && onRetry != null) ...[
-          const SizedBox(height: 16),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: _OutlineButton(label: retryLabel!, onTap: onRetry!),
-          ),
-        ],
-      ],
-    );
-  }
+  return SteppeOps.mist;
 }
 
 class _SkuTile extends StatelessWidget {
@@ -482,42 +339,43 @@ class _SkuTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color swatch = skuThemeSwatch(sku.id);
     return Material(
-      color: _ShopPageState._wood,
+      color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(color: _ShopPageState._cream, width: 1),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    color: swatch,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: _ShopPageState._cream, width: 1),
+        child: HudPanel(
+          padding: const EdgeInsets.all(10),
+          accentEdge: sku.equipped,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 22,
+                height: 22,
+                decoration: BoxDecoration(
+                  color: swatch,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: SteppeOps.mist.withValues(alpha: 0.5),
                   ),
                 ),
-                const Spacer(),
-                Text(
-                  name,
-                  style: _ShopPageState._label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              ),
+              const Spacer(),
+              Text(
+                name,
+                style: SteppeOps.label.copyWith(fontSize: 13),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                priceLabel,
+                style: SteppeOps.labelMuted.copyWith(
+                  color: sku.equipped ? SteppeOps.accent : SteppeOps.mistMuted,
+                  fontSize: 12,
                 ),
-                Text(
-                  priceLabel,
-                  style: _ShopPageState._label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ),
         ),
       ),

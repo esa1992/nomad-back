@@ -449,6 +449,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String walletHint(int coins, int gems) {
+    return 'Золотой · монеты (мягкая валюта): $coins\nСиний · самоцветы (премиум): $gems\nПотратить можно в Магазине.';
+  }
+
+  @override
   String rewardCoins(int n) {
     return '+$n МОНЕТЫ';
   }
@@ -668,6 +673,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get avatarSection => 'Аватар';
+
+  @override
+  String get avatarCustomA11y => 'Добавить фото из галереи';
+
+  @override
+  String get errorAvatarPick =>
+      'Не удалось открыть галерею. Проверь доступ и попробуй снова.';
 
   @override
   String get statsAlchiki => 'Альчики';

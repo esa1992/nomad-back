@@ -24,15 +24,15 @@ public final class Dyn4jBurstSim {
     private static final double MATCH_IMPULSE_SCALE = 3.0;
     private static final String[] TARGET_IDS = {"b1", "b2", "b3", "b4", "b5", "b6", "b7"};
 
-    /** Locked seed-1 layout — must match 01-03, do not invent a client hex helper. */
+    /** Locked seed-1 line — must match Dart AlchikiSandboxGame.seed1Bones. */
     private static final double[][] SEED1 = {
         {0.0, -1.15},
-        {0.22, 0.0},
-        {0.11, 0.19053},
-        {-0.11, 0.19053},
-        {-0.22, 0.0},
-        {-0.11, -0.19053},
-        {0.11, -0.19053}
+        {-0.28, 0.12},
+        {-0.14, 0.12},
+        {0.0, 0.12},
+        {0.14, 0.12},
+        {0.28, 0.12},
+        {0.42, 0.12}
     };
 
     private static final String[] IDS = {"saka", "b1", "b2", "b3", "b4", "b5", "b6"};
@@ -114,7 +114,7 @@ public final class Dyn4jBurstSim {
             addDisk(world, bodies, IDS[i], SEED1[i][0], SEED1[i][1], false);
         }
         if (boneCount == 7) {
-            addDisk(world, bodies, "b7", 0.0, 0.0, false);
+            addDisk(world, bodies, "b7", 0.0, 0.30, false);
         }
         return bodies;
     }
@@ -133,7 +133,7 @@ public final class Dyn4jBurstSim {
                 continue;
             }
             if ("b7".equals(id)) {
-                addDisk(world, bodies, "b7", 0.0, 0.0, false);
+                addDisk(world, bodies, "b7", 0.0, 0.30, false);
                 continue;
             }
             int index = indexOf(id);
@@ -153,7 +153,7 @@ public final class Dyn4jBurstSim {
                 continue;
             }
             if ("b7".equals(id)) {
-                addDisk(world, bodies, "b7", 0.0, 0.0, false);
+                addDisk(world, bodies, "b7", 0.0, 0.30, false);
                 continue;
             }
             int index = indexOf(id);
@@ -203,7 +203,8 @@ public final class Dyn4jBurstSim {
             world.step(1);
             stepsRun = i + 1;
             int tMs = (int) Math.round(stepsRun * (1000.0 / TableConstants.physicsHz));
-            if ((i + 1) % 3 == 0 && frames.size() < KEYFRAME_CAP) {
+            // 30 Hz samples — strong impulses move sohi far between frames at 20 Hz.
+            if ((i + 1) % 2 == 0 && frames.size() < KEYFRAME_CAP) {
                 frames.add(capture(tMs, bodies));
             }
             if (allAtRest(bodies)) {

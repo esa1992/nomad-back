@@ -235,6 +235,17 @@
       }
     }
   },
+  "walletHint": "Gold · coins (soft currency): {coins}\nBlue · gems (premium): {gems}\nTap Shop to spend them.",
+  "@walletHint": {
+    "placeholders": {
+      "coins": {
+        "type": "int"
+      },
+      "gems": {
+        "type": "int"
+      }
+    }
+  },
   "rewardCoins": "+{n} COINS",
   "@rewardCoins": {
     "placeholders": {
@@ -355,6 +366,8 @@
   "cosmeticsSection": "Selected cosmetics",
   "cosmeticsDefault": "Default loadout",
   "avatarSection": "Avatar",
+  "avatarCustomA11y": "Add photo from gallery",
+  "errorAvatarPick": "Could not open the gallery. Check permission and try again.",
   "statsAlchiki": "Alchiki",
   "statsStickPull": "Stick Pull",
   "noMatchesYet": "No matches yet",

@@ -15,7 +15,10 @@ class _NoMatchApi extends NomadApi {
   _NoMatchApi(SessionStore session) : super(sessionStore: session);
 
   @override
-  Future<MatchStart> startMatch({String difficulty = 'EASY'}) async {
+  Future<MatchStart> startMatch({
+    String difficulty = 'EASY',
+    String game = 'ALCHIKI',
+  }) async {
     return const MatchStart(
       matchId: 'hold-test-match',
       difficulty: 'EASY',

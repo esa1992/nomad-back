@@ -51,7 +51,8 @@ public class AlchikiEngine implements GameEngine {
     public ScoredThrow applyThrow(ThrowInput input, Set<String> remainingBoneIds) {
         ThrowResolved resolved = Dyn4jBurstSim.simulate(input, remainingBoneIds).resolved();
         PlayerThrowView view = toView(resolved);
-        return new ScoredThrow(view, resolved.displayedScore(), List.copyOf(resolved.pocketedIds));
+        return new ScoredThrow(
+                view, resolved.displayedScore(), resolved.sakaOut, List.copyOf(resolved.pocketedIds));
     }
 
     @Override
@@ -61,7 +62,8 @@ public class AlchikiEngine implements GameEngine {
                         ThrowInput.parse(rawJson), remainingBoneIds, throwingSakaId, parkedSakaIds)
                 .resolved();
         PlayerThrowView view = toView(resolved);
-        return new ScoredThrow(view, resolved.displayedScore(), List.copyOf(resolved.pocketedIds));
+        return new ScoredThrow(
+                view, resolved.displayedScore(), resolved.sakaOut, List.copyOf(resolved.pocketedIds));
     }
 
     @Override
@@ -83,7 +85,8 @@ public class AlchikiEngine implements GameEngine {
                 clock.bTurns(),
                 now,
                 clock.matchDeadline(),
-                clock.hardCap());
+                clock.hardCap(),
+                clock.bonesRemaining());
         if (!clock.privateMatch()) {
             return status;
         }

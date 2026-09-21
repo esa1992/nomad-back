@@ -77,7 +77,7 @@ class EconomyIT {
             {
               "schemaVersion": 1,
               "yUp": true,
-              "aimAngleRad": 1.3962634015954636,
+              "aimAngleRad": 1.5707963267948966,
               "holdMs": 640,
               "seed": 1,
               "tableId": "alchiki-match-v1"

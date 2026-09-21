@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:client/l10n/app_localizations.dart';
 import 'package:client/platform/api/nomad_api.dart';
 import 'package:client/platform/auth/session_store.dart';
+import 'package:client/theme/steppe_backdrop.dart';
+import 'package:client/theme/steppe_ops.dart';
+import 'package:client/theme/steppe_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -14,17 +17,15 @@ class SplashPage extends ConsumerStatefulWidget {
   ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends ConsumerState<SplashPage> {
-  static const Color _surround = Color(0xFF241810);
-  static const Color _felt = Color(0xFF1B6B3A);
-  static const Color _onDark = Color(0xFFF4E8C8);
-  static const Color _destructive = Color(0xFFC43C2C);
-  static const Color _accent = Color(0xFFF0B429);
-  static const Color _onAccent = Color(0xFF241810);
-
+class _SplashPageState extends ConsumerState<SplashPage>
+    with SingleTickerProviderStateMixin {
   bool _inFlight = false;
   bool _mintFailed = false;
   Timer? _timeout;
+  late final AnimationController _fade = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  )..forward();
 
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   void dispose() {
     _timeout?.cancel();
+    _fade.dispose();
     super.dispose();
   }
 
@@ -48,7 +50,9 @@ class _SplashPageState extends ConsumerState<SplashPage> {
       _inFlight = true;
       _mintFailed = false;
     });
-    _timeout = Timer(const Duration(milliseconds: 2500), () {
+    final DateTime started = DateTime.now();
+    // Render free-tier cold start can take ~30–60s.
+    _timeout = Timer(const Duration(seconds: 55), () {
       if (mounted && _inFlight) {
         setState(() {
           _inFlight = false;
@@ -68,6 +72,10 @@ class _SplashPageState extends ConsumerState<SplashPage> {
       }
       _timeout?.cancel();
       _inFlight = false;
+      await _holdSplash(started);
+      if (!mounted) {
+        return;
+      }
       final String? token = await session.reconnectToken();
       final String? matchId = await session.reconnectMatchId();
       if (!mounted) {
@@ -92,6 +100,10 @@ class _SplashPageState extends ConsumerState<SplashPage> {
       if (!mounted) {
         return;
       }
+      await _holdSplash(started);
+      if (!mounted) {
+        return;
+      }
       setState(() {
         _inFlight = false;
         _mintFailed = true;
@@ -99,90 +111,112 @@ class _SplashPageState extends ConsumerState<SplashPage> {
     }
   }
 
+  /// Keep the branded splash visible at least 2s (even on fast/failed mint).
+  Future<void> _holdSplash(DateTime started) async {
+    const Duration minHold = Duration(seconds: 2);
+    final Duration elapsed = DateTime.now().difference(started);
+    if (elapsed < minHold) {
+      await Future<void>.delayed(minHold - elapsed);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);
     return Scaffold(
-      backgroundColor: _surround,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 96,
-              height: 96,
-              decoration: const BoxDecoration(
-                color: _felt,
-                shape: BoxShape.circle,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              l10n.appTitle,
-              style: const TextStyle(
-                color: _onDark,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                height: 1.2,
-              ),
-            ),
-            if (_mintFailed) ...[
-              const SizedBox(height: 24),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 320),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: _destructive),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      l10n.errorGuestMint,
+      backgroundColor: SteppeOps.voidBg,
+      body: SteppeBackdrop(
+        child: SafeArea(
+          child: FadeTransition(
+            opacity: _fade,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CustomPaint(
+                      size: const Size(88, 88),
+                      painter: const _BrandMarkPainter(),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      l10n.appTitle.toUpperCase(),
+                      style: SteppeOps.brand,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: _onDark,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.2,
-                      ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Material(
-                color: _accent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: InkWell(
-                  onTap: _startMint,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minWidth: 48,
-                      minHeight: 48,
+                    const SizedBox(height: 8),
+                    Text(
+                      'STEPPE OPS',
+                      style: SteppeOps.labelMuted.copyWith(letterSpacing: 3),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
-                      child: Center(
-                        child: Text(
-                          l10n.retry,
-                          style: const TextStyle(
-                            color: _onAccent,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            height: 1.2,
-                          ),
+                    if (_inFlight && !_mintFailed) ...[
+                      const SizedBox(height: 28),
+                      const SizedBox(
+                        width: 28,
+                        height: 28,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: SteppeOps.accent,
                         ),
                       ),
-                    ),
-                  ),
+                    ],
+                    if (_mintFailed) ...[
+                      const SizedBox(height: 28),
+                      SteppeBanner(
+                        message: l10n.errorGuestMint,
+                        retryLabel: l10n.retry,
+                        onRetry: _startMint,
+                      ),
+                    ],
+                  ],
                 ),
               ),
-            ],
-          ],
+            ),
+          ),
         ),
       ),
     );
   }
+}
+
+class _BrandMarkPainter extends CustomPainter {
+  const _BrandMarkPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Offset c = Offset(size.width / 2, size.height / 2);
+    canvas.drawCircle(
+      c,
+      size.width / 2,
+      Paint()
+        ..color = SteppeOps.felt
+        ..style = PaintingStyle.fill,
+    );
+    canvas.drawCircle(
+      c,
+      size.width / 2 - 1,
+      Paint()
+        ..color = SteppeOps.accent.withValues(alpha: 0.55)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2,
+    );
+    final Color mark = SteppeOps.mist.withValues(alpha: 0.9);
+    final Paint stroke = Paint()
+      ..color = mark
+      ..strokeWidth = 5
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke;
+    final Paint fill = Paint()..color = mark;
+    canvas.drawLine(
+      Offset(c.dx - 18, c.dy + 6),
+      Offset(c.dx + 18, c.dy - 6),
+      stroke,
+    );
+    canvas.drawCircle(Offset(c.dx - 18, c.dy + 6), 6, fill);
+    canvas.drawCircle(Offset(c.dx + 18, c.dy - 6), 6, fill);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

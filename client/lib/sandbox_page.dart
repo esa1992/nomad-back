@@ -112,21 +112,25 @@ class _SandboxPageState extends State<SandboxPage>
   int get _rawHoldMs {
     final start = _chargeStart;
     if (start == null) {
-      return TableConstants.holdMsMin;
+      return 0;
     }
     return DateTime.now().difference(start).inMilliseconds;
   }
 
+  static const int _chargeMsToMax = TableConstants.holdMsMax * 2;
+
   double get _chargeT {
-    final clamped = _rawHoldMs.clamp(
-      TableConstants.holdMsMin,
-      TableConstants.holdMsMax,
-    );
-    return (clamped - TableConstants.holdMsMin) /
-        (TableConstants.holdMsMax - TableConstants.holdMsMin);
+    return (_rawHoldMs / _chargeMsToMax).clamp(0.0, 1.0);
   }
 
-  bool get _atMax => _rawHoldMs >= TableConstants.holdMsMax;
+  int get _holdMsFromCharge {
+    final double t = _chargeT;
+    return (TableConstants.holdMsMin +
+            t * (TableConstants.holdMsMax - TableConstants.holdMsMin))
+        .round();
+  }
+
+  bool get _atMax => _rawHoldMs >= _chargeMsToMax;
 
   bool get _holdEnabled => !_throwing && !_settled && !_replaying;
 
@@ -198,10 +202,7 @@ class _SandboxPageState extends State<SandboxPage>
     _pulse
       ..stop()
       ..value = 0;
-    final holdMs = _rawHoldMs.clamp(
-      TableConstants.holdMsMin,
-      TableConstants.holdMsMax,
-    );
+    final holdMs = _holdMsFromCharge;
     final input = ThrowInput(
       schemaVersion: 1,
       yUp: true,
@@ -682,20 +683,84 @@ class _PowerMeter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double t = fill.clamp(0.0, 1.0);
+    final int pct = (t * 100).round();
+    final Color tip = Color.lerp(
+      const Color(0xFFF0B429),
+      const Color(0xFFE85D04),
+      t,
+    )!;
+    final List<Color> fillColors = t > 0.72
+        ? <Color>[const Color(0xFFF5D76E), tip, const Color(0xFFD00000)]
+        : <Color>[const Color(0xFFF5D76E), tip];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SizedBox(
-        height: 8,
-        child: DecoratedBox(
-          decoration: const BoxDecoration(color: Color(0xFF241810)),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: FractionallySizedBox(
-              widthFactor: fill.clamp(0.0, 1.0),
-              child: const ColoredBox(color: Color(0xFFF0B429)),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              '$pct%',
+              style: TextStyle(
+                color: tip,
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
+                height: 1.0,
+                fontFeatures: const [FontFeature.tabularFigures()],
+                shadows: const [
+                  Shadow(color: Color(0xCC000000), blurRadius: 6),
+                ],
+              ),
             ),
           ),
-        ),
+          const SizedBox(height: 6),
+          SizedBox(
+            height: 32,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: const Color(0xFF1A120C),
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: const Color(0xFF5A4030), width: 1.5),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4.5),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: FractionallySizedBox(
+                        widthFactor: t <= 0 ? 0.001 : t,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: fillColors),
+                          ),
+                          child: const SizedBox.expand(),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        for (final double _ in const [0.25, 0.5, 0.75])
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                width: 1.5,
+                                color: Colors.white.withValues(alpha: 0.22),
+                              ),
+                            ),
+                          ),
+                        const Expanded(child: SizedBox.shrink()),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

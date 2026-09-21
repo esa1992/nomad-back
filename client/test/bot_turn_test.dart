@@ -15,7 +15,10 @@ class _BotTurnApi extends NomadApi {
   _BotTurnApi(SessionStore session) : super(sessionStore: session);
 
   @override
-  Future<MatchStart> startMatch({String difficulty = 'EASY'}) async {
+  Future<MatchStart> startMatch({
+    String difficulty = 'EASY',
+    String game = 'ALCHIKI',
+  }) async {
     return const MatchStart(
       matchId: 'bot-turn-match',
       difficulty: 'EASY',
@@ -121,9 +124,12 @@ void main() {
       await tester.pump();
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 50));
-      expect(game.isLoaded, isTrue);
+      final AlchikiMatchPageState state = tester.state(
+        find.byType(AlchikiMatchPage),
+      );
+      expect(state.game.isLoaded, isTrue);
 
-      game.applyPlayerThrow(
+      state.game.applyPlayerThrow(
         ThrowResolved.parse('''
 {
   "schemaVersion": 1,
@@ -154,7 +160,6 @@ void main() {
 '''),
       );
 
-      final AlchikiMatchPageState state = tester.state(find.byType(AlchikiMatchPage));
       final ThrowInput botInput = ThrowInput(
         schemaVersion: 1,
         yUp: true,
@@ -167,10 +172,10 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
 
-      expect(game.saka.body.worldCenter.x, closeTo(0, 1e-4));
-      expect(game.saka.body.worldCenter.y, closeTo(-1.15, 1e-4));
+      expect(state.game.saka.body.worldCenter.x, closeTo(0, 1e-4));
+      expect(state.game.saka.body.worldCenter.y, closeTo(-1.15, 1e-4));
       expect(
-        game.bones.where((bone) => bone.isMounted).map((bone) => bone.boneId),
+        state.game.bones.where((bone) => bone.isMounted).map((bone) => bone.boneId),
         isNot(contains('b1')),
       );
     },

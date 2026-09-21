@@ -448,6 +448,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String walletHint(int coins, int gems) {
+    return 'Gold · coins (soft currency): $coins\nBlue · gems (premium): $gems\nTap Shop to spend them.';
+  }
+
+  @override
   String rewardCoins(int n) {
     return '+$n COINS';
   }
@@ -667,6 +672,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get avatarSection => 'Avatar';
+
+  @override
+  String get avatarCustomA11y => 'Add photo from gallery';
+
+  @override
+  String get errorAvatarPick =>
+      'Could not open the gallery. Check permission and try again.';
 
   @override
   String get statsAlchiki => 'Alchiki';

@@ -522,9 +522,7 @@ public class MatchService {
         }
         Set<String> remaining = new LinkedHashSet<>(match.getBonesLeft());
         ScoredThrow scored = engine.applyThrow(rawJson, remaining);
-        List<String> bonesLeft = new ArrayList<>(match.getBonesLeft());
-        bonesLeft.removeAll(scored.pocketedIds());
-        match.setBonesLeft(bonesLeft);
+        applyPocketedBones(match, scored);
         match.setPlayerScore(match.getPlayerScore() + scored.displayedScore());
         match.setPlayerTurns(match.getPlayerTurns() + 1);
         match.setTurnDeadline(now.plus(engine.turnClock()));
@@ -634,9 +632,7 @@ public class MatchService {
         List<String> parkedSakaIds = List.of(joinerTurn ? "saka-host" : "saka-joiner");
         Set<String> remaining = new LinkedHashSet<>(match.getBonesLeft());
         ScoredThrow scored = engine.applyThrow(rawJson, remaining, throwingSakaId, parkedSakaIds);
-        List<String> bonesLeft = new ArrayList<>(match.getBonesLeft());
-        bonesLeft.removeAll(scored.pocketedIds());
-        match.setBonesLeft(bonesLeft);
+        applyPocketedBones(match, scored);
         if (joinerTurn) {
             match.setBotScore(match.getBotScore() + scored.displayedScore());
             match.setBotTurns(match.getBotTurns() + 1);
@@ -936,9 +932,7 @@ public class MatchService {
         int seed = Objects.hash(match.getId(), match.getBotTurns());
         BotThrowView bot =
                 engine.nextBotThrow(match.getDifficulty(), seed, MATCH_TABLE_ID, remainingBoneIds);
-        List<String> bonesLeft = new ArrayList<>(match.getBonesLeft());
-        bonesLeft.removeAll(bot.pocketedIds());
-        match.setBonesLeft(bonesLeft);
+        applyPocketedBones(match, bot.sakaOut(), bot.pocketedIds());
         match.setBotScore(match.getBotScore() + bot.displayedScore());
         match.setBotTurns(match.getBotTurns() + 1);
         match.setTurnDeadline(now.plus(engine.turnClock()));
@@ -962,7 +956,8 @@ public class MatchService {
                 match.getBotTurns(),
                 match.getMatchDeadline(),
                 match.getHardCap(),
-                false);
+                false,
+                match.getBonesLeft() == null ? 0 : match.getBonesLeft().size());
     }
 
     private static ScoreClock privateScoreClock(MatchEntity match) {
@@ -973,7 +968,26 @@ public class MatchService {
                 match.getBotTurns(),
                 match.getMatchDeadline(),
                 match.getHardCap(),
-                true);
+                true,
+                match.getBonesLeft() == null ? 0 : match.getBonesLeft().size());
+    }
+
+    /**
+     * Valid knock-outs leave the table. Saka-out foul zeroes the throw and restores
+     * any sohi that left the circle (they stay in bonesLeft).
+     */
+    private static void applyPocketedBones(MatchEntity match, ScoredThrow scored) {
+        applyPocketedBones(match, scored.sakaOut(), scored.pocketedIds());
+    }
+
+    private static void applyPocketedBones(
+            MatchEntity match, boolean sakaOut, List<String> pocketedIds) {
+        if (sakaOut || pocketedIds == null || pocketedIds.isEmpty()) {
+            return;
+        }
+        List<String> bonesLeft = new ArrayList<>(match.getBonesLeft());
+        bonesLeft.removeAll(pocketedIds);
+        match.setBonesLeft(bonesLeft);
     }
 
     /** Rematch eligibility for finished PRIVATE|CASUAL only (D-99). Seat-bound via requireSeat (T-05-04). */

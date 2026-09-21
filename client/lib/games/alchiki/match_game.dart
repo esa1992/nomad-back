@@ -140,7 +140,7 @@ class AlchikiMatchGame extends Forge2DGame {
     };
     switch (difficulty.toUpperCase()) {
       case 'HARD':
-        hex['b7'] = Vector2.zero();
+        hex['b7'] = Vector2(0.0, 0.30);
         return hex;
       case 'NORMAL':
         return hex;
@@ -159,6 +159,8 @@ class AlchikiMatchGame extends Forge2DGame {
   late final List<BoneBody> bones;
   late final AimingMarker aimingMarker;
   final Set<String> pocketedIds = <String>{};
+  final Set<String> _pendingPocketedIds = <String>{};
+  final Set<String> _foulRestoreIds = <String>{};
   final Set<String> _flashedBoneIds = <String>{};
   final List<PlusOnePopup> _plusOnes = <PlusOnePopup>[];
 
@@ -340,9 +342,9 @@ class AlchikiMatchGame extends Forge2DGame {
 
   /// Applies a playerThrow snapshot without recreating omitted pocketed bodies.
   void applyPlayerThrow(ThrowResolved resolved) {
-    pocketedIds.addAll(resolved.pocketedIds);
-    _dropPocketedBones();
+    _queuePocketed(resolved);
     if (resolved.keyframes.isEmpty) {
+      _finalizePocketed();
       return;
     }
     _replayTargets = _currentReplayTargets();
@@ -351,11 +353,12 @@ class AlchikiMatchGame extends Forge2DGame {
       resolved.keyframes,
       _replayTargets,
     );
+    _finalizePocketed();
   }
 
   void startReplay(ThrowResolved resolved) {
-    pocketedIds.addAll(resolved.pocketedIds);
-    _dropPocketedBones();
+    // Keep pocketed sohi visible through the replay — drop only after flight ends.
+    _queuePocketed(resolved);
     _replayResolved = resolved;
     replayTimeMs = 0;
     replaying = true;
@@ -371,7 +374,7 @@ class AlchikiMatchGame extends Forge2DGame {
 
   void resetSakaToRim() {
     cancelReplay();
-    _dropPocketedBones();
+    _finalizePocketed();
     if (isPrivate) {
       hostSaka.snapToSpawn();
       joinerSaka.snapToSpawn();
@@ -383,6 +386,38 @@ class AlchikiMatchGame extends Forge2DGame {
     aimLocked = false;
     simTimeS = 0;
     sakaOut = false;
+  }
+
+  void _queuePocketed(ThrowResolved resolved) {
+    _pendingPocketedIds.clear();
+    _foulRestoreIds.clear();
+    if (resolved.sakaOut) {
+      // Foul: sohi leave in the replay then snap back for the next throw.
+      _foulRestoreIds.addAll(resolved.pocketedIds);
+    } else {
+      _pendingPocketedIds.addAll(resolved.pocketedIds);
+    }
+  }
+
+  void _finalizePocketed() {
+    if (_pendingPocketedIds.isNotEmpty) {
+      pocketedIds.addAll(_pendingPocketedIds);
+      _pendingPocketedIds.clear();
+      _dropPocketedBones();
+    }
+    _restoreFoulBones();
+  }
+
+  void _restoreFoulBones() {
+    if (_foulRestoreIds.isEmpty) {
+      return;
+    }
+    for (final BoneBody bone in bones) {
+      if (_foulRestoreIds.contains(bone.boneId)) {
+        bone.snapToSpawn();
+      }
+    }
+    _foulRestoreIds.clear();
   }
 
   void cancelReplay() {

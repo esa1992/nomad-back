@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:client/l10n/app_localizations.dart';
 import 'package:client/platform/api/nomad_api.dart';
 import 'package:client/shop/shop_page.dart';
+import 'package:client/theme/steppe_ops.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,31 +20,16 @@ class ShopDetailPage extends ConsumerStatefulWidget {
   final int coins;
   final int gems;
 
-  static const Color _wood = Color(0xFF241810);
-  static const Color _cream = Color(0xFFF4E8C8);
-  static const Color _felt = Color(0xFF1B6B3A);
-  static const Color _accent = Color(0xFFF0B429);
-  static const Color _onAccent = Color(0xFF241810);
-  static const Color _destructive = Color(0xFFC43C2C);
+  static const Color _wood = SteppeOps.voidBg;
+  static const Color _cream = SteppeOps.mist;
+  static const Color _felt = SteppeOps.felt;
+  static const Color _accent = SteppeOps.accent;
+  static const Color _onAccent = SteppeOps.onAccent;
+  static const Color _destructive = SteppeOps.danger;
 
-  static const TextStyle _label = TextStyle(
-    color: _cream,
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    height: 1.2,
-  );
-  static const TextStyle _body = TextStyle(
-    color: _cream,
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    height: 1.5,
-  );
-  static const TextStyle _heading = TextStyle(
-    color: _cream,
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    height: 1.2,
-  );
+  static const TextStyle _label = SteppeOps.label;
+  static const TextStyle _body = SteppeOps.labelMuted;
+  static const TextStyle _heading = SteppeOps.heading;
 
   @override
   ConsumerState<ShopDetailPage> createState() => _ShopDetailPageState();

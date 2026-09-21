@@ -93,12 +93,14 @@ class LeaveConfirm extends StatelessWidget {
     required this.onStay,
     required this.onLeaveMatch,
     this.body,
+    this.busy = false,
   });
 
   final AppLocalizations l10n;
-  final VoidCallback onStay;
-  final VoidCallback onLeaveMatch;
+  final VoidCallback? onStay;
+  final VoidCallback? onLeaveMatch;
   final String? body;
+  final bool busy;
 
   @override
   Widget build(BuildContext context) {
@@ -111,28 +113,43 @@ class LeaveConfirm extends StatelessWidget {
           const SizedBox(height: 16),
           Text(body ?? l10n.leaveBody, style: _body, textAlign: TextAlign.center),
           const SizedBox(height: 24),
-          Row(
-            children: [
-              Expanded(
-                child: _PanelButton(
-                  label: l10n.stay,
-                  fill: _wood,
-                  textColor: _onDark,
-                  outlined: true,
-                  onTap: onStay,
+          if (busy)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 12),
+              child: Center(
+                child: SizedBox(
+                  width: 28,
+                  height: 28,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: _accent,
+                  ),
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _PanelButton(
-                  label: l10n.leaveMatch,
-                  fill: _destructive,
-                  textColor: _onDark,
-                  onTap: onLeaveMatch,
+            )
+          else
+            Row(
+              children: [
+                Expanded(
+                  child: _PanelButton(
+                    label: l10n.stay,
+                    fill: _wood,
+                    textColor: _onDark,
+                    outlined: true,
+                    onTap: onStay,
+                  ),
                 ),
-              ),
-            ],
-          ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _PanelButton(
+                    label: l10n.leaveMatch,
+                    fill: _destructive,
+                    textColor: _onDark,
+                    onTap: onLeaveMatch,
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );

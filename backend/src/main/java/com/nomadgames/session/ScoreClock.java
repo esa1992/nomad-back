@@ -9,4 +9,6 @@ public record ScoreClock(
         int bTurns,
         Instant matchDeadline,
         Instant hardCap,
-        boolean privateMatch) {}
+        boolean privateMatch,
+        /** Remaining sohi on the table; 0 ends the match by score. Use -1 to ignore. */
+        int bonesRemaining) {}

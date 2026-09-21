@@ -884,6 +884,12 @@ abstract class AppLocalizations {
   /// **'{coins} COINS, {gems} GEMS'**
   String walletA11y(int coins, int gems);
 
+  /// No description provided for @walletHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold · coins (soft currency): {coins}\nBlue · gems (premium): {gems}\nTap Shop to spend them.'**
+  String walletHint(int coins, int gems);
+
   /// No description provided for @rewardCoins.
   ///
   /// In en, this message translates to:
@@ -1291,6 +1297,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Avatar'**
   String get avatarSection;
+
+  /// No description provided for @avatarCustomA11y.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo from gallery'**
+  String get avatarCustomA11y;
+
+  /// No description provided for @errorAvatarPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the gallery. Check permission and try again.'**
+  String get errorAvatarPick;
 
   /// No description provided for @statsAlchiki.
   ///

@@ -11,7 +11,10 @@ class _HudApi extends NomadApi {
   _HudApi(SessionStore session) : super(sessionStore: session);
 
   @override
-  Future<MatchStart> startMatch({String difficulty = 'EASY'}) async {
+  Future<MatchStart> startMatch({
+    String difficulty = 'EASY',
+    String game = 'ALCHIKI',
+  }) async {
     final int now = DateTime.now().millisecondsSinceEpoch;
     return MatchStart(
       matchId: 'rules-hud-match',
@@ -57,7 +60,7 @@ void main() {
     expect(find.textContaining('You'), findsWidgets);
     expect(find.textContaining('Bot'), findsWidgets);
     expect(find.textContaining('First to 5'), findsOneWidget);
-    expect(find.text('Pause'), findsOneWidget);
+    expect(find.byIcon(Icons.pause), findsOneWidget);
     expect(
       find.byWidgetPredicate(
         (Widget widget) =>

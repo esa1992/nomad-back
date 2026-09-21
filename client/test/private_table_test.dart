@@ -64,7 +64,9 @@ void main() {
       );
 
       expect(find.text("Opponent's turn"), findsOneWidget);
-      expect(find.text('You 0 — Guest-C9D0 0'), findsOneWidget);
+      expect(find.text('You'), findsOneWidget);
+      expect(find.text('0'), findsNWidgets(2));
+      expect(find.text('Guest-C9D0'), findsOneWidget);
       expect(find.text('First to 5 · NORMAL'), findsOneWidget);
       expect(find.textContaining('Bot'), findsNothing);
     },

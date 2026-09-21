@@ -38,14 +38,16 @@ class AlchikiEngineSpiTest {
 
     @Test
     void resolveMapsPrivateFirstToFiveOntoHostAndJoinerWin() {
-        ScoreClock hostLead = new ScoreClock(5, 0, 2, 2, MATCH_DEADLINE, HARD_CAP, true);
+        ScoreClock hostLead = new ScoreClock(5, 0, 2, 2, MATCH_DEADLINE, HARD_CAP, true, 6);
         assertEquals(MatchStatus.HOST_WIN, engine.resolve(hostLead, NOW));
-        ScoreClock joinerLead = new ScoreClock(0, 5, 2, 2, MATCH_DEADLINE, HARD_CAP, true);
+        ScoreClock joinerLead = new ScoreClock(0, 5, 2, 2, MATCH_DEADLINE, HARD_CAP, true, 6);
         assertEquals(MatchStatus.JOINER_WIN, engine.resolve(joinerLead, NOW));
-        ScoreClock draw = new ScoreClock(2, 2, 8, 8, MATCH_DEADLINE, HARD_CAP, true);
+        ScoreClock draw = new ScoreClock(2, 2, 8, 8, MATCH_DEADLINE, HARD_CAP, true, 6);
         assertEquals(MatchStatus.DRAW, engine.resolve(draw, NOW));
-        ScoreClock botPath = new ScoreClock(5, 0, 2, 2, MATCH_DEADLINE, HARD_CAP, false);
+        ScoreClock botPath = new ScoreClock(5, 0, 2, 2, MATCH_DEADLINE, HARD_CAP, false, 6);
         assertEquals(MatchStatus.PLAYER_WIN, engine.resolve(botPath, NOW));
+        ScoreClock emptyBoard = new ScoreClock(3, 1, 2, 2, MATCH_DEADLINE, HARD_CAP, true, 0);
+        assertEquals(MatchStatus.HOST_WIN, engine.resolve(emptyBoard, NOW));
     }
 
     @Test

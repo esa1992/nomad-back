@@ -108,6 +108,7 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
   bool _replaying = false;
   bool _paused = false;
   bool _leaveConfirm = false;
+  bool _leaving = false;
   bool _tableAttached = false;
   bool _startError = false;
   bool _throwError = false;
@@ -317,21 +318,26 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
   int get _rawHoldMs {
     final start = _chargeStart;
     if (start == null) {
-      return TableConstants.holdMsMin;
+      return 0;
     }
     return DateTime.now().difference(start).inMilliseconds;
   }
 
+  /// Visual charge window is 2× the holdMs clamp so the meter is readable.
+  static const int _chargeMsToMax = TableConstants.holdMsMax * 2;
+
   double get _chargeT {
-    final clamped = _rawHoldMs.clamp(
-      TableConstants.holdMsMin,
-      TableConstants.holdMsMax,
-    );
-    return (clamped - TableConstants.holdMsMin) /
-        (TableConstants.holdMsMax - TableConstants.holdMsMin);
+    return (_rawHoldMs / _chargeMsToMax).clamp(0.0, 1.0);
   }
 
-  bool get _atMax => _rawHoldMs >= TableConstants.holdMsMax;
+  int get _holdMsFromCharge {
+    final double t = _chargeT;
+    return (TableConstants.holdMsMin +
+            t * (TableConstants.holdMsMax - TableConstants.holdMsMin))
+        .round();
+  }
+
+  bool get _atMax => _rawHoldMs >= _chargeMsToMax;
 
   String _turnClockLabel(AppLocalizations l10n) {
     final int secs = (_turnRemainMs / 1000).ceil().clamp(0, 20);
@@ -1064,10 +1070,7 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     _pulse
       ..stop()
       ..value = 0;
-    final holdMs = _rawHoldMs.clamp(
-      TableConstants.holdMsMin,
-      TableConstants.holdMsMax,
-    );
+    final holdMs = _holdMsFromCharge;
     final input = ThrowInput(
       schemaVersion: 1,
       yUp: true,
@@ -1085,10 +1088,13 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       _lastInput = input;
       _scored = null;
     });
-    game.throwSaka(input);
     if (_isHuman) {
+      game.throwSaka(input);
       await _sendPrivateThrow(input);
     } else {
+      // Bot matches: skip local physics — server keyframes are the only flight.
+      // Local throwSaka + startReplay caused a double toss (wild then normal).
+      game.aimLocked = true;
       await _submitThrow(input);
     }
   }
@@ -1229,31 +1235,30 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
   }
 
   Future<void> _leaveMatch() async {
-    _consentedLeave = true;
-    await ref.read(sessionStoreProvider).clearReconnect();
-    final MatchStart? match = _match;
-    if (match == null) {
-      _goCatalog();
+    if (_leaving) {
       return;
     }
-    try {
-      final MatchStart left = await ref
-          .read(nomadApiProvider)
-          .leaveMatch(match.matchId);
-      if (!mounted) {
-        return;
-      }
+    _leaving = true;
+    _consentedLeave = true;
+    // Leave UI immediately — do not wait on Render/API (user priority).
+    unawaited(ref.read(sessionStoreProvider).clearReconnect());
+    final MatchStart? match = _match;
+    final String? matchId = match?.matchId;
+    if (mounted) {
       setState(() {
-        _applyMatch(left);
         _leaveConfirm = false;
         _paused = false;
       });
-    } catch (_) {
-      if (!mounted) {
-        return;
-      }
     }
     _goCatalog();
+    if (matchId == null || matchId.isEmpty) {
+      return;
+    }
+    try {
+      await ref.read(nomadApiProvider).leaveMatch(matchId);
+    } catch (_) {
+      // Best-effort; player already left the table UI.
+    }
   }
 
   void _ensureRematchWatch() {
@@ -1545,15 +1550,13 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
             ),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _TableButton(
+                  _PauseChip(
                     label: l10n.pause,
-                    fill: _surround.withValues(alpha: 0.88),
-                    textColor: _onDark,
-                    enabled: !_charging,
+                    enabled: !_charging && !_leaving,
                     onTap: () {
                       setState(() {
                         _paused = true;
@@ -1561,6 +1564,7 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
                       });
                     },
                   ),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: MatchHud(
                       l10n: l10n,
@@ -1581,7 +1585,6 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
                       graceCap: _graceCap,
                     ),
                   ),
-                  const SizedBox(width: 48),
                 ],
               ),
             ),
@@ -1678,12 +1681,15 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
               body: _isRanked
                   ? l10n.leaveRankedBody
                   : (_isHuman ? l10n.leaveBodyPrivate : null),
-              onStay: () {
-                setState(() {
-                  _leaveConfirm = false;
-                });
-              },
-              onLeaveMatch: () => unawaited(_leaveMatch()),
+              busy: _leaving,
+              onStay: _leaving
+                  ? null
+                  : () {
+                      setState(() {
+                        _leaveConfirm = false;
+                      });
+                    },
+              onLeaveMatch: _leaving ? null : () => unawaited(_leaveMatch()),
             ),
           SafeArea(
             child: Align(
@@ -1742,6 +1748,49 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _PauseChip extends StatelessWidget {
+  const _PauseChip({
+    required this.label,
+    required this.enabled,
+    this.onTap,
+  });
+
+  final String label;
+  final bool enabled;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: enabled ? 1 : 0.4,
+      child: Material(
+        color: AlchikiMatchPageState._surround.withValues(alpha: 0.88),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4),
+          side: BorderSide(
+            color: AlchikiMatchPageState._onDark.withValues(alpha: 0.45),
+          ),
+        ),
+        child: InkWell(
+          onTap: enabled ? onTap : null,
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: Tooltip(
+              message: label,
+              child: Icon(
+                Icons.pause,
+                color: AlchikiMatchPageState._onDark,
+                size: 22,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -1858,20 +1907,84 @@ class _PowerMeter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double t = fill.clamp(0.0, 1.0);
+    final int pct = (t * 100).round();
+    final Color tip = Color.lerp(
+      const Color(0xFFF0B429),
+      const Color(0xFFE85D04),
+      t,
+    )!;
+    final List<Color> fillColors = t > 0.72
+        ? <Color>[const Color(0xFFF5D76E), tip, const Color(0xFFD00000)]
+        : <Color>[const Color(0xFFF5D76E), tip];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SizedBox(
-        height: 8,
-        child: DecoratedBox(
-          decoration: const BoxDecoration(color: Color(0xFF241810)),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: FractionallySizedBox(
-              widthFactor: fill.clamp(0.0, 1.0),
-              child: const ColoredBox(color: Color(0xFFF0B429)),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              '$pct%',
+              style: TextStyle(
+                color: tip,
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
+                height: 1.0,
+                fontFeatures: const [FontFeature.tabularFigures()],
+                shadows: const [
+                  Shadow(color: Color(0xCC000000), blurRadius: 6),
+                ],
+              ),
             ),
           ),
-        ),
+          const SizedBox(height: 6),
+          SizedBox(
+            height: 32,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: const Color(0xFF1A120C),
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: const Color(0xFF5A4030), width: 1.5),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4.5),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: FractionallySizedBox(
+                        widthFactor: t <= 0 ? 0.001 : t,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: fillColors),
+                          ),
+                          child: const SizedBox.expand(),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        for (final double _ in const [0.25, 0.5, 0.75])
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                width: 1.5,
+                                color: Colors.white.withValues(alpha: 0.22),
+                              ),
+                            ),
+                          ),
+                        const Expanded(child: SizedBox.shrink()),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

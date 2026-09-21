@@ -1,10 +1,17 @@
+import 'dart:async';
+
 import 'package:client/l10n/app_localizations.dart';
 import 'package:client/platform/api/nomad_api.dart';
 import 'package:client/platform/auth/session_store.dart';
 import 'package:client/profile/avatar_assets.dart';
 import 'package:client/profile/bind_sheet.dart';
+import 'package:client/profile/custom_avatar_store.dart';
+import 'package:client/profile/player_avatar.dart';
 import 'package:client/profile/sign_in_sheet.dart';
 import 'package:client/shop/shop_page.dart';
+import 'package:client/theme/steppe_backdrop.dart';
+import 'package:client/theme/steppe_ops.dart';
+import 'package:client/theme/steppe_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,44 +25,17 @@ class ProfilePage extends ConsumerStatefulWidget {
 }
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
-  static const Color _wood = Color(0xFF241810);
-  static const Color _cream = Color(0xFFF4E8C8);
-  static const Color _accent = Color(0xFFF0B429);
-  static const Color _onAccent = Color(0xFF241810);
-  static const Color _destructive = Color(0xFFC43C2C);
-  static const Color _xpTrack = Color(0xFF3A2A1C);
-
-  static const TextStyle _label = TextStyle(
-    color: _cream,
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    height: 1.2,
-  );
-  static const TextStyle _body = TextStyle(
-    color: _cream,
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    height: 1.5,
-  );
-  static const TextStyle _heading = TextStyle(
-    color: _cream,
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    height: 1.2,
-  );
-  static const TextStyle _display = TextStyle(
-    color: _cream,
-    fontSize: 28,
-    fontWeight: FontWeight.w600,
-    height: 1.2,
-  );
-
   PlayerProfile? _profile;
   String _selectedPreset = kDefaultAvatarPreset;
+  bool _useCustom = false;
+  String? _customPath;
+  bool _savedUseCustom = false;
+  String? _savedCustomPath;
   bool _loading = true;
   bool _error = false;
   bool _saving = false;
   bool _saveError = false;
+  bool _pickError = false;
   bool _isGuest = true;
 
   @override
@@ -69,11 +49,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       _loading = true;
       _error = false;
       _saveError = false;
+      _pickError = false;
     });
     try {
       final bool guest = await ref.read(sessionStoreProvider).isGuest();
       final PlayerProfile profile =
           await ref.read(nomadApiProvider).fetchProfile();
+      final CustomAvatarStore customs = ref.read(customAvatarStoreProvider);
+      final bool customActive = await customs.isActive();
+      final String? customPath = await customs.filePath();
       if (!mounted) {
         return;
       }
@@ -81,6 +65,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         _isGuest = guest;
         _profile = profile;
         _selectedPreset = profile.avatarPreset;
+        _useCustom = customActive;
+        _customPath = customPath;
+        _savedUseCustom = customActive;
+        _savedCustomPath = customPath;
         _loading = false;
         _error = false;
       });
@@ -126,14 +114,44 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     context.go('/');
   }
 
-  bool get _dirty =>
-      _profile != null && _selectedPreset != _profile!.avatarPreset;
+  bool get _dirty {
+    if (_profile == null) {
+      return false;
+    }
+    if (_useCustom != _savedUseCustom) {
+      return true;
+    }
+    if (_useCustom) {
+      return _customPath != _savedCustomPath;
+    }
+    return _selectedPreset != _profile!.avatarPreset;
+  }
+
+  Future<void> _pickCustom() async {
+    setState(() => _pickError = false);
+    try {
+      final String? path =
+          await ref.read(customAvatarStoreProvider).pickFromGallery();
+      if (!mounted) {
+        return;
+      }
+      if (path == null) {
+        return;
+      }
+      setState(() {
+        _customPath = path;
+        _useCustom = true;
+      });
+    } catch (_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() => _pickError = true);
+    }
+  }
 
   Future<void> _saveAvatar() async {
     if (!_dirty || _saving) {
-      return;
-    }
-    if (!kAvatarPresets.contains(_selectedPreset)) {
       return;
     }
     setState(() {
@@ -141,6 +159,27 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       _saveError = false;
     });
     try {
+      final CustomAvatarStore customs = ref.read(customAvatarStoreProvider);
+      if (_useCustom) {
+        if (_customPath == null || _customPath!.isEmpty) {
+          throw StateError('custom path missing');
+        }
+        await customs.setActive(true);
+        if (!mounted) {
+          return;
+        }
+        setState(() {
+          _savedUseCustom = true;
+          _savedCustomPath = _customPath;
+          _saving = false;
+          _saveError = false;
+        });
+        return;
+      }
+      if (!kAvatarPresets.contains(_selectedPreset)) {
+        throw StateError('bad preset');
+      }
+      await customs.setActive(false);
       final PlayerProfile updated =
           await ref.read(nomadApiProvider).putAvatar(_selectedPreset);
       if (!mounted) {
@@ -149,6 +188,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
       setState(() {
         _profile = updated;
         _selectedPreset = updated.avatarPreset;
+        _useCustom = false;
+        _savedUseCustom = false;
         _saving = false;
         _saveError = false;
       });
@@ -167,26 +208,38 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);
     return Scaffold(
-      backgroundColor: _wood,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  _OutlineButton(
-                    label: l10n.backToCatalog,
-                    onTap: () => context.go('/'),
-                  ),
-                  const Spacer(),
-                  Text(l10n.profileTitle, style: _heading),
-                ],
-              ),
-              const SizedBox(height: 24),
-              Expanded(child: _buildBody(l10n)),
-            ],
+      backgroundColor: SteppeOps.voidBg,
+      body: SteppeBackdrop(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    SteppeGhostButton(
+                      label: l10n.backToCatalog,
+                      onTap: () {
+                        if (context.canPop()) {
+                          context.pop();
+                        } else {
+                          context.go('/');
+                        }
+                      },
+                      minWidth: 88,
+                    ),
+                    const Spacer(),
+                    Text(
+                      l10n.profileTitle.toUpperCase(),
+                      style: SteppeOps.heading,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Expanded(child: _buildBody(l10n)),
+              ],
+            ),
           ),
         ),
       ),
@@ -196,13 +249,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
   Widget _buildBody(AppLocalizations l10n) {
     if (_loading) {
       return const Center(
-        child: CircularProgressIndicator(color: _accent),
+        child: CircularProgressIndicator(color: SteppeOps.accent),
       );
     }
     if (_error || _profile == null) {
-      return _MessagePanel(
-        title: l10n.errorProfileTitle,
-        body: l10n.errorProfileBody,
+      return SteppeBanner(
+        message: '${l10n.errorProfileTitle}\n${l10n.errorProfileBody}',
         retryLabel: l10n.retry,
         onRetry: _load,
       );
@@ -230,160 +282,153 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Center(
-            child: ClipOval(
-              child: Image.asset(
-                avatarAssetPath(_selectedPreset),
-                width: 64,
-                height: 64,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const ColoredBox(
-                  color: Color(0xFF1B6B3A),
-                  child: SizedBox(width: 64, height: 64),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: SteppeOps.accent.withValues(alpha: 0.7),
+                  width: 2,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: SteppeOps.accent.withValues(alpha: 0.2),
+                    blurRadius: 20,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+              child: PlayerAvatar(
+                presetId: _selectedPreset,
+                customPath: _customPath,
+                useCustom: _useCustom,
+                size: 120,
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Text(
-            profile.displayName.isEmpty
-                ? l10n.guestDisplay
-                : profile.displayName,
-            style: _heading,
+            (profile.displayName.isEmpty
+                    ? l10n.guestDisplay
+                    : profile.displayName)
+                .toUpperCase(),
+            style: SteppeOps.heading.copyWith(fontSize: 22),
             textAlign: TextAlign.center,
           ),
           Text(
             profile.subtitle,
-            style: _label,
+            style: SteppeOps.labelMuted,
             textAlign: TextAlign.center,
           ),
           if (_isGuest) ...[
             const SizedBox(height: 16),
             Text(
               l10n.guestBindHelper,
-              style: _body,
+              style: SteppeOps.labelMuted,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            SizedBox(
-              height: 48,
-              child: ElevatedButton(
-                onPressed: _openBind,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _accent,
-                  foregroundColor: _onAccent,
-                ),
-                child: Text(
-                  l10n.bindAccount,
-                  style: _label.copyWith(color: _onAccent),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 48,
-              child: OutlinedButton(
-                onPressed: _openSignIn,
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: _cream,
-                  side: const BorderSide(color: _cream),
-                ),
-                child: Text(l10n.signIn, style: _label),
-              ),
-            ),
+            SteppePlayButton(label: l10n.bindAccount, onTap: _openBind),
+            const SizedBox(height: 12),
+            SteppeGhostButton(label: l10n.signIn, onTap: _openSignIn),
           ] else ...[
             const SizedBox(height: 8),
             Text(
-              l10n.boundLabel,
-              style: _label,
+              l10n.boundLabel.toUpperCase(),
+              style: SteppeOps.label.copyWith(color: SteppeOps.accent),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            SizedBox(
-              height: 48,
-              child: ElevatedButton(
-                onPressed: () => context.push('/boards'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _accent,
-                  foregroundColor: _onAccent,
-                ),
-                child: Text(
-                  l10n.boards,
-                  style: _label.copyWith(color: _onAccent),
-                ),
-              ),
+            SteppePlayButton(
+              label: l10n.boards,
+              onTap: () => context.push('/boards'),
             ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 48,
-              child: OutlinedButton(
-                onPressed: _logOut,
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: _cream,
-                  side: const BorderSide(color: _cream),
-                ),
-                child: Text(l10n.logOut, style: _label),
-              ),
-            ),
+            const SizedBox(height: 12),
+            SteppeGhostButton(label: l10n.logOut, onTap: _logOut),
           ],
           const SizedBox(height: 24),
-          Text(l10n.statRating, style: _label, textAlign: TextAlign.center),
-          Text(
-            '${profile.rating}',
-            style: _display,
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            '${l10n.statBestRating} ${profile.bestRating}',
-            style: _label,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          Text(l10n.levelLabel(profile.level), style: _label),
-          const SizedBox(height: 8),
-          _XpBar(
-            xp: profile.xp,
-            xpToNext: profile.xpToNext,
-            track: _xpTrack,
-            fill: _accent,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            l10n.xpProgress(
-              profile.xp,
-              profile.xp + profile.xpToNext,
+          HudPanel(
+            child: Column(
+              children: [
+                Text(l10n.statRating, style: SteppeOps.labelMuted),
+                Text(
+                  '${profile.rating}',
+                  style: SteppeOps.brand.copyWith(fontSize: 36),
+                ),
+                Text(
+                  '${l10n.statBestRating} ${profile.bestRating}',
+                  style: SteppeOps.labelMuted,
+                ),
+                const SizedBox(height: 12),
+                Text(l10n.levelLabel(profile.level), style: SteppeOps.label),
+                const SizedBox(height: 8),
+                _XpBar(xp: profile.xp, xpToNext: profile.xpToNext),
+                const SizedBox(height: 8),
+                Text(
+                  l10n.xpProgress(profile.xp, profile.xp + profile.xpToNext),
+                  style: SteppeOps.labelMuted,
+                ),
+              ],
             ),
-            style: _label,
           ),
-          const SizedBox(height: 16),
-          _MetricRow(label: l10n.statMatches, value: '${profile.matches}'),
-          _MetricRow(label: l10n.statWins, value: '${profile.wins}'),
-          _MetricRow(label: l10n.statLosses, value: '${profile.losses}'),
-          _MetricRow(
-            label: l10n.statWinRate,
-            value: l10n.statWinRateValue((profile.winRate * 100).round()),
+          const SizedBox(height: 12),
+          HudPanel(
+            child: Column(
+              children: [
+                _MetricRow(label: l10n.statMatches, value: '${profile.matches}'),
+                _MetricRow(label: l10n.statWins, value: '${profile.wins}'),
+                _MetricRow(label: l10n.statLosses, value: '${profile.losses}'),
+                _MetricRow(
+                  label: l10n.statWinRate,
+                  value: l10n.statWinRateValue((profile.winRate * 100).round()),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 24),
-          Text(l10n.cosmeticsSection, style: _heading),
+          const SizedBox(height: 20),
+          Text(l10n.cosmeticsSection.toUpperCase(), style: SteppeOps.heading),
           const SizedBox(height: 8),
-          ..._cosmeticsLines(l10n, profile.cosmetics),
-          const SizedBox(height: 24),
-          Text(l10n.statsAlchiki, style: _heading),
+          HudPanel(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: _cosmeticsLines(l10n, profile.cosmetics),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(l10n.statsAlchiki.toUpperCase(), style: SteppeOps.heading),
           const SizedBox(height: 8),
-          _MetricRow(label: l10n.statMatches, value: '${alchiki.matches}'),
-          _MetricRow(label: l10n.statWins, value: '${alchiki.wins}'),
-          _MetricRow(label: l10n.statLosses, value: '${alchiki.losses}'),
-          const SizedBox(height: 24),
-          Text(l10n.statsStickPull, style: _heading),
+          HudPanel(
+            child: Column(
+              children: [
+                _MetricRow(label: l10n.statMatches, value: '${alchiki.matches}'),
+                _MetricRow(label: l10n.statWins, value: '${alchiki.wins}'),
+                _MetricRow(label: l10n.statLosses, value: '${alchiki.losses}'),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(l10n.statsStickPull.toUpperCase(), style: SteppeOps.heading),
           const SizedBox(height: 8),
-          if (stickPull.noMatchesYet || stickPull.matches == 0)
-            Text(l10n.noMatchesYet, style: _label)
-          else ...[
-            _MetricRow(label: l10n.statMatches, value: '${stickPull.matches}'),
-            _MetricRow(label: l10n.statWins, value: '${stickPull.wins}'),
-            _MetricRow(label: l10n.statLosses, value: '${stickPull.losses}'),
-          ],
-          const SizedBox(height: 24),
-          Text(l10n.avatarSection, style: _heading),
+          HudPanel(
+            child: stickPull.noMatchesYet || stickPull.matches == 0
+                ? Text(l10n.noMatchesYet, style: SteppeOps.label)
+                : Column(
+                    children: [
+                      _MetricRow(
+                        label: l10n.statMatches,
+                        value: '${stickPull.matches}',
+                      ),
+                      _MetricRow(
+                        label: l10n.statWins,
+                        value: '${stickPull.wins}',
+                      ),
+                      _MetricRow(
+                        label: l10n.statLosses,
+                        value: '${stickPull.losses}',
+                      ),
+                    ],
+                  ),
+          ),
+          const SizedBox(height: 20),
+          Text(l10n.avatarSection.toUpperCase(), style: SteppeOps.heading),
           const SizedBox(height: 8),
           GridView.builder(
             shrinkWrap: true,
@@ -392,40 +437,73 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               crossAxisCount: 4,
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
-              mainAxisExtent: 48,
+              mainAxisExtent: 56,
             ),
-            itemCount: kAvatarPresets.length,
+            itemCount: kAvatarPresets.length + 1,
             itemBuilder: (BuildContext context, int index) {
+              if (index == kAvatarPresets.length) {
+                final bool selected = _useCustom;
+                return Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    key: const Key('avatar_preset_custom'),
+                    onTap: () => unawaited(_pickCustom()),
+                    child: Semantics(
+                      label: l10n.avatarCustomA11y,
+                      button: true,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: SteppeOps.panelSolid,
+                          border: Border.all(
+                            color: selected
+                                ? SteppeOps.accent
+                                : SteppeOps.mist.withValues(alpha: 0.35),
+                            width: selected ? 2 : 1,
+                          ),
+                        ),
+                        child: _customPath != null
+                            ? Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: PlayerAvatar(
+                                  presetId: _selectedPreset,
+                                  customPath: _customPath,
+                                  useCustom: true,
+                                  size: 48,
+                                ),
+                              )
+                            : const Icon(
+                                Icons.add,
+                                color: SteppeOps.accent,
+                                size: 28,
+                              ),
+                      ),
+                    ),
+                  ),
+                );
+              }
               final String id = kAvatarPresets[index];
-              final bool selected = id == _selectedPreset;
+              final bool selected = !_useCustom && id == _selectedPreset;
               return Material(
                 color: Colors.transparent,
                 child: InkWell(
                   key: Key('avatar_preset_$id'),
-                  onTap: () => setState(() => _selectedPreset = id),
-                  child: SizedBox(
-                    width: 48,
-                    height: 48,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: selected ? _accent : _wood,
-                        border: Border.all(
-                          color: selected ? _accent : _cream,
-                          width: 1,
-                        ),
+                  onTap: () => setState(() {
+                    _useCustom = false;
+                    _selectedPreset = id;
+                  }),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: SteppeOps.panelSolid,
+                      border: Border.all(
+                        color: selected
+                            ? SteppeOps.accent
+                            : SteppeOps.mist.withValues(alpha: 0.35),
+                        width: selected ? 2 : 1,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(4),
-                        child: ClipOval(
-                          child: Image.asset(
-                            avatarAssetPath(id),
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => ColoredBox(
-                              color: selected ? _onAccent : const Color(0xFF1B6B3A),
-                            ),
-                          ),
-                        ),
-                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: PlayerAvatar(presetId: id, size: 48),
                     ),
                   ),
                 ),
@@ -433,30 +511,37 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             },
           ),
           const SizedBox(height: 16),
+          if (_pickError)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.all(color: SteppeOps.danger),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(l10n.errorAvatarPick, style: SteppeOps.label),
+                ),
+              ),
+            ),
           if (_saveError)
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  border: Border.all(color: _destructive, width: 1),
+                  border: Border.all(color: SteppeOps.danger),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Text(l10n.errorAvatarSave, style: _body),
+                  child: Text(l10n.errorAvatarSave, style: SteppeOps.label),
                 ),
               ),
             ),
-          SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: _dirty && !_saving ? _saveAvatar : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: _accent,
-                disabledBackgroundColor: _accent.withValues(alpha: 0.4),
-                foregroundColor: _onAccent,
-                disabledForegroundColor: _onAccent.withValues(alpha: 0.7),
-              ),
-              child: Text(l10n.saveAvatar, style: _label.copyWith(color: _onAccent)),
+          Opacity(
+            opacity: _dirty && !_saving ? 1 : 0.45,
+            child: SteppePlayButton(
+              label: l10n.saveAvatar,
+              onTap: _dirty && !_saving ? _saveAvatar : () {},
             ),
           ),
           const SizedBox(height: 32),
@@ -470,15 +555,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     Map<String, String> cosmetics,
   ) {
     if (cosmetics.isEmpty || _isDefaultLoadout(cosmetics)) {
-      return <Widget>[Text(l10n.cosmeticsDefault, style: _body)];
+      return <Widget>[Text(l10n.cosmeticsDefault, style: SteppeOps.label)];
     }
     final List<Widget> lines = <Widget>[];
     for (final MapEntry<String, String> entry in cosmetics.entries) {
       final String name = skuDisplayName(l10n, _nameKeyForSkuId(entry.value));
-      lines.add(Text(name, style: _body));
+      lines.add(Text(name, style: SteppeOps.label));
     }
     if (lines.isEmpty) {
-      return <Widget>[Text(l10n.cosmeticsDefault, style: _body)];
+      return <Widget>[Text(l10n.cosmeticsDefault, style: SteppeOps.label)];
     }
     return lines;
   }
@@ -515,32 +600,24 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 }
 
 class _XpBar extends StatelessWidget {
-  const _XpBar({
-    required this.xp,
-    required this.xpToNext,
-    required this.track,
-    required this.fill,
-  });
+  const _XpBar({required this.xp, required this.xpToNext});
 
   final int xp;
   final int xpToNext;
-  final Color track;
-  final Color fill;
 
   @override
   Widget build(BuildContext context) {
     final int span = xp + xpToNext;
-    final double progress =
-        span <= 0 ? 1.0 : (xp / span).clamp(0.0, 1.0);
+    final double progress = span <= 0 ? 1.0 : (xp / span).clamp(0.0, 1.0);
     return SizedBox(
-      height: 12,
+      height: 10,
       child: DecoratedBox(
-        decoration: BoxDecoration(color: track),
+        decoration: const BoxDecoration(color: SteppeOps.panelSolid),
         child: Align(
           alignment: Alignment.centerLeft,
           child: FractionallySizedBox(
             widthFactor: progress,
-            child: ColoredBox(color: fill),
+            child: const ColoredBox(color: SteppeOps.accent),
           ),
         ),
       ),
@@ -554,114 +631,17 @@ class _MetricRow extends StatelessWidget {
   final String label;
   final String value;
 
-  static const TextStyle _style = TextStyle(
-    color: Color(0xFFF4E8C8),
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
-    height: 1.2,
-  );
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Text(label, style: _style),
-          const SizedBox(width: 4),
+          Text(label, style: SteppeOps.label),
           const Spacer(),
-          Text(value, style: _style),
+          Text(value, style: SteppeOps.label.copyWith(color: SteppeOps.accent)),
         ],
       ),
-    );
-  }
-}
-
-class _OutlineButton extends StatelessWidget {
-  const _OutlineButton({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      child: OutlinedButton(
-        onPressed: onTap,
-        style: OutlinedButton.styleFrom(
-          foregroundColor: const Color(0xFFF4E8C8),
-          side: const BorderSide(color: Color(0xFFF4E8C8)),
-        ),
-        child: Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            height: 1.2,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _MessagePanel extends StatelessWidget {
-  const _MessagePanel({
-    required this.title,
-    required this.body,
-    required this.retryLabel,
-    required this.onRetry,
-  });
-
-  final String title;
-  final String? body;
-  final String? retryLabel;
-  final VoidCallback? onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            color: Color(0xFFF4E8C8),
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            height: 1.2,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        if (body != null) ...[
-          const SizedBox(height: 8),
-          Text(
-            body!,
-            style: const TextStyle(
-              color: Color(0xFFF4E8C8),
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              height: 1.5,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-        if (retryLabel != null && onRetry != null) ...[
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 48,
-            child: OutlinedButton(
-              onPressed: onRetry,
-              style: OutlinedButton.styleFrom(
-                foregroundColor: const Color(0xFFF4E8C8),
-                side: const BorderSide(color: Color(0xFFC43C2C)),
-              ),
-              child: Text(retryLabel!),
-            ),
-          ),
-        ],
-      ],
     );
   }
 }

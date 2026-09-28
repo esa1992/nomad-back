@@ -162,6 +162,7 @@
     }
   },
   "startingMatch": "Starting…",
+  "loadingLobby": "Loading…",
   "opponent": "Opponent",
   "opponentsTurn": "Opponent's turn",
   "opponentWins": "Opponent wins",

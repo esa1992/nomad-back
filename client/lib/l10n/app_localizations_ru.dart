@@ -329,6 +329,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get startingMatch => 'Начинаем…';
 
   @override
+  String get loadingLobby => 'Загрузка…';
+
+  @override
   String get opponent => 'Соперник';
 
   @override

@@ -235,6 +235,40 @@ class SteppeChip extends StatelessWidget {
   }
 }
 
+/// Centered wait indicator while a network round-trip is in flight.
+class SteppeLoading extends StatelessWidget {
+  const SteppeLoading({super.key, this.label});
+
+  final String? label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(
+            width: 40,
+            height: 40,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.5,
+              color: SteppeOps.accent,
+            ),
+          ),
+          if (label != null && label!.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Text(
+              label!,
+              style: SteppeOps.labelMuted.copyWith(fontSize: 14),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 class SteppeBanner extends StatelessWidget {
   const SteppeBanner({
     super.key,

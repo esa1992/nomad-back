@@ -504,7 +504,9 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                     .setOverride(code),
               ),
               Expanded(
-                child: SingleChildScrollView(
+                child: _loading
+                    ? SteppeLoading(label: l10n.loadingLobby)
+                    : SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -533,7 +535,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                           retryLabel: l10n.retry,
                           onRetry: _load,
                         )
-                      else if (!_loading && tiles.isEmpty)
+                      else if (tiles.isEmpty)
                         SteppeBanner(
                           message: l10n.emptyCatalogTitle,
                           retryLabel: l10n.retry,

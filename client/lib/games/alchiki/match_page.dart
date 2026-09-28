@@ -13,6 +13,7 @@ import 'package:client/profile/bind_sheet.dart';
 import 'package:client/replay/authority_score.dart';
 import 'package:client/replay/throw_resolved.dart';
 import 'package:client/schema/table_constants.dart';
+import 'package:client/theme/steppe_widgets.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -1544,10 +1545,8 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
                 gameFactory: () => game,
               ),
             ),
-          if (_isHuman && !_tableAttached && !_showRejoin)
-            Center(
-              child: Text(l10n.startingMatch, style: _body),
-            ),
+          if (!_tableAttached && !_startError && !_showRejoin)
+            SteppeLoading(label: l10n.startingMatch),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),

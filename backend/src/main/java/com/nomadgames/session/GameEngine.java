@@ -12,7 +12,20 @@ public interface GameEngine {
     ScoredThrow applyThrow(String rawJson, Set<String> remainingBoneIds);
 
     ScoredThrow applyThrow(
-            String rawJson, Set<String> remainingBoneIds, String throwingSakaId, List<String> parkedSakaIds);
+            String rawJson, Set<String> remainingBoneIds, List<BodyPoseView> leftoverPoses);
+
+    ScoredThrow applyThrow(
+            String rawJson,
+            Set<String> remainingBoneIds,
+            String throwingSakaId,
+            List<String> parkedSakaIds);
+
+    ScoredThrow applyThrow(
+            String rawJson,
+            Set<String> remainingBoneIds,
+            String throwingSakaId,
+            List<String> parkedSakaIds,
+            List<BodyPoseView> leftoverPoses);
 
     /**
      * NORMAL six target bone ids plus saka-host and saka-joiner identifiers.
@@ -21,6 +34,13 @@ public interface GameEngine {
     PrivateTable startPrivate();
 
     BotThrowView nextBotThrow(String difficulty, int seed, String tableId, Set<String> remainingBoneIds);
+
+    BotThrowView nextBotThrow(
+            String difficulty,
+            int seed,
+            String tableId,
+            Set<String> remainingBoneIds,
+            List<BodyPoseView> leftoverPoses);
 
     MatchStatus resolve(ScoreClock clock, Instant now);
 

@@ -2,7 +2,9 @@ package com.nomadgames.games.alchiki;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -45,11 +47,23 @@ public class AlchikiEngine implements GameEngine {
 
     @Override
     public ScoredThrow applyThrow(String rawJson, Set<String> remainingBoneIds) {
-        return applyThrow(ThrowInput.parse(rawJson), remainingBoneIds);
+        return applyThrow(rawJson, remainingBoneIds, List.of());
+    }
+
+    @Override
+    public ScoredThrow applyThrow(
+            String rawJson, Set<String> remainingBoneIds, List<BodyPoseView> leftoverPoses) {
+        return applyThrow(ThrowInput.parse(rawJson), remainingBoneIds, leftoverPoses);
     }
 
     public ScoredThrow applyThrow(ThrowInput input, Set<String> remainingBoneIds) {
-        ThrowResolved resolved = Dyn4jBurstSim.simulate(input, remainingBoneIds).resolved();
+        return applyThrow(input, remainingBoneIds, List.of());
+    }
+
+    public ScoredThrow applyThrow(
+            ThrowInput input, Set<String> remainingBoneIds, List<BodyPoseView> leftoverPoses) {
+        ThrowResolved resolved =
+                Dyn4jBurstSim.simulate(input, remainingBoneIds, toPoseMap(leftoverPoses)).resolved();
         PlayerThrowView view = toView(resolved);
         return new ScoredThrow(
                 view, resolved.displayedScore(), resolved.sakaOut, List.copyOf(resolved.pocketedIds));
@@ -58,8 +72,22 @@ public class AlchikiEngine implements GameEngine {
     @Override
     public ScoredThrow applyThrow(
             String rawJson, Set<String> remainingBoneIds, String throwingSakaId, List<String> parkedSakaIds) {
+        return applyThrow(rawJson, remainingBoneIds, throwingSakaId, parkedSakaIds, List.of());
+    }
+
+    @Override
+    public ScoredThrow applyThrow(
+            String rawJson,
+            Set<String> remainingBoneIds,
+            String throwingSakaId,
+            List<String> parkedSakaIds,
+            List<BodyPoseView> leftoverPoses) {
         ThrowResolved resolved = Dyn4jBurstSim.simulatePrivate(
-                        ThrowInput.parse(rawJson), remainingBoneIds, throwingSakaId, parkedSakaIds)
+                        ThrowInput.parse(rawJson),
+                        remainingBoneIds,
+                        throwingSakaId,
+                        parkedSakaIds,
+                        toPoseMap(leftoverPoses))
                 .resolved();
         PlayerThrowView view = toView(resolved);
         return new ScoredThrow(
@@ -69,10 +97,20 @@ public class AlchikiEngine implements GameEngine {
     @Override
     public BotThrowView nextBotThrow(
             String difficulty, int seed, String tableId, Set<String> remainingBoneIds) {
+        return nextBotThrow(difficulty, seed, tableId, remainingBoneIds, List.of());
+    }
+
+    @Override
+    public BotThrowView nextBotThrow(
+            String difficulty,
+            int seed,
+            String tableId,
+            Set<String> remainingBoneIds,
+            List<BodyPoseView> leftoverPoses) {
         ThrowInput botInput = ScriptedBot.nextThrow(difficulty, seed, tableId, remainingBoneIds);
         StringBuilder raw = new StringBuilder();
         botInput.appendJson(raw, "");
-        ScoredThrow scored = applyThrow(raw.toString(), remainingBoneIds);
+        ScoredThrow scored = applyThrow(raw.toString(), remainingBoneIds, leftoverPoses);
         return toBotView(botInput, scored);
     }
 
@@ -156,5 +194,19 @@ public class AlchikiEngine implements GameEngine {
                 .map(pose -> new BodyPoseView(pose.id, pose.x, pose.y, pose.angle))
                 .toList();
         return new KeyframeView(frame.tMs, bodies);
+    }
+
+    private static Map<String, Keyframe.BodyPose> toPoseMap(List<BodyPoseView> leftoverPoses) {
+        if (leftoverPoses == null || leftoverPoses.isEmpty()) {
+            return Map.of();
+        }
+        Map<String, Keyframe.BodyPose> poses = new HashMap<>();
+        for (BodyPoseView pose : leftoverPoses) {
+            if (pose == null || pose.id() == null || pose.id().startsWith("saka")) {
+                continue;
+            }
+            poses.put(pose.id(), new Keyframe.BodyPose(pose.id(), pose.x(), pose.y(), pose.angle()));
+        }
+        return poses;
     }
 }

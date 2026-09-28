@@ -179,6 +179,25 @@ class BurstSimTest {
     }
 
     @Test
+    void simulateRemainingUsesLeftoverPoseNotSeedLine() {
+        ThrowInput input = ThrowInput.parse(POCKETING_THROW);
+        Keyframe.BodyPose displaced = new Keyframe.BodyPose("b3", 0.55, -0.45, 0.0);
+        Dyn4jBurstSim.Result result =
+                Dyn4jBurstSim.simulate(input, Set.of("b3"), Map.of("b3", displaced));
+        assertFalse(result.keyframes().isEmpty());
+        Keyframe.BodyPose first = result.keyframes().get(0).bodies.stream()
+                .filter(pose -> "b3".equals(pose.id))
+                .findFirst()
+                .orElseThrow();
+        double seedY = 0.12;
+        assertTrue(
+                Math.abs(first.y - displaced.y) < Math.abs(first.y - seedY),
+                "bot/next throw must start from leftover rest, not the seed line");
+        assertTrue(Math.abs(first.x - displaced.x) < 0.35);
+        assertTrue(Math.abs(first.y - displaced.y) < 0.35);
+    }
+
+    @Test
     void cannedThrowPocketsAtLeastOneEasyBone() {
         ThrowInput input = ThrowInput.parse(POCKETING_THROW);
         Dyn4jBurstSim.Result result = Dyn4jBurstSim.simulate(input, Set.of("b1", "b2", "b3", "b4", "b5"));

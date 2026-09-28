@@ -24,6 +24,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.nomadgames.alchiki.proto.Dyn4jBurstSim;
 import com.nomadgames.analytics.EventSink;
 import com.nomadgames.economy.EconomyService;
 import com.nomadgames.economy.MatchRewardCommand;
@@ -521,8 +522,9 @@ public class MatchService {
             return new ThrowResponse(forfeitThrowView(), bot, snapshot(match, playerId, grants));
         }
         Set<String> remaining = new LinkedHashSet<>(match.getBonesLeft());
-        ScoredThrow scored = engine.applyThrow(rawJson, remaining);
+        ScoredThrow scored = engine.applyThrow(rawJson, remaining, leftoverPoses(match));
         applyPocketedBones(match, scored);
+        persistLeftoverPoses(match, scored.playerThrow().keyframes(), scored.sakaOut(), scored.pocketedIds());
         match.setPlayerScore(match.getPlayerScore() + scored.displayedScore());
         match.setPlayerTurns(match.getPlayerTurns() + 1);
         match.setTurnDeadline(now.plus(engine.turnClock()));
@@ -631,8 +633,10 @@ public class MatchService {
         String throwingSakaId = joinerTurn ? "saka-joiner" : "saka-host";
         List<String> parkedSakaIds = List.of(joinerTurn ? "saka-host" : "saka-joiner");
         Set<String> remaining = new LinkedHashSet<>(match.getBonesLeft());
-        ScoredThrow scored = engine.applyThrow(rawJson, remaining, throwingSakaId, parkedSakaIds);
+        ScoredThrow scored =
+                engine.applyThrow(rawJson, remaining, throwingSakaId, parkedSakaIds, leftoverPoses(match));
         applyPocketedBones(match, scored);
+        persistLeftoverPoses(match, scored.playerThrow().keyframes(), scored.sakaOut(), scored.pocketedIds());
         if (joinerTurn) {
             match.setBotScore(match.getBotScore() + scored.displayedScore());
             match.setBotTurns(match.getBotTurns() + 1);
@@ -930,9 +934,10 @@ public class MatchService {
         }
         Set<String> remainingBoneIds = new LinkedHashSet<>(match.getBonesLeft());
         int seed = Objects.hash(match.getId(), match.getBotTurns());
-        BotThrowView bot =
-                engine.nextBotThrow(match.getDifficulty(), seed, MATCH_TABLE_ID, remainingBoneIds);
+        BotThrowView bot = engine.nextBotThrow(
+                match.getDifficulty(), seed, MATCH_TABLE_ID, remainingBoneIds, leftoverPoses(match));
         applyPocketedBones(match, bot.sakaOut(), bot.pocketedIds());
+        persistLeftoverPoses(match, bot.keyframes(), bot.sakaOut(), bot.pocketedIds());
         match.setBotScore(match.getBotScore() + bot.displayedScore());
         match.setBotTurns(match.getBotTurns() + 1);
         match.setTurnDeadline(now.plus(engine.turnClock()));
@@ -988,6 +993,58 @@ public class MatchService {
         List<String> bonesLeft = new ArrayList<>(match.getBonesLeft());
         bonesLeft.removeAll(pocketedIds);
         match.setBonesLeft(bonesLeft);
+    }
+
+    private static List<BodyPoseView> leftoverPoses(MatchEntity match) {
+        List<BodyPoseView> stored = match.getBonePoses();
+        if (stored == null || stored.isEmpty()) {
+            return List.of();
+        }
+        Set<String> remaining = new LinkedHashSet<>(match.getBonesLeft());
+        List<BodyPoseView> poses = new ArrayList<>();
+        for (BodyPoseView pose : stored) {
+            if (pose != null && remaining.contains(pose.id())) {
+                poses.add(pose);
+            }
+        }
+        return poses;
+    }
+
+    /**
+     * Keep in-circle rest poses for the next throw. Saka-out foul puts knocked sohi
+     * back on the seed line; pocketed sohi on a legal throw are omitted.
+     */
+    private static void persistLeftoverPoses(
+            MatchEntity match, List<KeyframeView> keyframes, boolean sakaOut, List<String> pocketedIds) {
+        Map<String, BodyPoseView> next = new LinkedHashMap<>();
+        Set<String> remaining = new LinkedHashSet<>(match.getBonesLeft());
+        for (BodyPoseView pose : leftoverPoses(match)) {
+            if (remaining.contains(pose.id())) {
+                next.put(pose.id(), pose);
+            }
+        }
+        if (keyframes != null && !keyframes.isEmpty()) {
+            List<BodyPoseView> last = keyframes.get(keyframes.size() - 1).bodies();
+            if (last != null) {
+                for (BodyPoseView pose : last) {
+                    if (pose == null || pose.id() == null || pose.id().startsWith("saka")) {
+                        continue;
+                    }
+                    if (remaining.contains(pose.id())) {
+                        next.put(pose.id(), pose);
+                    }
+                }
+            }
+        }
+        if (sakaOut && pocketedIds != null) {
+            for (String id : pocketedIds) {
+                if (remaining.contains(id)) {
+                    var seed = Dyn4jBurstSim.seedBonePose(id);
+                    next.put(id, new BodyPoseView(seed.id, seed.x, seed.y, seed.angle));
+                }
+            }
+        }
+        match.setBonePoses(new ArrayList<>(next.values()));
     }
 
     /** Rematch eligibility for finished PRIVATE|CASUAL only (D-99). Seat-bound via requireSeat (T-05-04). */

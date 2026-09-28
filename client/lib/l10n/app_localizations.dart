@@ -674,6 +674,12 @@ abstract class AppLocalizations {
   /// **'Starting…'**
   String get startingMatch;
 
+  /// No description provided for @loadingLobby.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading…'**
+  String get loadingLobby;
+
   /// No description provided for @opponent.
   ///
   /// In en, this message translates to:

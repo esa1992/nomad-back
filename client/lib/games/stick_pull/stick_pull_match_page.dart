@@ -9,6 +9,7 @@ import 'package:client/l10n/app_localizations.dart';
 import 'package:client/platform/api/nomad_api.dart';
 import 'package:client/platform/auth/session_store.dart';
 import 'package:client/platform/session/match_socket.dart';
+import 'package:client/theme/steppe_widgets.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -612,6 +613,8 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
         child: Stack(
           fit: StackFit.expand,
           children: [
+            if (_match == null && !_startError && !_showRejoin)
+              SteppeLoading(label: l10n.startingMatch),
             if (_match != null && !_startError && !_showRejoin)
               GameWidget<StickPullGame>(game: _game),
             if (_match != null && !_startError && !_showRejoin) _buildHud(l10n),

@@ -73,12 +73,30 @@ public final class Dyn4jBurstSim {
     }
 
     public static Result simulate(ThrowInput input, Set<String> remainingBoneIds) {
-        return simulate(input, remainingBoneIds, TableConstants.settleTimeoutS);
+        return simulate(input, remainingBoneIds, Map.of(), TableConstants.settleTimeoutS);
+    }
+
+    public static Result simulate(
+            ThrowInput input, Set<String> remainingBoneIds, Map<String, Keyframe.BodyPose> leftoverPoses) {
+        return simulate(input, remainingBoneIds, leftoverPoses, TableConstants.settleTimeoutS);
     }
 
     public static Result simulate(ThrowInput input, Set<String> remainingBoneIds, double settleTimeoutS) {
+        return simulate(input, remainingBoneIds, Map.of(), settleTimeoutS);
+    }
+
+    public static Result simulate(
+            ThrowInput input,
+            Set<String> remainingBoneIds,
+            Map<String, Keyframe.BodyPose> leftoverPoses,
+            double settleTimeoutS) {
         World<Body> world = newWorld();
-        return runBurst(input, world, spawnRemaining(world, remainingBoneIds), settleTimeoutS, MATCH_IMPULSE_SCALE);
+        return runBurst(
+                input,
+                world,
+                spawnRemaining(world, remainingBoneIds, leftoverPoses),
+                settleTimeoutS,
+                MATCH_IMPULSE_SCALE);
     }
 
     /**
@@ -87,12 +105,21 @@ public final class Dyn4jBurstSim {
      */
     public static Result simulatePrivate(
             ThrowInput input, Set<String> remainingBoneIds, String throwingSakaId, List<String> parkedSakaIds) {
+        return simulatePrivate(input, remainingBoneIds, throwingSakaId, parkedSakaIds, Map.of());
+    }
+
+    public static Result simulatePrivate(
+            ThrowInput input,
+            Set<String> remainingBoneIds,
+            String throwingSakaId,
+            List<String> parkedSakaIds,
+            Map<String, Keyframe.BodyPose> leftoverPoses) {
         Objects.requireNonNull(parkedSakaIds, "parkedSakaIds");
         World<Body> world = newWorld();
         return runBurst(
                 input,
                 world,
-                spawnPrivate(world, remainingBoneIds),
+                spawnPrivate(world, remainingBoneIds, leftoverPoses),
                 TableConstants.settleTimeoutS,
                 MATCH_IMPULSE_SCALE,
                 throwingSakaId);
@@ -108,13 +135,13 @@ public final class Dyn4jBurstSim {
             throw new IllegalArgumentException("boneCount");
         }
         Map<String, Body> bodies = new LinkedHashMap<>();
-        addDisk(world, bodies, "saka", SEED1[0][0], SEED1[0][1], true);
+        addDisk(world, bodies, "saka", SEED1[0][0], SEED1[0][1], 0.0, true);
         int hexTargets = boneCount == 7 ? 6 : boneCount;
         for (int i = 1; i <= hexTargets; i++) {
-            addDisk(world, bodies, IDS[i], SEED1[i][0], SEED1[i][1], false);
+            addDisk(world, bodies, IDS[i], SEED1[i][0], SEED1[i][1], 0.0, false);
         }
         if (boneCount == 7) {
-            addDisk(world, bodies, "b7", 0.0, 0.30, false);
+            addDisk(world, bodies, "b7", 0.0, 0.30, 0.0, false);
         }
         return bodies;
     }
@@ -124,42 +151,53 @@ public final class Dyn4jBurstSim {
     }
 
     public static Map<String, Body> spawnRemaining(World<Body> world, Set<String> boneIds) {
+        return spawnRemaining(world, boneIds, Map.of());
+    }
+
+    public static Map<String, Body> spawnRemaining(
+            World<Body> world, Set<String> boneIds, Map<String, Keyframe.BodyPose> leftoverPoses) {
         Objects.requireNonNull(world, "world");
         Objects.requireNonNull(boneIds, "boneIds");
+        Map<String, Keyframe.BodyPose> poses = leftoverPoses == null ? Map.of() : leftoverPoses;
         Map<String, Body> bodies = new LinkedHashMap<>();
-        addDisk(world, bodies, "saka", 0.0, -1.15, true);
+        addDisk(world, bodies, "saka", 0.0, -1.15, 0.0, true);
         for (String id : TARGET_IDS) {
             if (!boneIds.contains(id)) {
                 continue;
             }
-            if ("b7".equals(id)) {
-                addDisk(world, bodies, "b7", 0.0, 0.30, false);
-                continue;
-            }
-            int index = indexOf(id);
-            addDisk(world, bodies, id, SEED1[index][0], SEED1[index][1], false);
+            addBone(world, bodies, id, poses.get(id));
         }
         return bodies;
     }
 
     static Map<String, Body> spawnPrivate(World<Body> world, Set<String> boneIds) {
+        return spawnPrivate(world, boneIds, Map.of());
+    }
+
+    static Map<String, Body> spawnPrivate(
+            World<Body> world, Set<String> boneIds, Map<String, Keyframe.BodyPose> leftoverPoses) {
         Objects.requireNonNull(world, "world");
         Objects.requireNonNull(boneIds, "boneIds");
+        Map<String, Keyframe.BodyPose> poses = leftoverPoses == null ? Map.of() : leftoverPoses;
         Map<String, Body> bodies = new LinkedHashMap<>();
-        addDisk(world, bodies, "saka-host", -0.25, -1.12, true);
-        addDisk(world, bodies, "saka-joiner", 0.25, -1.12, true);
+        addDisk(world, bodies, "saka-host", -0.25, -1.12, 0.0, true);
+        addDisk(world, bodies, "saka-joiner", 0.25, -1.12, 0.0, true);
         for (String id : TARGET_IDS) {
             if (!boneIds.contains(id)) {
                 continue;
             }
-            if ("b7".equals(id)) {
-                addDisk(world, bodies, "b7", 0.0, 0.30, false);
-                continue;
-            }
-            int index = indexOf(id);
-            addDisk(world, bodies, id, SEED1[index][0], SEED1[index][1], false);
+            addBone(world, bodies, id, poses.get(id));
         }
         return bodies;
+    }
+
+    /** Seed-line pose for a leftover soha (used on saka-out foul restore). */
+    public static Keyframe.BodyPose seedBonePose(String id) {
+        if ("b7".equals(id)) {
+            return new Keyframe.BodyPose("b7", 0.0, 0.30, 0.0);
+        }
+        int index = indexOf(id);
+        return new Keyframe.BodyPose(id, SEED1[index][0], SEED1[index][1], 0.0);
     }
 
     public static List<String> targetIdsForBoneCount(int boneCount) {
@@ -252,8 +290,29 @@ public final class Dyn4jBurstSim {
         return spawnForBoneCount(world, 6);
     }
 
+    private static void addBone(
+            World<Body> world, Map<String, Body> bodies, String id, Keyframe.BodyPose leftover) {
+        if (leftover != null) {
+            addDisk(world, bodies, id, leftover.x, leftover.y, leftover.angle, false);
+            return;
+        }
+        Keyframe.BodyPose seed = seedBonePose(id);
+        addDisk(world, bodies, id, seed.x, seed.y, seed.angle, false);
+    }
+
     private static void addDisk(
             World<Body> world, Map<String, Body> bodies, String id, double x, double y, boolean saka) {
+        addDisk(world, bodies, id, x, y, 0.0, saka);
+    }
+
+    private static void addDisk(
+            World<Body> world,
+            Map<String, Body> bodies,
+            String id,
+            double x,
+            double y,
+            double angle,
+            boolean saka) {
         double radius = saka ? TableConstants.sakaRadiusM : TableConstants.boneRadiusM;
         double mass = saka ? TableConstants.sakaMassKg : TableConstants.boneMassKg;
         double density = mass / (Math.PI * radius * radius);
@@ -263,6 +322,9 @@ public final class Dyn4jBurstSim {
         body.setLinearDamping(TableConstants.linearDamping);
         body.setAngularDamping(TableConstants.angularDamping);
         body.translate(x, y);
+        if (angle != 0.0) {
+            body.rotateAboutCenter(angle);
+        }
         body.setUserData(id);
         world.addBody(body);
         bodies.put(id, body);

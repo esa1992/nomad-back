@@ -162,6 +162,7 @@
     }
   },
   "startingMatch": "Начинаем…",
+  "loadingLobby": "Загрузка…",
   "opponent": "Соперник",
   "opponentsTurn": "Ход соперника",
   "opponentWins": "Соперник победил",

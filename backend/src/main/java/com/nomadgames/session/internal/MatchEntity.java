@@ -8,6 +8,8 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import com.nomadgames.session.BodyPoseView;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -50,6 +52,10 @@ public class MatchEntity {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "bones_left", nullable = false)
     private List<String> bonesLeft = new ArrayList<>();
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "bone_poses", nullable = false)
+    private List<BodyPoseView> bonePoses = new ArrayList<>();
 
     @Column(nullable = false)
     private String turn;
@@ -100,6 +106,7 @@ public class MatchEntity {
         this.difficulty = difficulty;
         this.status = status;
         this.bonesLeft = new ArrayList<>(bonesLeft);
+        this.bonePoses = new ArrayList<>();
         this.turn = turn;
         this.turnDeadline = turnDeadline;
         this.matchDeadline = matchDeadline;
@@ -181,6 +188,14 @@ public class MatchEntity {
 
     public List<String> getBonesLeft() {
         return bonesLeft;
+    }
+
+    public List<BodyPoseView> getBonePoses() {
+        return bonePoses == null ? List.of() : bonePoses;
+    }
+
+    public void setBonePoses(List<BodyPoseView> bonePoses) {
+        this.bonePoses = bonePoses == null ? new ArrayList<>() : new ArrayList<>(bonePoses);
     }
 
     public String getTurn() {

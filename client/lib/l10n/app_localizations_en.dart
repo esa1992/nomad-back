@@ -329,6 +329,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get startingMatch => 'Starting…';
 
   @override
+  String get loadingLobby => 'Loading…';
+
+  @override
   String get opponent => 'Opponent';
 
   @override

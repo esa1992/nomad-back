@@ -5,7 +5,7 @@ package com.nomadgames.games.stickpull;
  */
 public final class StickPullConstants {
 
-    public static final double SOFT_FORCE = 0.012;
+    public static final double SOFT_FORCE = 0.03;
     public static final double WIN_THRESHOLD = 0.85;
     public static final double BURST_FORCE_MULT = 0.4;
     public static final double EXHAUST_FORCE_MULT = 0.15;

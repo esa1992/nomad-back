@@ -672,14 +672,11 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 28),
-                  child: SizedBox(
-                    width: 260,
-                    child: _PullCta(
-                      label: _tapLabel(l10n),
-                      enabled: !_tapDisabled,
-                      active: _canPull,
-                      onTap: _onTapZone,
-                    ),
+                  child: _PullCta(
+                    label: _tapLabel(l10n),
+                    enabled: !_tapDisabled,
+                    active: _canPull,
+                    onTap: _onTapZone,
                   ),
                 ),
               ),
@@ -818,6 +815,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
                 opponentLabel: _isHuman ? _opponentLabel : null,
                 youScore: 0,
                 botScore: 0,
+                showScore: false,
                 isRanked: _isRanked,
                 coinsGranted: _match?.coinsGranted ?? 0,
                 gemsGranted: _match?.gemsGranted ?? 0,
@@ -1042,28 +1040,26 @@ class _PullCta extends StatelessWidget {
         : _StickPullMatchPageState._onDark.withValues(alpha: enabled ? 0.85 : 0.4);
     return Opacity(
       opacity: enabled ? 1 : 0.55,
-      child: Material(
-        color: fill,
-        borderRadius: BorderRadius.circular(4),
-        elevation: active ? 4 : 0,
-        child: InkWell(
-          onTap: enabled ? onTap : null,
+      child: SizedBox(
+        width: 260,
+        height: 56,
+        child: Material(
+          color: fill,
           borderRadius: BorderRadius.circular(4),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 56),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-              child: Center(
-                child: Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: text,
-                    fontSize: active ? 18 : 15,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: active ? 1.4 : 0.6,
-                    height: 1.1,
-                  ),
+          elevation: active ? 4 : 0,
+          child: InkWell(
+            onTap: enabled ? onTap : null,
+            borderRadius: BorderRadius.circular(4),
+            child: Center(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: text,
+                  fontSize: active ? 18 : 15,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: active ? 1.4 : 0.6,
+                  height: 1.1,
                 ),
               ),
             ),

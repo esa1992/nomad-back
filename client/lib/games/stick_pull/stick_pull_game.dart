@@ -65,7 +65,7 @@ class StickPullGame extends FlameGame {
   @override
   void update(double dt) {
     super.update(dt);
-    _displayMarker += (marker - _displayMarker) * (dt * 10).clamp(0.0, 1.0);
+    _displayMarker += (marker - _displayMarker) * (dt * 18).clamp(0.0, 1.0);
     if (_thresholdFlashLeft > 0) {
       _thresholdFlashLeft -= dt;
       if (_thresholdFlashLeft <= 0) {

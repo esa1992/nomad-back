@@ -182,6 +182,7 @@ class ResultOverlay extends StatelessWidget {
     this.gemsGranted = 0,
     this.onShop,
     this.victoryAccent,
+    this.showScore = true,
   });
 
   final AppLocalizations l10n;
@@ -206,6 +207,9 @@ class ResultOverlay extends StatelessWidget {
 
   /// Equipped victory SKU tint; applied only on local win (D-46, D-54).
   final Color? victoryAccent;
+
+  /// Alchiki bone tallies. Stick Pull has no points — hide the pair.
+  final bool showScore;
 
   @override
   Widget build(BuildContext context) {
@@ -237,12 +241,14 @@ class ResultOverlay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(heading, style: headingStyle, textAlign: TextAlign.center),
-          const SizedBox(height: 16),
-          Text(
-            pair,
-            style: _display,
-            textAlign: TextAlign.center,
-          ),
+          if (showScore) ...[
+            const SizedBox(height: 16),
+            Text(
+              pair,
+              style: _display,
+              textAlign: TextAlign.center,
+            ),
+          ],
           if (coinsGranted > 0) ...[
             const SizedBox(height: 8),
             Text(

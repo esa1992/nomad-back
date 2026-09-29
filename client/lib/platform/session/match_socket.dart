@@ -15,6 +15,7 @@ class MatchSocket {
   final WebSocketChannel? _channel;
   StreamSubscription<dynamic>? _subscription;
   final StreamController<Map<String, dynamic>> _incoming;
+  final List<Map<String, dynamic>> _early = <Map<String, dynamic>>[];
 
   Stream<Map<String, dynamic>> get messages => _incoming.stream;
 
@@ -49,6 +50,31 @@ class MatchSocket {
     );
   }
 
+  void _emit(Map<String, dynamic> frame) {
+    if (_incoming.isClosed) {
+      return;
+    }
+    if (_incoming.hasListener) {
+      _incoming.add(frame);
+    } else {
+      _early.add(frame);
+    }
+  }
+
+  /// Call immediately after [messages.listen] so Countdown/StickState that
+  /// arrived during handshake are not dropped.
+  void flushBufferedFrames() {
+    if (_early.isEmpty || _incoming.isClosed) {
+      return;
+    }
+    final List<Map<String, dynamic>> pending =
+        List<Map<String, dynamic>>.from(_early);
+    _early.clear();
+    for (final Map<String, dynamic> frame in pending) {
+      _incoming.add(frame);
+    }
+  }
+
   void _listen() {
     final WebSocketChannel? channel = _channel;
     if (channel == null) {
@@ -61,7 +87,7 @@ class MatchSocket {
               ? jsonDecode(message)
               : message;
           if (decoded is Map) {
-            _incoming.add(Map<String, dynamic>.from(decoded));
+            _emit(Map<String, dynamic>.from(decoded));
           }
         } catch (error) {
           if (!_incoming.isClosed) {
@@ -100,6 +126,7 @@ class MatchSocket {
   Future<void> close() async {
     await _subscription?.cancel();
     _subscription = null;
+    _early.clear();
     if (!_incoming.isClosed) {
       _incoming.close();
     }

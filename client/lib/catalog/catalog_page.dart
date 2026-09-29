@@ -517,8 +517,8 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                 child: _loading
                     ? SteppeLoading(
                         label: _apiMs == null
-                            ? l10n.loadingLobby
-                            : '${l10n.loadingLobby}\n${l10n.apiLatencyMs(_apiMs!)}',
+                            ? l10n.checkingApi
+                            : '${l10n.apiLatencyMs(_apiMs!)}\n${l10n.loadingCatalog}',
                       )
                     : SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),

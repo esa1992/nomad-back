@@ -704,6 +704,18 @@ abstract class AppLocalizations {
   /// **'Loading…'**
   String get loadingLobby;
 
+  /// Shown while catalog/wallet requests are in flight after health probe.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading catalog…'**
+  String get loadingCatalog;
+
+  /// Shown while measuring backend RTT.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking connection…'**
+  String get checkingApi;
+
   /// No description provided for @opponent.
   ///
   /// In en, this message translates to:

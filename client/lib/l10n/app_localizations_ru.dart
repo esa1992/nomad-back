@@ -344,6 +344,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get loadingLobby => 'Загрузка…';
 
   @override
+  String get loadingCatalog => 'Загрузка каталога…';
+
+  @override
+  String get checkingApi => 'Проверка связи…';
+
+  @override
   String get opponent => 'Соперник';
 
   @override

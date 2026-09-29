@@ -217,6 +217,35 @@ public class StickPullRuntime {
         return open.size() >= 2;
     }
 
+    /**
+     * Call right after a WS seat is registered. Arms + emits the first Countdown
+     * digit immediately so the client does not sit on "Starting…" waiting for the
+     * next 50ms scheduler tick (and so GO is not missed if ticks were delayed).
+     */
+    public void kickCountdownIfReady(UUID matchId) {
+        Instant now = Instant.now();
+        live.computeIfPresent(matchId, (id, session) -> {
+            if (session.sim().phase() != StickPullPhase.COUNTDOWN) {
+                return session;
+            }
+            if (!seatsReadyForCountdown(session)) {
+                return session;
+            }
+            if (session.nextCountdownAt() != null) {
+                return session;
+            }
+            LiveSession armed = copy(
+                    session,
+                    0,
+                    now,
+                    session.nextBotTapAt(),
+                    session.botTapsSincePause(),
+                    session.nextStateBroadcastAt(),
+                    session.clientPaused());
+            return advanceCountdown(armed, now);
+        });
+    }
+
     private LiveSession advanceCountdown(LiveSession session, Instant now) {
         if (session.nextCountdownAt() != null && now.isBefore(session.nextCountdownAt())) {
             return session;

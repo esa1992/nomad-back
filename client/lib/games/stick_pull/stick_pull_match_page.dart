@@ -66,6 +66,8 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   Timer? _falseStartTimer;
   Timer? _uiTick;
   Timer? _countdownClearTimer;
+  Timer? _countdownWatch;
+  bool _countdownReconnectAttempted = false;
   bool _goHapticDone = false;
   bool _thresholdHapticDone = false;
 
@@ -156,6 +158,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   void dispose() {
     _falseStartTimer?.cancel();
     _countdownClearTimer?.cancel();
+    _countdownWatch?.cancel();
     _uiTick?.cancel();
     unawaited(_sub?.cancel());
     unawaited(_socket?.close());
@@ -246,6 +249,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
       _countdown = null;
       _goHapticDone = false;
       _thresholdHapticDone = false;
+      _countdownReconnectAttempted = false;
       _staminaYou = 1;
       _staminaOpp = 1;
       _prevLocalStamina = 1;
@@ -324,6 +328,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   Future<void> _connectWs(String matchId) async {
     await _sub?.cancel();
     await _socket?.close();
+    _countdownWatch?.cancel();
     final NomadApi api = ref.read(nomadApiProvider);
     final WsTicket ticket = await api.wsTicket(matchId);
     if (_isHuman) {
@@ -333,10 +338,32 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
       api.wsUrlForMatch(matchId: matchId, ticket: ticket.ticket),
     );
     _socket = socket;
+    // Attach BEFORE any await so buffered Countdown/StickState flush immediately.
     _sub = socket.messages.listen(_onFrame, onError: (_) {}, onDone: () {
       if (_isHuman) {
         unawaited(_onSocketLost());
       }
+    });
+    socket.flushBufferedFrames();
+    _armCountdownWatch();
+  }
+
+  void _armCountdownWatch() {
+    _countdownWatch?.cancel();
+    _countdownWatch = Timer(const Duration(seconds: 3), () {
+      if (!mounted ||
+          _isTerminal ||
+          _countdown != null ||
+          _phase == 'LIVE' ||
+          _countdownReconnectAttempted) {
+        return;
+      }
+      _countdownReconnectAttempted = true;
+      final String? id = _activeMatchId;
+      if (id == null || id.isEmpty) {
+        return;
+      }
+      unawaited(_connectWs(id));
     });
   }
 
@@ -461,6 +488,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
     switch (type) {
       case 'Countdown':
         final String? value = StickPullWs.countdownValue(frame);
+        _countdownWatch?.cancel();
         _countdownClearTimer?.cancel();
         setState(() {
           _countdown = value;
@@ -605,6 +633,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
       _countdown = null;
       _goHapticDone = false;
       _thresholdHapticDone = false;
+      _countdownReconnectAttempted = false;
       _staminaYou = 1;
       _staminaOpp = 1;
       _prevLocalStamina = 1;

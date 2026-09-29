@@ -344,6 +344,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loadingLobby => 'Loading…';
 
   @override
+  String get loadingCatalog => 'Loading catalog…';
+
+  @override
+  String get checkingApi => 'Checking connection…';
+
+  @override
   String get opponent => 'Opponent';
 
   @override

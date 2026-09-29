@@ -237,10 +237,11 @@ public class MatchService {
     }
 
     /**
-     * After a seat opens WS: push current StickState so a late connect does not sit forever
-     * on a client-side COUNTDOWN with no frames (countdown may already be LIVE).
+     * After a seat opens WS: arm Stick Pull 3-2-1 if needed, then push StickState
+     * so the client syncs even if early Countdown frames were buffered/raced.
      */
     public void pushStickPullSync(UUID matchId) {
+        stickPull.kickCountdownIfReady(matchId);
         StickPullRuntime.LiveSession session = stickPull.session(matchId);
         if (session == null) {
             return;

@@ -10,6 +10,7 @@ import 'package:client/platform/api/nomad_api.dart';
 import 'package:client/platform/app.dart';
 import 'package:client/platform/auth/session_store.dart';
 import 'package:client/platform/session/match_socket.dart';
+import 'package:client/platform/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -165,7 +166,8 @@ Future<void> _pumpApp(
 Future<void> _pumpUntilRejoin(WidgetTester tester) async {
   await tester.pump();
   await tester.pump();
-  for (int i = 0; i < 40; i++) {
+  final int frames = SplashPage.minHold.inMilliseconds ~/ 50 + 20;
+  for (int i = 0; i < frames; i++) {
     await tester.pump(const Duration(milliseconds: 50));
     if (find.text('Rejoin match').evaluate().isNotEmpty) {
       return;

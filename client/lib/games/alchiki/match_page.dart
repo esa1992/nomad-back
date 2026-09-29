@@ -13,6 +13,8 @@ import 'package:client/profile/bind_sheet.dart';
 import 'package:client/replay/authority_score.dart';
 import 'package:client/replay/throw_resolved.dart';
 import 'package:client/schema/table_constants.dart';
+import 'package:client/theme/steppe_backdrop.dart';
+import 'package:client/theme/steppe_ops.dart';
 import 'package:client/theme/steppe_widgets.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +89,7 @@ class AlchikiMatchPage extends ConsumerStatefulWidget {
 
 class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     with SingleTickerProviderStateMixin {
-  static const Color _surround = Color(0xFF241810);
+  static const Color _surround = SteppeOps.voidBg;
   static const Color _onDark = Color(0xFFF4E8C8);
   static const Color _accent = Color(0xFFF0B429);
   static const Color _onAccent = Color(0xFF241810);
@@ -311,7 +313,7 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       !_settled &&
       !_replaying &&
       _isPlayerTurn &&
-      !      _paused &&
+      !_paused &&
       !_turnExpired &&
       !_isTerminal &&
       !_inReconnectGrace;
@@ -374,6 +376,15 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
         !_throwing &&
         !_isTerminal;
     game.showAimingMarker = waiting;
+    game.showThrowHand = _isPlayerTurn &&
+        !_isTerminal &&
+        !_paused &&
+        !_showRejoin &&
+        _tableAttached &&
+        !_startError;
+    if (!_charging) {
+      game.holdChargeT = 0;
+    }
   }
 
   String _turnSeatOf(String turn) => turn == 'JOINER' ? 'joiner' : 'host';
@@ -1014,7 +1025,8 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     game.aim.aimAngleRad = input.aimAngleRad;
     game.aimLocked = true;
     _meterTick?.cancel();
-    final int holdMs = input.holdMs.clamp(80, 400);
+    // Show the bot winding up; 80–400ms was shorter than a blink on device.
+    final int holdMs = input.holdMs.clamp(400, 1100);
     _meterTick = Timer(Duration(milliseconds: holdMs), () {
       if (!mounted) {
         return;
@@ -1055,9 +1067,12 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       _chargeStart = DateTime.now();
     });
     game.aimLocked = true;
+    game.throwFlickT = 0;
+    game.holdChargeT = 0;
     _pulse.repeat(reverse: true);
     _meterTick = Timer.periodic(const Duration(milliseconds: 16), (_) {
       if (mounted && _charging) {
+        game.holdChargeT = _chargeT;
         setState(() {});
       }
     });
@@ -1532,11 +1547,23 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     final holdOpacity = !holdEnabled ? 0.4 : pulseOpacity;
     final String difficulty = widget.difficulty;
     _scheduleBindPromptIfNeeded();
+    if (game.isLoaded) {
+      game.showThrowHand = _isPlayerTurn &&
+          !_isTerminal &&
+          !_paused &&
+          !_showRejoin &&
+          _tableAttached &&
+          !_startError;
+      if (_charging) {
+        game.holdChargeT = _chargeT;
+      }
+    }
 
     return Scaffold(
       backgroundColor: _surround,
       body: Stack(
         children: [
+          const SteppeBackdrop(),
           if (_tableAttached)
             IgnorePointer(
               ignoring: _isTerminal || _paused,

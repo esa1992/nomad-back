@@ -110,11 +110,11 @@ class AppLocalizationsRu extends AppLocalizations {
       'Когда кости остановились, каждая цель полностью за кругом даёт 1 и уходит со стола. Если сака вышла — 0, и она вернётся.';
 
   @override
-  String get howtoWinTitle => 'До пяти';
+  String get howtoWinTitle => 'Очисти круг';
 
   @override
   String get howtoWinBody =>
-      'Набери 5 очков, чтобы победить. Если закончилось время или ходы — побеждает больший счёт.';
+      'Выбей все сохи за круг. Когда круг пуст или кончилось время — побеждает больший счёт.';
 
   @override
   String get howtoStickSitTitle => 'Напротив';
@@ -183,7 +183,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get bot => 'Бот';
 
   @override
-  String get firstToFive => 'До пяти';
+  String get firstToFive => 'Очисти круг';
 
   @override
   String get yourTurn => 'Твой ход';

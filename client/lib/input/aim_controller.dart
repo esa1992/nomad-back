@@ -4,7 +4,7 @@ import 'package:forge2d/forge2d.dart';
 
 /// Drag-around-saka aim. Canonical angle is CCW from +X in Y-up meters (D-04).
 class AimController {
-  double aimAngleRad = 0;
+  double aimAngleRad = math.pi / 2;
 
   void updateFromWorldPoint(Vector2 worldYUp, Vector2 sakaPos) {
     final dx = worldYUp.x - sakaPos.x;

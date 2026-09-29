@@ -84,13 +84,13 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(store.seen, isTrue);
-      expect(find.text('First to 5 · EASY'), findsOneWidget);
+      expect(find.text('Clear circle · EASY'), findsOneWidget);
       expect(find.text('The circle'), findsNothing);
     });
   });
 
   group('five how-to cards', () {
-    testWidgets('page 1 of 5; swipe to card 5 shows First to 5 and Play Alchiki', (
+    testWidgets('page 1 of 5; swipe to card 5 shows Clear the circle and Play Alchiki', (
       WidgetTester tester,
     ) async {
       await _pumpApp(
@@ -105,7 +105,7 @@ void main() {
 
       await _swipeToLastCard(tester);
 
-      expect(find.text('First to 5'), findsWidgets);
+      expect(find.text('Clear the circle'), findsWidgets);
       expect(find.text('Play Alchiki'), findsOneWidget);
       expect(find.text('5 / 5'), findsOneWidget);
       expect(find.text('Next'), findsNothing);
@@ -125,7 +125,7 @@ void main() {
         'Aim',
         'Hold to throw',
         'Out is one point',
-        'First to 5',
+        'Clear the circle',
       ];
 
       for (var i = 0; i < headings.length; i++) {
@@ -157,7 +157,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('The circle'), findsNothing);
-      expect(find.text('First to 5 · EASY'), findsOneWidget);
+      expect(find.text('Clear circle · EASY'), findsOneWidget);
     });
   });
 }

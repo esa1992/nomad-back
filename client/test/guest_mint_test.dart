@@ -67,7 +67,7 @@ void main() {
     );
     await tester.pump();
     await tester.pump();
-    await tester.pump(const Duration(seconds: 2));
+    await tester.pump(SplashPage.minHold);
 
     final BuildContext context = tester.element(find.byType(SplashPage));
     final AppLocalizations l10n = AppLocalizations.of(context);
@@ -86,7 +86,7 @@ void main() {
       session: session,
     );
     await tester.pump();
-    await tester.pump(const Duration(seconds: 2));
+    await tester.pump(SplashPage.minHold);
     await tester.pumpAndSettle();
 
     expect(find.byType(TextField), findsNothing);

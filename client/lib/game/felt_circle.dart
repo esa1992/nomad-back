@@ -1,11 +1,12 @@
 import 'dart:ui';
 
+import 'package:client/game/knucklebone_look.dart';
 import 'package:client/schema/table_constants.dart';
 import 'package:flame/components.dart';
 
-/// Render-only parlor felt. Not a collider (D-07).
+/// Packed-earth scoring circle. Not a collider (D-07).
 class FeltCircle extends PositionComponent {
-  static const Color fill = Color(0xFF1B6B3A);
+  static const Color fill = Color(0xFF5C3C22);
   static const Color rimIdle = Color(0xFFE8D4A8);
   static const Color rimFlash = Color(0xFFF0B429);
 
@@ -40,20 +41,12 @@ class FeltCircle extends PositionComponent {
   void render(Canvas canvas) {
     final r = TableConstants.circleRadiusM;
     final center = Offset(r, r);
-    canvas.drawCircle(
-      center,
-      r,
-      Paint()..color = fill,
-    );
-    canvas.drawCircle(
-      center,
-      r,
-      Paint()
-        ..color = _flashRemainingS > 0
-            ? rimFlash
-            : (rimTint ?? rimIdle)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 0.03,
+    KnuckleboneLook.paintPit(
+      canvas,
+      center: center,
+      radius: r,
+      rim: _flashRemainingS > 0 ? rimFlash : (rimTint ?? rimIdle),
+      flashing: _flashRemainingS > 0,
     );
   }
 }

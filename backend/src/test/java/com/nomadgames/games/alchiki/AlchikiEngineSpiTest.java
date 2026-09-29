@@ -37,17 +37,19 @@ class AlchikiEngineSpiTest {
     }
 
     @Test
-    void resolveMapsPrivateFirstToFiveOntoHostAndJoinerWin() {
-        ScoreClock hostLead = new ScoreClock(5, 0, 2, 2, MATCH_DEADLINE, HARD_CAP, true, 6);
-        assertEquals(MatchStatus.HOST_WIN, engine.resolve(hostLead, NOW));
-        ScoreClock joinerLead = new ScoreClock(0, 5, 2, 2, MATCH_DEADLINE, HARD_CAP, true, 6);
-        assertEquals(MatchStatus.JOINER_WIN, engine.resolve(joinerLead, NOW));
-        ScoreClock draw = new ScoreClock(2, 2, 8, 8, MATCH_DEADLINE, HARD_CAP, true, 6);
-        assertEquals(MatchStatus.DRAW, engine.resolve(draw, NOW));
-        ScoreClock botPath = new ScoreClock(5, 0, 2, 2, MATCH_DEADLINE, HARD_CAP, false, 6);
-        assertEquals(MatchStatus.PLAYER_WIN, engine.resolve(botPath, NOW));
-        ScoreClock emptyBoard = new ScoreClock(3, 1, 2, 2, MATCH_DEADLINE, HARD_CAP, true, 0);
-        assertEquals(MatchStatus.HOST_WIN, engine.resolve(emptyBoard, NOW));
+    void resolveEndsOnlyOnEmptyBoardOrClockAndMapsPrivateSeats() {
+        ScoreClock highScore = new ScoreClock(5, 0, 2, 2, MATCH_DEADLINE, HARD_CAP, true, 6);
+        assertEquals(MatchStatus.IN_PLAY, engine.resolve(highScore, NOW));
+        ScoreClock eightTurns = new ScoreClock(2, 2, 8, 8, MATCH_DEADLINE, HARD_CAP, true, 6);
+        assertEquals(MatchStatus.IN_PLAY, engine.resolve(eightTurns, NOW));
+        ScoreClock emptyHostLead = new ScoreClock(3, 1, 2, 2, MATCH_DEADLINE, HARD_CAP, true, 0);
+        assertEquals(MatchStatus.HOST_WIN, engine.resolve(emptyHostLead, NOW));
+        ScoreClock emptyJoinerLead = new ScoreClock(1, 3, 2, 2, MATCH_DEADLINE, HARD_CAP, true, 0);
+        assertEquals(MatchStatus.JOINER_WIN, engine.resolve(emptyJoinerLead, NOW));
+        ScoreClock emptyBotPath = new ScoreClock(3, 1, 2, 2, MATCH_DEADLINE, HARD_CAP, false, 0);
+        assertEquals(MatchStatus.PLAYER_WIN, engine.resolve(emptyBotPath, NOW));
+        ScoreClock atDeadline = new ScoreClock(3, 1, 4, 4, MATCH_DEADLINE, HARD_CAP, true, 4);
+        assertEquals(MatchStatus.HOST_WIN, engine.resolve(atDeadline, MATCH_DEADLINE));
     }
 
     @Test

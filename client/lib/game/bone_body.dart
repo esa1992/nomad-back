@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+import 'package:client/game/knucklebone_look.dart';
 import 'package:client/schema/table_constants.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 
@@ -59,12 +60,13 @@ class BoneBody extends BodyComponent {
 
   @override
   void renderCircle(Canvas canvas, Offset center, double radius) {
-    canvas.drawCircle(center, radius, paint);
-    final tickPaint = Paint()
-      ..color = tick
-      ..strokeWidth = radius * 0.16
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-    canvas.drawLine(center, Offset(center.dx + radius, center.dy), tickPaint);
+    KnuckleboneLook.paint(
+      canvas,
+      center: center,
+      radius: radius,
+      fill: paint.color,
+      crease: tick,
+      bodyAngle: body.angle,
+    );
   }
 }

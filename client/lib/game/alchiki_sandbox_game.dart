@@ -1,7 +1,11 @@
+import 'dart:math' as math;
+
 import 'package:client/game/bone_body.dart';
 import 'package:client/game/felt_circle.dart';
 import 'package:client/game/physics_stepper.dart';
 import 'package:client/game/saka_body.dart';
+import 'package:client/game/throw_juice.dart';
+import 'package:client/games/alchiki/throw_hand.dart';
 import 'package:client/input/aim_controller.dart';
 import 'package:client/input/throw_input.dart';
 import 'package:client/replay/keyframe_player.dart';
@@ -17,7 +21,7 @@ import 'package:flutter/painting.dart';
 Future<void> initializeForge2D() async {}
 
 /// 2.5D presentation squash. Negative Y also maps Y-up meters onto Flame (D-06).
-const double presentationScaleY = 0.86;
+const double presentationScaleY = 0.74;
 
 /// Sleep of every dynamic body, or [TableConstants.settleTimeoutS] (1.2 s).
 bool computeSettled(bool allDynamicSleeping, double simTimeS) {
@@ -72,6 +76,11 @@ class AlchikiSandboxGame extends Forge2DGame {
   double replayTimeMs = 0;
   int previewCount = 0;
   bool sakaOut = false;
+  double holdChargeT = 0;
+  double throwFlickT = 0;
+  bool showThrowHand = true;
+  double _fitZoom = 100;
+  double cameraPunch = 0;
   void Function()? onSettled;
   void Function()? onReplayEnded;
   ThrowResolved? _replayResolved;
@@ -88,6 +97,9 @@ class AlchikiSandboxGame extends Forge2DGame {
         .where((body) => body.bodyType == BodyType.dynamic)
         .length;
   }
+
+  @override
+  Color backgroundColor() => const Color(0x00000000);
 
   @override
   Future<void> onLoad() async {
@@ -120,14 +132,43 @@ class AlchikiSandboxGame extends Forge2DGame {
       felt,
       saka,
       ...bones,
+      ThrowJuice(
+        isLive: () => throwing || replaying,
+        saka: () => saka,
+        bones: () => bones,
+        trailColor: () => const Color(0xFFF4E8C8),
+        onImpact: () {
+          cameraPunch = 1;
+        },
+      ),
       AimArrow(sandbox: this),
       TableDragLayer(sandbox: this),
     ]);
+    await camera.viewport.add(
+      ThrowHandHud(
+        aim: () => aim,
+        visible: () => showThrowHand,
+        chargeT: () => holdChargeT,
+        flickT: () => throwFlickT,
+        sakaFill: () => saka.paint.color,
+        sakaCrease: () => saka.stripeColor,
+      ),
+    );
   }
 
   @override
   void update(double dt) {
     super.update(dt);
+    if (throwing || replaying) {
+      throwFlickT = math.min(1.0, throwFlickT + dt / 0.26);
+    }
+    if (cameraPunch > 0.001) {
+      cameraPunch *= math.exp(-dt * 7);
+      _applyZoom();
+    } else if (cameraPunch != 0) {
+      cameraPunch = 0;
+      _applyZoom();
+    }
     if (replaying) {
       _advanceReplay(dt);
       return;
@@ -279,6 +320,9 @@ class AlchikiSandboxGame extends Forge2DGame {
     throwing = false;
     aimLocked = false;
     simTimeS = 0;
+    throwFlickT = 0;
+    cameraPunch = 0;
+    _applyZoom();
   }
 
   @override
@@ -286,8 +330,13 @@ class AlchikiSandboxGame extends Forge2DGame {
     super.onGameResize(size);
     final minSide = size.x < size.y ? size.x : size.y;
     if (minSide > 0) {
-      camera.viewfinder.zoom = minSide / (TableConstants.circleRadiusM * 2.6);
+      _fitZoom = minSide / (TableConstants.circleRadiusM * 2.6);
+      _applyZoom();
     }
+  }
+
+  void _applyZoom() {
+    camera.viewfinder.zoom = _fitZoom * (1 + 0.04 * cameraPunch);
   }
 
   void throwSaka(ThrowInput input) {
@@ -296,6 +345,7 @@ class AlchikiSandboxGame extends Forge2DGame {
     tableSettled = false;
     simTimeS = 0;
     aimLocked = true;
+    throwFlickT = 0.01;
     saka.applyThrowImpulse(input);
   }
 }

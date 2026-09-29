@@ -67,7 +67,7 @@ void main() {
       expect(find.text('You'), findsOneWidget);
       expect(find.text('0'), findsNWidgets(2));
       expect(find.text('Guest-C9D0'), findsOneWidget);
-      expect(find.text('First to 5 · NORMAL'), findsOneWidget);
+      expect(find.text('Clear circle · NORMAL'), findsOneWidget);
       expect(find.textContaining('Bot'), findsNothing);
     },
   );

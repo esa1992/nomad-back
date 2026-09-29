@@ -3,7 +3,7 @@ import 'package:client/l10n/app_localizations.dart';
 import 'package:client/theme/steppe_ops.dart';
 import 'package:flutter/material.dart';
 
-/// Score pair, first-to-5, preview/scored, and server-clock HUD (D-19).
+/// Score pair, clear-circle goal, preview/scored, and server-clock HUD (D-19).
 class MatchHud extends StatelessWidget {
   const MatchHud({
     super.key,

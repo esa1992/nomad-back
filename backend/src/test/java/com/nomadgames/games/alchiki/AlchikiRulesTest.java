@@ -34,9 +34,7 @@ class AlchikiRulesTest {
     }
 
     @Test
-    void constantsLockFirstToFiveAndClocks() {
-        assertEquals(5, AlchikiRules.FIRST_TO);
-        assertEquals(8, AlchikiRules.TURNS_EACH);
+    void constantsLockClocks() {
         assertEquals(Duration.ofMinutes(4), AlchikiRules.MATCH_LIMIT);
         assertEquals(Duration.ofMinutes(5), AlchikiRules.HARD_CAP);
         assertEquals(Duration.ofSeconds(20), AlchikiRules.TURN_CLOCK);
@@ -52,30 +50,25 @@ class AlchikiRulesTest {
     static Stream<Arguments> resolveCases() {
         return Stream.of(
                 Arguments.of(
-                        "firstToFive player 5 wins while clocks remain",
+                        "score 5 with bones left stays IN_PLAY",
                         snap(5, 0, 2, 2),
                         T0.plusSeconds(30),
-                        MatchStatus.PLAYER_WIN),
+                        MatchStatus.IN_PLAY),
                 Arguments.of(
-                        "firstToFive bot 5 wins while clocks remain",
+                        "bot score 5 with bones left stays IN_PLAY",
                         snap(1, 5, 2, 2),
                         T0.plusSeconds(30),
-                        MatchStatus.BOT_WIN),
+                        MatchStatus.IN_PLAY),
                 Arguments.of(
-                        "8 turns each 3 vs 2 is PLAYER_WIN",
+                        "8 turns each with bones left stays IN_PLAY",
                         snap(3, 2, 8, 8),
                         T0.plusSeconds(30),
-                        MatchStatus.PLAYER_WIN),
+                        MatchStatus.IN_PLAY),
                 Arguments.of(
-                        "8 turns each 2 vs 2 is DRAW",
+                        "8 turns each draw score with bones stays IN_PLAY",
                         snap(2, 2, 8, 8),
                         T0.plusSeconds(30),
-                        MatchStatus.DRAW),
-                Arguments.of(
-                        "8 turns each 2 vs 3 is BOT_WIN",
-                        snap(2, 3, 8, 8),
-                        T0.plusSeconds(30),
-                        MatchStatus.BOT_WIN),
+                        MatchStatus.IN_PLAY),
                 Arguments.of(
                         "4:00 match limit 3 vs 2 is PLAYER_WIN",
                         snap(3, 2, 4, 4),
@@ -117,7 +110,7 @@ class AlchikiRulesTest {
                         T0.plusSeconds(30),
                         MatchStatus.DRAW),
                 Arguments.of(
-                        "bones remain keeps IN_PLAY under first-to",
+                        "bones remain keeps IN_PLAY under high score",
                         snap(2, 1, 2, 2, 3),
                         T0.plusSeconds(30),
                         MatchStatus.IN_PLAY));

@@ -186,9 +186,12 @@ class _SandboxPageState extends State<SandboxPage>
       _emptyOpacity = 0;
     });
     game.aimLocked = true;
+    game.throwFlickT = 0;
+    game.holdChargeT = 0;
     _pulse.repeat(reverse: true);
     _meterTick = Timer.periodic(const Duration(milliseconds: 16), (_) {
       if (mounted && _charging) {
+        game.holdChargeT = _chargeT;
         setState(() {});
       }
     });

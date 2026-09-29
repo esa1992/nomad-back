@@ -7,7 +7,9 @@ import com.nomadgames.session.MatchStatus;
 
 public final class AlchikiRules {
 
+    /** Legacy constant — no longer ends the match (score is cumulative only). */
     public static final int FIRST_TO = 5;
+    /** Legacy constant — turn count no longer ends the match. */
     public static final int TURNS_EACH = 8;
     public static final Duration MATCH_LIMIT = Duration.ofMinutes(4);
     public static final Duration HARD_CAP = Duration.ofMinutes(5);
@@ -27,6 +29,10 @@ public final class AlchikiRules {
                 playerScore, botScore, playerTurns, botTurns, now, matchDeadline, hardCap, -1);
     }
 
+    /**
+     * Match ends only when the circle is empty or a clock expires.
+     * Score alone (first-to-N) and turn caps do not end play while bones remain.
+     */
     public static MatchStatus resolve(
             int playerScore,
             int botScore,
@@ -36,20 +42,11 @@ public final class AlchikiRules {
             Instant matchDeadline,
             Instant hardCap,
             int bonesRemaining) {
-        if (hardCap != null && !now.isBefore(hardCap)) {
-            return byScore(playerScore, botScore);
-        }
-        if (playerScore >= FIRST_TO) {
-            return MatchStatus.PLAYER_WIN;
-        }
-        if (botScore >= FIRST_TO) {
-            return MatchStatus.BOT_WIN;
-        }
-        // No sohi left on the table — nothing left to throw at; settle by score.
+        // No sohi left — settle by score.
         if (bonesRemaining == 0) {
             return byScore(playerScore, botScore);
         }
-        if (playerTurns >= TURNS_EACH && botTurns >= TURNS_EACH) {
+        if (hardCap != null && !now.isBefore(hardCap)) {
             return byScore(playerScore, botScore);
         }
         if (matchDeadline != null && !now.isBefore(matchDeadline)) {

@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
+import 'package:client/game/knucklebone_look.dart';
 import 'package:flutter/material.dart';
 
-const Color _felt = Color(0xFF1B6B3A);
 const Color _wood = Color(0xFF241810);
 const Color _cream = Color(0xFFF4E8C8);
 const Color _saka = Color(0xFFFFF6D6);
@@ -197,7 +197,7 @@ class _WinPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     _paintLabel(
       canvas,
-      'You 5 — Bot 2',
+      'You 4 — Bot 2',
       Offset(size.width / 2, size.height * 0.40),
       const TextStyle(
         color: _cream,
@@ -208,7 +208,7 @@ class _WinPainter extends CustomPainter {
     );
     _paintLabel(
       canvas,
-      'First to 5',
+      'Clear the circle',
       Offset(size.width / 2, size.height * 0.62),
       const TextStyle(
         color: _cream,
@@ -226,14 +226,12 @@ class _WinPainter extends CustomPainter {
 Offset _paintTable(Canvas canvas, Size size, {required bool pocketed}) {
   final Offset center = Offset(size.width / 2, size.height * 0.46);
   final double radius = size.shortestSide * 0.34;
-  canvas.drawCircle(center, radius, Paint()..color = _felt);
-  canvas.drawCircle(
-    center,
-    radius,
-    Paint()
-      ..color = _rim
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3,
+  KnuckleboneLook.paintPit(
+    canvas,
+    center: center,
+    radius: radius,
+    rim: _rim,
+    flashing: false,
   );
 
   const List<Offset> boneOffsets = <Offset>[
@@ -249,22 +247,37 @@ Offset _paintTable(Canvas canvas, Size size, {required bool pocketed}) {
       continue;
     }
     final Offset pos = center + boneOffsets[i] * (radius * 0.42);
-    canvas.drawCircle(pos, boneR, Paint()..color = _bone);
+    KnuckleboneLook.paint(
+      canvas,
+      center: pos,
+      radius: boneR,
+      fill: _bone,
+      crease: const Color(0xFF6B4423),
+      bodyAngle: i * 0.4,
+    );
   }
   if (pocketed) {
     final Offset out = center + Offset(radius * 1.18, 0);
-    canvas.drawCircle(out, boneR, Paint()..color = _bone);
+    KnuckleboneLook.paint(
+      canvas,
+      center: out,
+      radius: boneR,
+      fill: _bone,
+      crease: const Color(0xFF6B4423),
+      bodyAngle: 0.6,
+    );
   }
 
   final Offset saka = center + Offset(0, radius * 0.62);
   final double sakaR = boneR * 1.15;
-  canvas.drawCircle(saka, sakaR, Paint()..color = _saka);
-  canvas.drawLine(
-    saka + Offset(-sakaR * 0.7, 0),
-    saka + Offset(sakaR * 0.7, 0),
-    Paint()
-      ..color = _sakaStripe
-      ..strokeWidth = 2,
+  KnuckleboneLook.paint(
+    canvas,
+    center: saka,
+    radius: sakaR,
+    fill: _saka,
+    crease: _sakaStripe,
+    bodyAngle: 0.2,
+    shooter: true,
   );
   return saka;
 }

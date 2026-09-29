@@ -13,6 +13,9 @@ import 'package:go_router/go_router.dart';
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
+  /// Branded splash stays at least this long after mint starts.
+  static const Duration minHold = Duration(seconds: 5);
+
   @override
   ConsumerState<SplashPage> createState() => _SplashPageState();
 }
@@ -111,12 +114,12 @@ class _SplashPageState extends ConsumerState<SplashPage>
     }
   }
 
-  /// Keep the branded splash visible at least 2s (even on fast/failed mint).
+  /// Keep the branded splash visible at least [SplashPage.minHold]
+  /// (even on fast/failed mint).
   Future<void> _holdSplash(DateTime started) async {
-    const Duration minHold = Duration(seconds: 2);
     final Duration elapsed = DateTime.now().difference(started);
-    if (elapsed < minHold) {
-      await Future<void>.delayed(minHold - elapsed);
+    if (elapsed < SplashPage.minHold) {
+      await Future<void>.delayed(SplashPage.minHold - elapsed);
     }
   }
 

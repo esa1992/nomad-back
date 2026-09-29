@@ -1,9 +1,13 @@
+import 'dart:math' as math;
+
 import 'package:client/game/alchiki_sandbox_game.dart';
 import 'package:client/game/bone_body.dart';
 import 'package:client/game/felt_circle.dart';
 import 'package:client/game/physics_stepper.dart';
 import 'package:client/game/saka_body.dart';
+import 'package:client/game/throw_juice.dart';
 import 'package:client/games/alchiki/aiming_marker.dart';
+import 'package:client/games/alchiki/throw_hand.dart';
 import 'package:client/input/aim_controller.dart';
 import 'package:client/input/throw_input.dart';
 import 'package:client/replay/keyframe_player.dart';
@@ -186,6 +190,9 @@ class AlchikiMatchGame extends Forge2DGame {
   bool get isLocalTurn => !isPrivate || turnSeat == localSeat;
 
   bool showAimingMarker = false;
+  bool showThrowHand = false;
+  double holdChargeT = 0;
+  double throwFlickT = 0;
   bool aimLocked = false;
   bool throwing = false;
   bool tableSettled = true;
@@ -199,8 +206,19 @@ class AlchikiMatchGame extends Forge2DGame {
   void Function()? onReplayEnded;
   ThrowResolved? _replayResolved;
   List<ReplayTarget> _replayTargets = const [];
+  bool _holdingRest = false;
+  double _restHoldMs = 0;
+
+  static const double _replayDtCapS = 1 / 30;
+  static const double _restHoldAfterThrowMs = 500;
+
+  double _fitZoom = 100;
+  double cameraPunch = 0;
 
   MatchFixedDtWorld get _matchWorld => world as MatchFixedDtWorld;
+
+  @override
+  Color backgroundColor() => const Color(0x00000000);
 
   @override
   Future<void> onLoad() async {
@@ -268,15 +286,45 @@ class AlchikiMatchGame extends Forge2DGame {
     await world.add(parlor);
     await parlor.addAll([
       ...bodies,
+      ThrowJuice(
+        isLive: () => throwing || replaying,
+        saka: () => throwingSaka,
+        bones: () => bones,
+        trailColor: () => trailTint ?? const Color(0xFFF4E8C8),
+        onImpact: () {
+          cameraPunch = 1;
+        },
+      ),
       MatchAimArrow(game: this),
       aimingMarker,
       MatchTableDragLayer(game: this),
     ]);
+    await camera.viewport.add(
+      ThrowHandHud(
+        aim: () => aim,
+        visible: () =>
+            showThrowHand && isLocalTurn && !showAimingMarker,
+        chargeT: () => holdChargeT,
+        flickT: () => throwFlickT,
+        sakaFill: () => throwingSaka.paint.color,
+        sakaCrease: () => throwingSaka.stripeColor,
+      ),
+    );
   }
 
   @override
   void update(double dt) {
     super.update(dt);
+    if (throwing || replaying) {
+      throwFlickT = math.min(1.0, throwFlickT + dt / 0.26);
+    }
+    if (cameraPunch > 0.001) {
+      cameraPunch *= math.exp(-dt * 7);
+      _applyZoom();
+    } else if (cameraPunch != 0) {
+      cameraPunch = 0;
+      _applyZoom();
+    }
     if (replaying) {
       _advanceReplay(dt);
       return;
@@ -299,8 +347,13 @@ class AlchikiMatchGame extends Forge2DGame {
     super.onGameResize(size);
     final minSide = size.x < size.y ? size.x : size.y;
     if (minSide > 0) {
-      camera.viewfinder.zoom = minSide / (TableConstants.circleRadiusM * 2.6);
+      _fitZoom = minSide / (TableConstants.circleRadiusM * 2.6);
+      _applyZoom();
     }
+  }
+
+  void _applyZoom() {
+    camera.viewfinder.zoom = _fitZoom * (1 + 0.04 * cameraPunch);
   }
 
   void throwSaka(ThrowInput input) {
@@ -312,6 +365,7 @@ class AlchikiMatchGame extends Forge2DGame {
     tableSettled = false;
     simTimeS = 0;
     aimLocked = true;
+    throwFlickT = 0.01;
     throwingSaka.applyThrowImpulse(input);
   }
 
@@ -361,10 +415,13 @@ class AlchikiMatchGame extends Forge2DGame {
     _queuePocketed(resolved);
     _replayResolved = resolved;
     replayTimeMs = 0;
+    _holdingRest = false;
+    _restHoldMs = 0;
     replaying = true;
     throwing = false;
     tableSettled = true;
     aimLocked = true;
+    throwFlickT = 0.01;
     _replayTargets = _currentReplayTargets();
     _freezePoses();
     KeyframePlayer.applyFrame(0, resolved.keyframes, _replayTargets);
@@ -386,6 +443,9 @@ class AlchikiMatchGame extends Forge2DGame {
     aimLocked = false;
     simTimeS = 0;
     sakaOut = false;
+    throwFlickT = 0;
+    cameraPunch = 0;
+    _applyZoom();
   }
 
   void _queuePocketed(ThrowResolved resolved) {
@@ -425,6 +485,8 @@ class AlchikiMatchGame extends Forge2DGame {
     _replayResolved = null;
     _replayTargets = const [];
     replayTimeMs = 0;
+    _holdingRest = false;
+    _restHoldMs = 0;
   }
 
   void _advanceReplay(double dt) {
@@ -433,12 +495,22 @@ class AlchikiMatchGame extends Forge2DGame {
       _finishReplay();
       return;
     }
-    replayTimeMs += dt * 1000;
+    // One long frame after waiting on the API must not skip the whole throw.
+    final double step = dt.clamp(0.0, _replayDtCapS);
+    if (_holdingRest) {
+      _restHoldMs += step * 1000;
+      if (_restHoldMs >= _restHoldAfterThrowMs) {
+        _finishReplay();
+      }
+      return;
+    }
+    replayTimeMs += step * 1000;
     KeyframePlayer.applyFrame(replayTimeMs, resolved.keyframes, _replayTargets);
     final lastMs = resolved.keyframes.last.tMs.toDouble();
     if (replayTimeMs >= lastMs) {
       KeyframePlayer.applyFrame(lastMs, resolved.keyframes, _replayTargets);
-      _finishReplay();
+      _holdingRest = true;
+      _restHoldMs = 0;
     }
   }
 

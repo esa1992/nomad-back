@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+import 'package:client/game/knucklebone_look.dart';
 import 'package:client/input/throw_input.dart';
 import 'package:client/schema/table_constants.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
@@ -68,16 +69,14 @@ class SakaBody extends BodyComponent {
 
   @override
   void renderCircle(Canvas canvas, Offset center, double radius) {
-    canvas.drawCircle(center, radius, paint);
-    final stripePaint = Paint()
-      ..color = stripeColor
-      ..strokeWidth = radius * 0.18
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-    canvas.drawLine(
-      Offset(center.dx - radius, center.dy),
-      Offset(center.dx + radius, center.dy),
-      stripePaint,
+    KnuckleboneLook.paint(
+      canvas,
+      center: center,
+      radius: radius,
+      fill: paint.color,
+      crease: stripeColor,
+      bodyAngle: body.angle,
+      shooter: true,
     );
   }
 }

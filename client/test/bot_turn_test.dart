@@ -170,7 +170,10 @@ void main() {
       );
       await state.playBotTurn(botInput, _botResolved(pocketedIds: const <String>[]));
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 400));
+      await tester.pump(const Duration(milliseconds: 450));
+      for (int i = 0; i < 40; i++) {
+        await tester.pump(const Duration(milliseconds: 32));
+      }
 
       expect(state.game.saka.body.worldCenter.x, closeTo(0, 1e-4));
       expect(state.game.saka.body.worldCenter.y, closeTo(-1.15, 1e-4));

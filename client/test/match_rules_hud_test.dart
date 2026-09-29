@@ -52,14 +52,14 @@ Future<void> _pumpMatchHud(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('match HUD shows you, bot, firstToFive, clocks, and pause', (
+  testWidgets('match HUD shows you, bot, clear-circle goal, clocks, and pause', (
     WidgetTester tester,
   ) async {
     await _pumpMatchHud(tester);
 
     expect(find.textContaining('You'), findsWidgets);
     expect(find.textContaining('Bot'), findsWidgets);
-    expect(find.textContaining('First to 5'), findsOneWidget);
+    expect(find.textContaining('Clear circle'), findsOneWidget);
     expect(find.byIcon(Icons.pause), findsOneWidget);
     expect(
       find.byWidgetPredicate(

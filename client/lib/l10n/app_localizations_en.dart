@@ -110,11 +110,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'After the bones stop, each target fully outside the circle scores 1 and leaves the table. If the saka leaves, you score 0 and it comes back.';
 
   @override
-  String get howtoWinTitle => 'First to 5';
+  String get howtoWinTitle => 'Clear the circle';
 
   @override
   String get howtoWinBody =>
-      'Reach 5 points to win. If time or turns run out, the higher score wins.';
+      'Knock every bone fully outside. When the circle is empty or the match clock ends, the higher score wins.';
 
   @override
   String get howtoStickSitTitle => 'Sit opposite';
@@ -184,7 +184,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bot => 'Bot';
 
   @override
-  String get firstToFive => 'First to 5';
+  String get firstToFive => 'Clear circle';
 
   @override
   String get yourTurn => 'Your turn';

@@ -5,7 +5,7 @@ package com.nomadgames.games.stickpull;
  */
 public final class StickPullConstants {
 
-    public static final double SOFT_FORCE = 0.03;
+    public static final double SOFT_FORCE = 0.06;
     public static final double WIN_THRESHOLD = 0.85;
     public static final double BURST_FORCE_MULT = 0.4;
     public static final double EXHAUST_FORCE_MULT = 0.15;
@@ -25,9 +25,9 @@ public final class StickPullConstants {
     public static final double SOFT_DRAIN_PER_TAP = 0.04;
     public static final double BURST_DRAIN_PER_TAP = 0.12;
 
-    public static final int DEFAULT_CLOCK_SECONDS = 30;
+    public static final int DEFAULT_CLOCK_SECONDS = 60;
     public static final int MIN_CLOCK_SECONDS = 15;
-    public static final int MAX_CLOCK_SECONDS = 40;
+    public static final int MAX_CLOCK_SECONDS = 90;
 
     public static final long COUNTDOWN_STEP_MS = 1_000L;
     public static final int SIM_TICK_HZ = 20;

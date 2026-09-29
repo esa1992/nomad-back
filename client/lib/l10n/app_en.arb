@@ -60,6 +60,15 @@
   "stickTapHint": "Tap",
   "stickWaitGo": "Wait for GO",
   "stickPullNow": "Pull!",
+  "stickSettlingResult": "Please wait… tallying result",
+  "apiLatencyMs": "API {ms} ms",
+  "@apiLatencyMs": {
+    "placeholders": {
+      "ms": {
+        "type": "int"
+      }
+    }
+  },
   "errorStickPullStart": "Stick Pull did not start. Tap Retry.",
   "you": "You",
   "bot": "Bot",

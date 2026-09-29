@@ -416,6 +416,18 @@ abstract class AppLocalizations {
   /// **'Pull!'**
   String get stickPullNow;
 
+  /// Shown while match is settling after threshold / clock.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait… tallying result'**
+  String get stickSettlingResult;
+
+  /// Backend round-trip shown on splash / lobby load.
+  ///
+  /// In en, this message translates to:
+  /// **'API {ms} ms'**
+  String apiLatencyMs(int ms);
+
   /// No description provided for @errorStickPullStart.
   ///
   /// In en, this message translates to:

@@ -179,6 +179,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get stickPullNow => 'Тяни!';
 
   @override
+  String get stickSettlingResult => 'Ожидайте… подсчитываем результат';
+
+  @override
+  String apiLatencyMs(int ms) => 'Бэк $ms мс';
+
+  @override
   String get errorStickPullStart =>
       'Не удалось начать Перетягивание. Нажми «Повторить».';
 

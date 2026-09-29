@@ -259,7 +259,7 @@ class SteppeLoading extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               label!,
-              style: SteppeOps.labelMuted.copyWith(fontSize: 14),
+              style: SteppeOps.labelMuted.copyWith(fontSize: 14, height: 1.35),
               textAlign: TextAlign.center,
             ),
           ],

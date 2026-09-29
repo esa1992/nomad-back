@@ -56,7 +56,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   double _staminaYou = 1;
   double _staminaOpp = 1;
   double _prevLocalStamina = 1;
-  int _clockSeconds = 30;
+  int _clockSeconds = 60;
   int _clientSeq = 0;
   bool _startError = false;
   bool _paused = false;
@@ -131,6 +131,9 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   bool get _canPull => !_tapDisabled && !_waitingForGo;
 
   String _tapLabel(AppLocalizations l10n) {
+    if (_isTerminal || _phase == 'SETTLED') {
+      return l10n.stickSettlingResult;
+    }
     if (_phase == 'LIVE' || _countdown == 'GO') {
       return l10n.stickPullNow;
     }
@@ -585,13 +588,36 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
       }
       return;
     }
-    final String difficulty = ref.read(lastStickPullBotDifficultyProvider);
+    await _sub?.cancel();
     await _socket?.close();
     _socket = null;
+    _sub = null;
     if (!mounted) {
       return;
     }
-    context.go('/match?game=stickPull&difficulty=$difficulty');
+    // Reset in place (like Alchiki). Do NOT context.go — that remounts a second
+    // match while this state also starts one (orphan MATCH_STARTED + stuck CTA).
+    setState(() {
+      _startError = false;
+      _match = null;
+      _activeMatchId = null;
+      _phase = 'COUNTDOWN';
+      _countdown = null;
+      _goHapticDone = false;
+      _thresholdHapticDone = false;
+      _staminaYou = 1;
+      _staminaOpp = 1;
+      _prevLocalStamina = 1;
+      _clockSeconds = 60;
+      _clientSeq = 0;
+      _paused = false;
+      _leaveConfirm = false;
+      _falseStart = false;
+      _opponentDroppedAt = null;
+      _opponentDisconnected = false;
+      _showRejoin = false;
+      _game = StickPullGame();
+    });
     await _startMatch();
   }
 
@@ -667,7 +693,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
             if (_match != null && !_startError && !_showRejoin)
               GameWidget<StickPullGame>(game: _game),
             if (_match != null && !_startError && !_showRejoin) _buildHud(l10n),
-            if (_match != null && !_startError && !_showRejoin)
+            if (_match != null && !_startError && !_showRejoin && !_isTerminal)
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(

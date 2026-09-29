@@ -33,6 +33,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
   CatalogSnapshot? _snapshot;
   bool _loading = true;
   bool _error = false;
+  int? _apiMs;
   bool _createError = false;
   bool _creating = false;
   bool _quickMatchError = false;
@@ -100,9 +101,18 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
       _loading = true;
       _error = false;
       _walletError = false;
+      _apiMs = null;
     });
     final NomadApi api = ref.read(nomadApiProvider);
     final bool guest = await ref.read(sessionStoreProvider).isGuest();
+
+    // Fire health RTT early so lobby spinner can show real backend ms.
+    unawaited(() async {
+      final int ms = await api.probeHealthMs();
+      if (mounted && _loading) {
+        setState(() => _apiMs = ms);
+      }
+    }());
 
     CatalogSnapshot? catalog;
     Object? catalogError;
@@ -141,7 +151,6 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
         }
       }(),
     ]);
-
     if (!mounted) {
       return;
     }
@@ -506,7 +515,11 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
               ),
               Expanded(
                 child: _loading
-                    ? SteppeLoading(label: l10n.loadingLobby)
+                    ? SteppeLoading(
+                        label: _apiMs == null
+                            ? l10n.loadingLobby
+                            : '${l10n.loadingLobby}\n${l10n.apiLatencyMs(_apiMs!)}',
+                      )
                     : SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                   child: Column(

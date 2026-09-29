@@ -433,6 +433,25 @@ class NomadApi {
 
   String? accessToken;
 
+  /// Round-trip to `/actuator/health` (no auth). Useful to separate cold UI hold from API.
+  Future<int> probeHealthMs({Duration timeout = const Duration(seconds: 15)}) async {
+    final Stopwatch sw = Stopwatch()..start();
+    try {
+      await _dio.get<dynamic>(
+        '/actuator/health',
+        options: Options(
+          sendTimeout: timeout,
+          receiveTimeout: timeout,
+          validateStatus: (int? code) => code != null && code < 500,
+        ),
+      );
+    } catch (_) {
+      // Still return elapsed — caller sees how long the attempt took.
+    }
+    sw.stop();
+    return sw.elapsedMilliseconds;
+  }
+
   void _installAuthInterceptor() {
     _dio.interceptors.add(
       QueuedInterceptorsWrapper(

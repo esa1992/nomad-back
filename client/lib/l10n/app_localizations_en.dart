@@ -181,6 +181,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stickPullNow => 'Pull!';
 
   @override
+  String get stickSettlingResult => 'Please wait… tallying result';
+
+  @override
+  String apiLatencyMs(int ms) => 'API $ms ms';
+
+  @override
   String get errorStickPullStart => 'Stick Pull did not start. Tap Retry.';
 
   @override

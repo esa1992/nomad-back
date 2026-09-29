@@ -60,6 +60,15 @@
   "stickTapHint": "Жми",
   "stickWaitGo": "Жди GO",
   "stickPullNow": "Тяни!",
+  "stickSettlingResult": "Ожидайте… подсчитываем результат",
+  "apiLatencyMs": "Бэк {ms} мс",
+  "@apiLatencyMs": {
+    "placeholders": {
+      "ms": {
+        "type": "int"
+      }
+    }
+  },
   "errorStickPullStart": "Не удалось начать Перетягивание. Нажми «Повторить».",
   "you": "Ты",
   "bot": "Бот",

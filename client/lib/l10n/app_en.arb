@@ -58,6 +58,8 @@
   },
   "falseStartToast": "Too early — wait for GO",
   "stickTapHint": "Tap",
+  "stickWaitGo": "Wait for GO",
+  "stickPullNow": "Pull!",
   "errorStickPullStart": "Stick Pull did not start. Tap Retry.",
   "you": "You",
   "bot": "Bot",

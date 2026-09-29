@@ -404,6 +404,18 @@ abstract class AppLocalizations {
   /// **'Tap'**
   String get stickTapHint;
 
+  /// Label while countdown has not reached GO.
+  ///
+  /// In en, this message translates to:
+  /// **'Wait for GO'**
+  String get stickWaitGo;
+
+  /// Label when taps pull the stick.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull!'**
+  String get stickPullNow;
+
   /// No description provided for @errorStickPullStart.
   ///
   /// In en, this message translates to:

@@ -56,6 +56,11 @@ public class MatchWebSocketHandler extends TextWebSocketHandler {
             } catch (ResponseStatusException ignored) {
                 // Missing match or not a seat.
             }
+            try {
+                matches.pushStickPullSync(matchId);
+            } catch (RuntimeException ignored) {
+                // Non-stick or no live session.
+            }
         }
     }
 

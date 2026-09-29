@@ -497,6 +497,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
                 languageCode: enSelected ? 'en' : 'ru',
                 langEn: l10n.langEn,
                 langRu: l10n.langRu,
+                showNavLinks: !_loading,
                 onShop: () => context.push('/shop'),
                 onBoards: () => unawaited(_onBoardsTap()),
                 onLanguage: (String code) => ref
@@ -792,6 +793,7 @@ class _LobbyTopBar extends StatelessWidget {
     required this.languageCode,
     required this.langEn,
     required this.langRu,
+    required this.showNavLinks,
     required this.onShop,
     required this.onBoards,
     required this.onLanguage,
@@ -804,6 +806,7 @@ class _LobbyTopBar extends StatelessWidget {
   final String languageCode;
   final String langEn;
   final String langRu;
+  final bool showNavLinks;
   final VoidCallback onShop;
   final VoidCallback onBoards;
   final ValueChanged<String> onLanguage;
@@ -823,10 +826,12 @@ class _LobbyTopBar extends StatelessWidget {
             ),
           ] else
             const Spacer(),
-          _HudLink(label: shopLabel, onTap: onShop),
-          const SizedBox(width: 4),
-          _HudLink(label: boardsLabel, onTap: onBoards),
-          const SizedBox(width: 4),
+          if (showNavLinks) ...[
+            _HudLink(label: shopLabel, onTap: onShop),
+            const SizedBox(width: 4),
+            _HudLink(label: boardsLabel, onTap: onBoards),
+            const SizedBox(width: 4),
+          ],
           _LanguageMenu(
             languageCode: languageCode,
             langEn: langEn,

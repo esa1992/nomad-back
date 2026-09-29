@@ -9,6 +9,8 @@ import 'package:client/l10n/app_localizations.dart';
 import 'package:client/platform/api/nomad_api.dart';
 import 'package:client/platform/auth/session_store.dart';
 import 'package:client/platform/session/match_socket.dart';
+import 'package:client/theme/steppe_backdrop.dart';
+import 'package:client/theme/steppe_ops.dart';
 import 'package:client/theme/steppe_widgets.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +36,8 @@ class StickPullMatchPage extends ConsumerStatefulWidget {
 }
 
 class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
-  static const Color _wood = Color(0xFF241810);
-  static const Color _felt = Color(0xFF1B6B3A);
+  static const Color _wood = SteppeOps.voidBg;
+  static const Color _earth = Color(0xFF5C3C22);
   static const Color _onDark = Color(0xFFF4E8C8);
   static const Color _accent = Color(0xFFF0B429);
   static const Color _onAccent = Color(0xFF241810);
@@ -59,9 +61,11 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   bool _startError = false;
   bool _paused = false;
   bool _leaveConfirm = false;
+  bool _leaving = false;
   bool _falseStart = false;
   Timer? _falseStartTimer;
   Timer? _uiTick;
+  Timer? _countdownClearTimer;
   bool _goHapticDone = false;
   bool _thresholdHapticDone = false;
 
@@ -118,6 +122,24 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
       _showRejoin ||
       _opponentReconnectSeconds != null;
 
+  /// Countdown not finished — taps are false-starts until GO / LIVE.
+  bool get _waitingForGo =>
+      !_isTerminal &&
+      _phase != 'LIVE' &&
+      _countdown != 'GO';
+
+  bool get _canPull => !_tapDisabled && !_waitingForGo;
+
+  String _tapLabel(AppLocalizations l10n) {
+    if (_phase == 'LIVE' || _countdown == 'GO') {
+      return l10n.stickPullNow;
+    }
+    if (_countdown != null) {
+      return l10n.stickWaitGo;
+    }
+    return l10n.startingMatch;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -130,6 +152,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   @override
   void dispose() {
     _falseStartTimer?.cancel();
+    _countdownClearTimer?.cancel();
     _uiTick?.cancel();
     unawaited(_sub?.cancel());
     unawaited(_socket?.close());
@@ -435,6 +458,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
     switch (type) {
       case 'Countdown':
         final String? value = StickPullWs.countdownValue(frame);
+        _countdownClearTimer?.cancel();
         setState(() {
           _countdown = value;
           _phase = 'COUNTDOWN';
@@ -443,7 +467,13 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
           _goHapticDone = true;
           HapticFeedback.mediumImpact();
           setState(() => _phase = 'LIVE');
+          _countdownClearTimer = Timer(const Duration(milliseconds: 700), () {
+            if (mounted && _countdown == 'GO') {
+              setState(() => _countdown = null);
+            }
+          });
         }
+        break;
       case 'StickState':
       case 'TapResolved':
         final double? marker = StickPullWs.markerOf(frame);
@@ -472,6 +502,9 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
           final String? phase = StickPullWs.phaseOf(frame);
           if (phase != null) {
             _phase = phase;
+            if (phase == 'LIVE' && _countdown != 'GO') {
+              _countdown = null;
+            }
           }
           if (type == 'TapResolved' &&
               !StickPullWs.accepted(frame) &&
@@ -480,6 +513,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
             _showFalseStart();
           }
         });
+        break;
       case 'MatchSettled':
         final Map<String, dynamic>? match = StickPullWs.matchOf(frame);
         if (match != null) {
@@ -513,6 +547,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
           });
           unawaited(ref.read(sessionStoreProvider).clearReconnect());
         }
+        break;
       default:
         break;
     }
@@ -577,18 +612,28 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   }
 
   Future<void> _leave() async {
-    _consentedLeave = true;
-    final String? id = _activeMatchId;
-    if (id != null) {
-      try {
-        await ref.read(nomadApiProvider).leaveMatch(id);
-      } on NomadApiException {
-        // still leave UI
-      }
+    if (_leaving) {
+      return;
     }
-    await ref.read(sessionStoreProvider).clearReconnect();
+    _leaving = true;
+    _consentedLeave = true;
+    // Leave UI immediately — do not wait on Render/API.
+    unawaited(ref.read(sessionStoreProvider).clearReconnect());
+    final String? id = _activeMatchId;
     if (mounted) {
+      setState(() {
+        _leaveConfirm = false;
+        _paused = false;
+      });
       context.go('/');
+    }
+    if (id == null || id.isEmpty) {
+      return;
+    }
+    try {
+      await ref.read(nomadApiProvider).leaveMatch(id);
+    } catch (_) {
+      // Best-effort; player already left the table UI.
     }
   }
 
@@ -609,10 +654,14 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
     final int? oppReconnect = _opponentReconnectSeconds;
     return Scaffold(
       backgroundColor: _wood,
-      body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          const SteppeBackdrop(),
+          SafeArea(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
             if (_match == null && !_startError && !_showRejoin)
               SteppeLoading(label: l10n.startingMatch),
             if (_match != null && !_startError && !_showRejoin)
@@ -622,28 +671,14 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
-                  child: Material(
-                    color: _wood.withValues(alpha: 0.88),
-                    child: InkWell(
-                      onTap: _tapDisabled ? null : _onTapZone,
-                      child: SizedBox(
-                        height: 96,
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            l10n.stickTapHint,
-                            style: TextStyle(
-                              color: _onDark.withValues(
-                                alpha: _tapDisabled ? 0.4 : 1,
-                              ),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              height: 1.2,
-                            ),
-                          ),
-                        ),
-                      ),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 28),
+                  child: SizedBox(
+                    width: 260,
+                    child: _PullCta(
+                      label: _tapLabel(l10n),
+                      enabled: !_tapDisabled,
+                      active: _canPull,
+                      onTap: _onTapZone,
                     ),
                   ),
                 ),
@@ -667,16 +702,21 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
                 ),
               ),
             if (_countdown != null && !_isTerminal && !_showRejoin)
-              ColoredBox(
-                color: _wood.withValues(alpha: 0.6),
-                child: Center(
-                  child: Text(
-                    _countdown!,
-                    style: const TextStyle(
-                      color: _onDark,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
-                      height: 1.2,
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: ColoredBox(
+                    color: _wood.withValues(alpha: 0.55),
+                    child: Center(
+                      child: Text(
+                        _countdown!,
+                        style: TextStyle(
+                          color: _countdown == 'GO' ? _accent : _onDark,
+                          fontSize: _countdown == 'GO' ? 56 : 48,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 2,
+                          height: 1.1,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -781,8 +821,6 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
                 isRanked: _isRanked,
                 coinsGranted: _match?.coinsGranted ?? 0,
                 gemsGranted: _match?.gemsGranted ?? 0,
-                // Ranked: Find Ranked match (D-99). Human rematch stays Alchiki path.
-                // Stick Pull forfeit/result: bot Play again only; no Bot wins CTA.
                 onPlayAgain: (_isHuman || _isRanked)
                     ? null
                     : () => unawaited(_playAgain()),
@@ -813,19 +851,24 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
                 body: _isRanked
                     ? l10n.leaveRankedBody
                     : (_isHuman ? l10n.leaveBodyPrivate : null),
-                onStay: () {
-                  setState(() {
-                    _leaveConfirm = false;
-                    _paused = false;
-                  });
-                  if (!_isHuman) {
-                    _socket?.send(StickPullWs.resume());
-                  }
-                },
-                onLeaveMatch: () => unawaited(_leave()),
+                busy: _leaving,
+                onStay: _leaving
+                    ? null
+                    : () {
+                        setState(() {
+                          _leaveConfirm = false;
+                          _paused = false;
+                        });
+                        if (!_isHuman) {
+                          _socket?.send(StickPullWs.resume());
+                        }
+                      },
+                onLeaveMatch: _leaving ? null : () => unawaited(_leave()),
               ),
-          ],
-        ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -835,33 +878,25 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
         _isHuman ? (_opponentLabel.isEmpty ? l10n.opponent : _opponentLabel) : l10n.bot;
     return Positioned(
       top: 8,
-      left: 16,
+      left: 8,
       right: 16,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 48,
-            child: TextButton(
-              onPressed: () {
-                setState(() {
-                  _paused = true;
-                  _leaveConfirm = false;
-                });
-                if (!_isHuman) {
-                  _socket?.send(StickPullWs.pause());
-                }
-              },
-              child: Text(
-                l10n.pause,
-                style: const TextStyle(
-                  color: _onDark,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+          _PauseChip(
+            label: l10n.pause,
+            enabled: !_leaving,
+            onTap: () {
+              setState(() {
+                _paused = true;
+                _leaveConfirm = false;
+              });
+              if (!_isHuman) {
+                _socket?.send(StickPullWs.pause());
+              }
+            },
           ),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               children: [
@@ -886,7 +921,6 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
               ],
             ),
           ),
-          const SizedBox(width: 48),
         ],
       ),
     );
@@ -906,7 +940,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
           height: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _felt,
+            color: _earth,
             border: Border.all(
               color: local ? const Color(0xFFFFF6D6) : const Color(0xFF7EB6D9),
               width: 2,
@@ -938,6 +972,104 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _PauseChip extends StatelessWidget {
+  const _PauseChip({
+    required this.label,
+    required this.enabled,
+    this.onTap,
+  });
+
+  final String label;
+  final bool enabled;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: enabled ? 1 : 0.4,
+      child: Material(
+        color: _StickPullMatchPageState._wood.withValues(alpha: 0.88),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4),
+          side: BorderSide(
+            color: _StickPullMatchPageState._onDark.withValues(alpha: 0.45),
+          ),
+        ),
+        child: InkWell(
+          onTap: enabled ? onTap : null,
+          child: SizedBox(
+            width: 44,
+            height: 44,
+            child: Tooltip(
+              message: label,
+              child: const Icon(
+                Icons.pause,
+                color: _StickPullMatchPageState._onDark,
+                size: 22,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PullCta extends StatelessWidget {
+  const _PullCta({
+    required this.label,
+    required this.enabled,
+    required this.active,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool enabled;
+  final bool active;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color fill = active
+        ? _StickPullMatchPageState._accent
+        : _StickPullMatchPageState._wood.withValues(alpha: 0.92);
+    final Color text = active
+        ? _StickPullMatchPageState._onAccent
+        : _StickPullMatchPageState._onDark.withValues(alpha: enabled ? 0.85 : 0.4);
+    return Opacity(
+      opacity: enabled ? 1 : 0.55,
+      child: Material(
+        color: fill,
+        borderRadius: BorderRadius.circular(4),
+        elevation: active ? 4 : 0,
+        child: InkWell(
+          onTap: enabled ? onTap : null,
+          borderRadius: BorderRadius.circular(4),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 56),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              child: Center(
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: text,
+                    fontSize: active ? 18 : 15,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: active ? 1.4 : 0.6,
+                    height: 1.1,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

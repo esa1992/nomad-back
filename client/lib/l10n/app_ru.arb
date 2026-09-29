@@ -58,6 +58,8 @@
   },
   "falseStartToast": "Рано — жди GO",
   "stickTapHint": "Жми",
+  "stickWaitGo": "Жди GO",
+  "stickPullNow": "Тяни!",
   "errorStickPullStart": "Не удалось начать Перетягивание. Нажми «Повторить».",
   "you": "Ты",
   "bot": "Бот",

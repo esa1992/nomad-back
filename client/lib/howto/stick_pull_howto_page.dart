@@ -27,7 +27,7 @@ class StickPullHowToPage extends ConsumerStatefulWidget {
 class _StickPullHowToPageState extends ConsumerState<StickPullHowToPage> {
   static const Color _wood = Color(0xFF241810);
   static const Color _cream = Color(0xFFF4E8C8);
-  static const Color _felt = Color(0xFF1B6B3A);
+  static const Color _felt = Color(0xFF5C3C22);
   static const Color _accent = Color(0xFFF0B429);
   static const Color _onAccent = Color(0xFF241810);
   static const Color _stick = Color(0xFF8B5A2B);

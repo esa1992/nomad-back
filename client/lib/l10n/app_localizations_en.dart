@@ -175,6 +175,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stickTapHint => 'Tap';
 
   @override
+  String get stickWaitGo => 'Wait for GO';
+
+  @override
+  String get stickPullNow => 'Pull!';
+
+  @override
   String get errorStickPullStart => 'Stick Pull did not start. Tap Retry.';
 
   @override

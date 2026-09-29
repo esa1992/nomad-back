@@ -2,16 +2,16 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-/// Flame 1D tug lane — no Forge2D / Alchiki imports (D-81).
+/// Flame 1D tug lane — packed earth + sliding stick (no Forge2D).
 class StickPullGame extends FlameGame {
-  StickPullGame({this.shaftColor = const Color(0xFF8B5A2B)});
+  StickPullGame({this.shaftColor = const Color(0xFFD4B896)});
 
-  static const Color felt = Color(0xFF1B6B3A);
-  static const Color surround = Color(0xFF241810);
+  static const Color earth = Color(0xFF5C3C22);
+  static const Color earthDeep = Color(0xFF24160E);
+  static const Color surround = Color(0xFF0E1410);
   static const Color rim = Color(0xFFE8D4A8);
-  static const Color markerFill = Color(0xFFF4E8C8);
   static const Color accent = Color(0xFFF0B429);
-  static const Color defaultShaft = Color(0xFF8B5A2B);
+  static const Color defaultShaft = Color(0xFFD4B896);
   static const Color iceShaft = Color(0xFF7EB6D9);
 
   /// Presentation-only loadout paint at GameWidget create (D-83 / D-54).
@@ -51,16 +51,15 @@ class StickPullGame extends FlameGame {
   }
 
   @override
-  Color backgroundColor() => surround;
+  Color backgroundColor() => const Color(0x00000000);
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    add(_Lane());
-    add(_Stick());
-    add(_MarkerKnot());
+    add(_Ground());
     add(_ThresholdTick(at: -0.85));
     add(_ThresholdTick(at: 0.85));
+    add(_SlidingStick());
   }
 
   @override
@@ -77,14 +76,24 @@ class StickPullGame extends FlameGame {
   }
 
   double get displayMarker => _displayMarker;
-}
 
-class _Lane extends PositionComponent with HasGameReference<StickPullGame> {
-  @override
-  Future<void> onLoad() async {
-    size = game.size;
+  Rect get laneRect {
+    return Rect.fromLTWH(
+      size.x * 0.14,
+      size.y * 0.14,
+      size.x * 0.72,
+      size.y * 0.58,
+    );
   }
 
+  double markerY(double at) {
+    final Rect lane = laneRect;
+    final double t = (1 - at) * 0.5;
+    return lane.top + lane.height * t;
+  }
+}
+
+class _Ground extends PositionComponent with HasGameReference<StickPullGame> {
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
@@ -93,54 +102,101 @@ class _Lane extends PositionComponent with HasGameReference<StickPullGame> {
 
   @override
   void render(Canvas canvas) {
-    final RRect lane = RRect.fromRectAndRadius(
-      Rect.fromLTWH(size.x * 0.18, size.y * 0.12, size.x * 0.64, size.y * 0.76),
-      const Radius.circular(16),
+    final Rect lane = game.laneRect;
+    final RRect pad = RRect.fromRectAndRadius(lane, const Radius.circular(12));
+    canvas.drawRRect(
+      pad,
+      Paint()
+        ..shader = RadialGradient(
+          center: const Alignment(0, -0.2),
+          radius: 1.1,
+          colors: const <Color>[
+            Color(0xFF8A5E34),
+            StickPullGame.earth,
+            StickPullGame.earthDeep,
+          ],
+          stops: const <double>[0.05, 0.55, 1],
+        ).createShader(lane),
     );
-    canvas.drawRRect(lane, Paint()..color = StickPullGame.felt);
+    canvas.drawRRect(
+      pad,
+      Paint()
+        ..color = StickPullGame.rim.withValues(alpha: 0.7)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.5,
+    );
+    // Center groove the stick slides in.
+    final double cx = lane.center.dx;
+    canvas.drawLine(
+      Offset(cx, lane.top + 12),
+      Offset(cx, lane.bottom - 12),
+      Paint()
+        ..color = const Color(0x6624160E)
+        ..strokeWidth = 10
+        ..strokeCap = StrokeCap.round,
+    );
   }
 }
 
-class _Stick extends PositionComponent with HasGameReference<StickPullGame> {
+/// Light wood stick that slides toward local (bottom) or opponent (top).
+class _SlidingStick extends PositionComponent with HasGameReference<StickPullGame> {
   @override
   void render(Canvas canvas) {
-    final double cx = game.size.x * 0.5;
-    final double top = game.size.y * 0.16;
-    final double bottom = game.size.y * 0.84;
-    final Paint shaft = Paint()
-      ..color = game.shaftColor
-      ..strokeWidth = 14
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke;
-    final Paint outline = Paint()
-      ..color = StickPullGame.rim
-      ..strokeWidth = 18
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke;
-    canvas.drawLine(Offset(cx, top), Offset(cx, bottom), outline);
-    canvas.drawLine(Offset(cx, top), Offset(cx, bottom), shaft);
-  }
-}
+    final Rect lane = game.laneRect;
+    final double y = game.markerY(game.displayMarker);
+    final double half = lane.width * 0.38;
+    final double cx = lane.center.dx;
+    final Color wood = game.thresholdFlash
+        ? StickPullGame.accent
+        : game.shaftColor;
+    final Color shade = Color.lerp(wood, const Color(0xFF3A2414), 0.35)!;
+    final Color lit = Color.lerp(wood, const Color(0xFFFFFFF0), 0.35)!;
 
-class _MarkerKnot extends PositionComponent with HasGameReference<StickPullGame> {
-  @override
-  void render(Canvas canvas) {
-    final double cx = game.size.x * 0.5;
-    final double top = game.size.y * 0.16;
-    final double bottom = game.size.y * 0.84;
-    // marker −1 = near/bottom, +1 = far/top
-    final double t = (1 - game.displayMarker) * 0.5;
-    final double y = top + (bottom - top) * t;
-    final Color fill =
-        game.thresholdFlash ? StickPullGame.accent : StickPullGame.markerFill;
-    canvas.drawCircle(Offset(cx, y), 16, Paint()..color = fill);
+    final RRect body = RRect.fromRectAndRadius(
+      Rect.fromCenter(center: Offset(cx, y), width: half * 2, height: 22),
+      const Radius.circular(11),
+    );
+    canvas.drawRRect(
+      body,
+      Paint()
+        ..color = const Color(0x66000000)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
+    );
+    canvas.drawRRect(
+      body,
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[lit, wood, shade],
+          stops: const <double>[0, 0.45, 1],
+        ).createShader(body.outerRect),
+    );
+    canvas.drawRRect(
+      body,
+      Paint()
+        ..color = StickPullGame.rim.withValues(alpha: 0.85)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5,
+    );
+    // End caps — round wood tips.
+    canvas.drawCircle(Offset(cx - half + 4, y), 11, Paint()..color = lit);
+    canvas.drawCircle(Offset(cx + half - 4, y), 11, Paint()..color = shade);
     canvas.drawCircle(
-      Offset(cx, y),
-      16,
+      Offset(cx - half + 4, y),
+      11,
       Paint()
         ..color = StickPullGame.rim
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 3,
+        ..strokeWidth = 1.2,
+    );
+    canvas.drawCircle(
+      Offset(cx + half - 4, y),
+      11,
+      Paint()
+        ..color = StickPullGame.rim
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.2,
     );
   }
 }
@@ -152,14 +208,15 @@ class _ThresholdTick extends PositionComponent with HasGameReference<StickPullGa
 
   @override
   void render(Canvas canvas) {
-    final double cx = game.size.x * 0.5;
-    final double top = game.size.y * 0.16;
-    final double bottom = game.size.y * 0.84;
-    final double t = (1 - at) * 0.5;
-    final double y = top + (bottom - top) * t;
+    final Rect lane = game.laneRect;
+    final double y = game.markerY(at);
     final Paint paint = Paint()
-      ..color = StickPullGame.rim
+      ..color = StickPullGame.rim.withValues(alpha: 0.75)
       ..strokeWidth = 2;
-    canvas.drawLine(Offset(cx - 28, y), Offset(cx + 28, y), paint);
+    canvas.drawLine(
+      Offset(lane.left + 16, y),
+      Offset(lane.right - 16, y),
+      paint,
+    );
   }
 }

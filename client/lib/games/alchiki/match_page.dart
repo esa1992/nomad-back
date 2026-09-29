@@ -68,6 +68,44 @@ PrivateSeatHud mapPrivateSeatHud({
   );
 }
 
+bool isAlchikiTerminalStatus(String? status) {
+  return status == 'PLAYER_WIN' ||
+      status == 'BOT_WIN' ||
+      status == 'DRAW' ||
+      status == 'HOST_WIN' ||
+      status == 'JOINER_WIN';
+}
+
+/// Same snapshot with IN_PLAY so ResultOverlay waits for throw replay.
+MatchStart matchStartAsInPlay(MatchStart match) {
+  return MatchStart(
+    matchId: match.matchId,
+    difficulty: match.difficulty,
+    boneIds: match.boneIds,
+    turn: match.turn,
+    playerScore: match.playerScore,
+    botScore: match.botScore,
+    status: 'IN_PLAY',
+    playerTurns: match.playerTurns,
+    botTurns: match.botTurns,
+    turnDeadlineEpochMs: match.turnDeadlineEpochMs,
+    matchDeadlineEpochMs: match.matchDeadlineEpochMs,
+    hardCapEpochMs: match.hardCapEpochMs,
+    mode: match.mode,
+    hostId: match.hostId,
+    joinerId: match.joinerId,
+    hostLabel: match.hostLabel,
+    joinerLabel: match.joinerLabel,
+    reconnectSecondsLeft: match.reconnectSecondsLeft,
+    pauseBudgetGone: match.pauseBudgetGone,
+    coinsGranted: match.coinsGranted,
+    gemsGranted: match.gemsGranted,
+    localLoadout: match.localLoadout,
+    hostLoadout: match.hostLoadout,
+    joinerLoadout: match.joinerLoadout,
+  );
+}
+
 /// Product match table. Flutter owns Hold Throw; Flame owns aim (D-20).
 class AlchikiMatchPage extends ConsumerStatefulWidget {
   const AlchikiMatchPage({
@@ -157,6 +195,8 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
   int? _frozenTurnRemainMs;
   int? _frozenMatchRemainMs;
   RejoinResult? _pendingRejoin;
+  /// Full terminal snapshot held until throw/bot replay finishes (result overlay).
+  MatchStart? _terminalAfterReplay;
 
   @override
   void initState() {
@@ -226,11 +266,7 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
 
   bool get _isTerminal {
     final String status = _match?.status ?? 'IN_PLAY';
-    return status == 'PLAYER_WIN' ||
-        status == 'BOT_WIN' ||
-        status == 'DRAW' ||
-        status == 'HOST_WIN' ||
-        status == 'JOINER_WIN';
+    return isAlchikiTerminalStatus(status);
   }
 
   String get _resultStatus {
@@ -366,6 +402,24 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       _forfeitSent = false;
       _turnTimeout = false;
     }
+  }
+
+  /// Keep scores/clocks from [terminal] but hide ResultOverlay until replay ends.
+  void _deferTerminalOverlay(MatchStart terminal) {
+    if (!isAlchikiTerminalStatus(terminal.status)) {
+      return;
+    }
+    _terminalAfterReplay = terminal;
+    _applyMatch(matchStartAsInPlay(terminal));
+  }
+
+  void _revealDeferredTerminal() {
+    final MatchStart? pending = _terminalAfterReplay;
+    if (pending == null) {
+      return;
+    }
+    _terminalAfterReplay = null;
+    _applyMatch(pending);
   }
 
   void _syncAimingMarker() {
@@ -859,7 +913,18 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
         MatchStart settled = api.snapshotFromMap(_privateMatchId, frame['match']);
         final String? playerId = await ref.read(sessionStoreProvider).playerId();
         settled = api.applyGrantsMap(settled, frame['grants'], playerId);
-        await _applyPrivateSnapshot(settled);
+        final bool holdForReplay = _replaying ||
+            _botsTurn ||
+            _pendingBot != null ||
+            _throwing ||
+            _awaitingOwnResolve;
+        if (holdForReplay && isAlchikiTerminalStatus(settled.status)) {
+          _terminalAfterReplay = settled;
+          await _applyPrivateSnapshot(matchStartAsInPlay(settled));
+        } else {
+          _terminalAfterReplay = null;
+          await _applyPrivateSnapshot(settled);
+        }
         if (!mounted) {
           return;
         }
@@ -869,7 +934,9 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
           _frozenMatchRemainMs = null;
           _showRejoin = false;
         });
-        _ensureRematchWatch();
+        if (!holdForReplay) {
+          _ensureRematchWatch();
+        }
       }());
     }
   }
@@ -880,10 +947,6 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     MatchStart? next;
     if (frame['match'] is Map) {
       next = api.snapshotFromMap(matchId, frame['match']);
-      await _applyPrivateSnapshot(next);
-    }
-    if (!mounted) {
-      return;
     }
     final Map<String, dynamic> throwMap = frame['playerThrow'] is Map
         ? Map<String, dynamic>.from(frame['playerThrow'] as Map)
@@ -900,11 +963,29 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       resolved = null;
     }
     if (resolved == null) {
+      if (next != null) {
+        await _applyPrivateSnapshot(next);
+      }
       return;
     }
     final ThrowResolved parsed = resolved;
     final bool ownThrow = _awaitingOwnResolve;
     _awaitingOwnResolve = false;
+    final bool willOwnReplay = ownThrow && parsed.keyframes.isNotEmpty;
+    final bool willOppAnimate = !ownThrow;
+    if (next != null) {
+      if ((willOwnReplay || willOppAnimate) &&
+          isAlchikiTerminalStatus(next.status)) {
+        _terminalAfterReplay = next;
+        await _applyPrivateSnapshot(matchStartAsInPlay(next));
+      } else {
+        _terminalAfterReplay = null;
+        await _applyPrivateSnapshot(next);
+      }
+    }
+    if (!mounted) {
+      return;
+    }
     setState(() {
       _resolved = parsed;
       _scored = AuthorityScore.displayedScore(
@@ -921,6 +1002,9 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     if (ownThrow) {
       if (parsed.keyframes.isNotEmpty) {
         game.startReplay(parsed);
+      } else {
+        setState(_revealDeferredTerminal);
+        _ensureRematchWatch();
       }
       _syncAimingMarker();
       return;
@@ -1002,8 +1086,10 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       _settled = false;
       _charging = false;
       _sakaOut = _resolved?.sakaOut ?? false;
+      _revealDeferredTerminal();
       _syncAimingMarker();
     });
+    _ensureRematchWatch();
   }
 
   /// Visible bot/opponent turn: aim + hold from server input, then keyframes (D-21, D-34).
@@ -1196,10 +1282,20 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       }
       final ThrowResolved resolved = result.playerThrow;
       final ThrowResolved? botThrow = result.botThrow;
+      final MatchStart next = _matchFromThrow(match, result);
+      final bool willPlayerReplay =
+          !forfeit && resolved.keyframes.isNotEmpty;
+      final bool willBotReplay = botThrow != null;
       setState(() {
         _resolved = resolved;
         _pendingBot = botThrow;
-        _applyMatch(_matchFromThrow(match, result));
+        if (isAlchikiTerminalStatus(result.status) &&
+            (willPlayerReplay || willBotReplay)) {
+          _deferTerminalOverlay(next);
+        } else {
+          _terminalAfterReplay = null;
+          _applyMatch(next);
+        }
         _youScore = result.playerScore;
         _botScore = result.botScore;
         _scored = AuthorityScore.displayedScore(resolved, lastInput: input);
@@ -1322,6 +1418,7 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     setState(() {
       _tableAttached = false;
       _match = null;
+      _terminalAfterReplay = null;
       _youScore = 0;
       _botScore = 0;
       _preview = 0;
@@ -1458,6 +1555,7 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     _activeMatchId = newId;
     setState(() {
       _match = null;
+      _terminalAfterReplay = null;
       _youScore = 0;
       _botScore = 0;
       _oppScore = 0;

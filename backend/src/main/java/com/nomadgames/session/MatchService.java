@@ -236,6 +236,18 @@ public class MatchService {
         stickPull.setClientPaused(matchId, paused);
     }
 
+    /**
+     * After a seat opens WS: push current StickState so a late connect does not sit forever
+     * on a client-side COUNTDOWN with no frames (countdown may already be LIVE).
+     */
+    public void pushStickPullSync(UUID matchId) {
+        StickPullRuntime.LiveSession session = stickPull.session(matchId);
+        if (session == null) {
+            return;
+        }
+        broadcastJson(matchId, stickPull.stickStatePayload(session, Instant.now()));
+    }
+
     @Transactional
     public void settleStickPullMatch(UUID matchId) {
         MatchEntity match = matches.findById(matchId).orElse(null);

@@ -173,6 +173,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get stickTapHint => 'Жми';
 
   @override
+  String get stickWaitGo => 'Жди GO';
+
+  @override
+  String get stickPullNow => 'Тяни!';
+
+  @override
   String get errorStickPullStart =>
       'Не удалось начать Перетягивание. Нажми «Повторить».';
 

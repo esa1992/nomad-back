@@ -58,6 +58,8 @@ public class StickPullRuntime {
             Consumer<LiveSession> onState,
             Consumer<LiveSession> onSettled) {
         Instant now = Instant.now();
+        // nextCountdownAt == null → armed, but wait for a WS seat before 3-2-1-GO
+        // (otherwise cold clients miss the whole countdown while HTTP+ticket connect).
         live.put(
                 matchId,
                 new LiveSession(
@@ -67,7 +69,7 @@ public class StickPullRuntime {
                         botMode,
                         now,
                         0,
-                        now,
+                        null,
                         null,
                         0,
                         now,
@@ -148,6 +150,19 @@ public class StickPullRuntime {
             return next;
         }
         if (next.sim().phase() == StickPullPhase.COUNTDOWN) {
+            if (next.nextCountdownAt() == null) {
+                if (!seatsReadyForCountdown(next)) {
+                    return next;
+                }
+                next = copy(
+                        next,
+                        next.countdownIndex(),
+                        now,
+                        next.nextBotTapAt(),
+                        next.botTapsSincePause(),
+                        next.nextStateBroadcastAt(),
+                        next.clientPaused());
+            }
             next = advanceCountdown(next, now);
             if (next == null) {
                 return null;
@@ -191,6 +206,15 @@ public class StickPullRuntime {
                     next.clientPaused());
         }
         return next;
+    }
+
+    /** Bot: any open seat. PvP: both seats (host+joiner) before 3-2-1. */
+    private boolean seatsReadyForCountdown(LiveSession session) {
+        var open = sessions.sessionsFor(session.matchId());
+        if (session.botMode()) {
+            return !open.isEmpty();
+        }
+        return open.size() >= 2;
     }
 
     private LiveSession advanceCountdown(LiveSession session, Instant now) {

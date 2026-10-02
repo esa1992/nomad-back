@@ -4,13 +4,18 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.nomadgames.session.internal.MatchSessionRegistry;
@@ -43,9 +48,36 @@ public class StickPullRuntime {
 
     private final ConcurrentHashMap<UUID, LiveSession> live = new ConcurrentHashMap<>();
     private final MatchSessionRegistry sessions;
+    /**
+     * Own thread. Spring's default scheduler is a single thread shared with lobby
+     * expiry and reconnect grace, both of which hit the database. Countdown 2/1/GO
+     * used to wait behind those calls, so the client sat on the "3" that kick sends
+     * from the websocket thread.
+     */
+    private final ScheduledExecutorService clock = Executors.newSingleThreadScheduledExecutor(runnable -> {
+        Thread thread = new Thread(runnable, "stick-pull-tick");
+        thread.setDaemon(true);
+        return thread;
+    });
 
     public StickPullRuntime(MatchSessionRegistry sessions) {
         this.sessions = sessions;
+    }
+
+    @PostConstruct
+    void startClock() {
+        clock.scheduleAtFixedRate(() -> {
+            try {
+                tickAll();
+            } catch (RuntimeException ex) {
+                log.warn("stick pull tick failed", ex);
+            }
+        }, 0, 50, TimeUnit.MILLISECONDS);
+    }
+
+    @PreDestroy
+    void stopClock() {
+        clock.shutdownNow();
     }
 
     public void start(
@@ -131,7 +163,6 @@ public class StickPullRuntime {
         live.remove(matchId);
     }
 
-    @Scheduled(fixedRate = 50)
     public void tickAll() {
         Instant now = Instant.now();
         for (UUID matchId : Map.copyOf(live).keySet()) {
@@ -171,6 +202,36 @@ public class StickPullRuntime {
         if (next.sim().phase() != StickPullPhase.LIVE) {
             return next;
         }
+        // GO can flip the sim to LIVE and then a failed broadcast rolls the session
+        // record back. The client stays on "1" and the bot schedule is never stored.
+        if (next.countdownIndex() < COUNTDOWN_STEPS.length) {
+            try {
+                next.onCountdown().accept(next, "GO");
+            } catch (RuntimeException ex) {
+                log.warn("countdown GO retry failed matchId={}", next.matchId(), ex);
+            }
+            Instant botAt = next.nextBotTapAt();
+            if (botAt == null && next.botMode()) {
+                botAt = now.plusMillis(nextBotDelay(next.difficulty(), 0));
+            }
+            next = copy(
+                    next,
+                    COUNTDOWN_STEPS.length,
+                    null,
+                    botAt,
+                    0,
+                    next.nextStateBroadcastAt(),
+                    next.clientPaused());
+        }
+        try {
+            return tickLive(next, now);
+        } catch (RuntimeException ex) {
+            log.warn("stick pull live tick failed matchId={}", next.matchId(), ex);
+            return next;
+        }
+    }
+
+    private LiveSession tickLive(LiveSession next, Instant now) {
         StickPullSim sim = next.sim();
         synchronized (sim) {
             sim.tick(now);
@@ -231,7 +292,8 @@ public class StickPullRuntime {
             if (!seatsReadyForCountdown(session)) {
                 return session;
             }
-            if (session.nextCountdownAt() != null) {
+            if (session.nextCountdownAt() != null || session.countdownIndex() > 0) {
+                resendCurrentDigit(session);
                 return session;
             }
             LiveSession armed = copy(
@@ -246,6 +308,19 @@ public class StickPullRuntime {
         });
     }
 
+    /** A seat that joins mid-count still sees the digit already on screen. */
+    private void resendCurrentDigit(LiveSession session) {
+        int shown = session.countdownIndex() - 1;
+        if (shown < 0 || shown >= COUNTDOWN_STEPS.length) {
+            return;
+        }
+        try {
+            session.onCountdown().accept(session, COUNTDOWN_STEPS[shown]);
+        } catch (RuntimeException ex) {
+            log.warn("countdown resend failed matchId={}", session.matchId(), ex);
+        }
+    }
+
     private LiveSession advanceCountdown(LiveSession session, Instant now) {
         if (session.nextCountdownAt() != null && now.isBefore(session.nextCountdownAt())) {
             return session;
@@ -255,9 +330,15 @@ public class StickPullRuntime {
             return session;
         }
         String label = COUNTDOWN_STEPS[index];
-        session.onCountdown().accept(session, label);
         if ("GO".equals(label)) {
             session.sim().enterLive(now);
+        }
+        try {
+            session.onCountdown().accept(session, label);
+        } catch (RuntimeException ex) {
+            log.warn("countdown broadcast failed matchId={} label={}", session.matchId(), label, ex);
+        }
+        if ("GO".equals(label)) {
             Instant botAt = session.botMode() ? now.plusMillis(nextBotDelay(session.difficulty(), 0)) : null;
             return copy(session, index + 1, null, botAt, 0, now, session.clientPaused());
         }

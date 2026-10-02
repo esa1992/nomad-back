@@ -410,21 +410,39 @@ class AlchikiMatchGame extends Forge2DGame {
     _finalizePocketed();
   }
 
+  /// Server keyframes from t=0. The bone stays in the hand until this runs.
   void startReplay(ThrowResolved resolved) {
-    // Keep pocketed sohi visible through the replay — drop only after flight ends.
+    throwFlickT = 0.01;
+    adoptServerFlight(resolved, 0);
+  }
+
+  void adoptServerFlight(ThrowResolved resolved, double elapsedMs) {
     _queuePocketed(resolved);
     _replayResolved = resolved;
-    replayTimeMs = 0;
     _holdingRest = false;
     _restHoldMs = 0;
     replaying = true;
     throwing = false;
     tableSettled = true;
     aimLocked = true;
-    throwFlickT = 0.01;
+    if (throwFlickT < 0.01) {
+      throwFlickT = 0.01;
+    }
     _replayTargets = _currentReplayTargets();
     _freezePoses();
-    KeyframePlayer.applyFrame(0, resolved.keyframes, _replayTargets);
+    if (resolved.keyframes.isEmpty) {
+      replayTimeMs = 0;
+      _holdingRest = true;
+      _restHoldMs = 0;
+      return;
+    }
+    final double lastMs = resolved.keyframes.last.tMs.toDouble();
+    replayTimeMs = elapsedMs.clamp(0, lastMs);
+    KeyframePlayer.applyFrame(replayTimeMs, resolved.keyframes, _replayTargets);
+    if (replayTimeMs >= lastMs) {
+      _holdingRest = true;
+      _restHoldMs = 0;
+    }
   }
 
   void startTurn() => resetSakaToRim();

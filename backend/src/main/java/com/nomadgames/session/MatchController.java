@@ -41,6 +41,11 @@ public class MatchController {
         return matches.applyThrow(playerId(jwt), matchId, body);
     }
 
+    @PostMapping("/{id}/bot-turn")
+    public ThrowResponse continueBot(@AuthenticationPrincipal Jwt jwt, @PathVariable("id") UUID matchId) {
+        return matches.continueBot(playerId(jwt), matchId);
+    }
+
     @PostMapping("/{id}/leave")
     public LeaveResponse leave(@AuthenticationPrincipal Jwt jwt, @PathVariable("id") UUID matchId) {
         return matches.leaveMatch(playerId(jwt), matchId);

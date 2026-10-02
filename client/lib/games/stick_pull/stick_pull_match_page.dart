@@ -67,7 +67,12 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   Timer? _uiTick;
   Timer? _countdownClearTimer;
   Timer? _countdownWatch;
+  Timer? _countdownFallback;
+  String? _fallbackDigit;
+  bool _countdownFinished = false;
   bool _countdownReconnectAttempted = false;
+  bool _botReconnectInFlight = false;
+  int _botReconnects = 0;
   bool _goHapticDone = false;
   bool _thresholdHapticDone = false;
 
@@ -120,15 +125,15 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
   bool get _tapDisabled =>
       _paused ||
       _isTerminal ||
+      _phase == 'SETTLED' ||
       _socket == null ||
       _showRejoin ||
       _opponentReconnectSeconds != null;
 
-  /// Countdown not finished — taps are false-starts until GO / LIVE.
+  /// Taps are false-starts until the server phase is LIVE.
+  /// SETTLED is the result wait, not a pre-GO window.
   bool get _waitingForGo =>
-      !_isTerminal &&
-      _phase != 'LIVE' &&
-      _countdown != 'GO';
+      !_isTerminal && _phase != 'LIVE' && _phase != 'SETTLED';
 
   bool get _canPull => !_tapDisabled && !_waitingForGo;
 
@@ -136,7 +141,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
     if (_isTerminal || _phase == 'SETTLED') {
       return l10n.stickSettlingResult;
     }
-    if (_phase == 'LIVE' || _countdown == 'GO') {
+    if (_phase == 'LIVE') {
       return l10n.stickPullNow;
     }
     if (_countdown != null) {
@@ -159,6 +164,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
     _falseStartTimer?.cancel();
     _countdownClearTimer?.cancel();
     _countdownWatch?.cancel();
+    _countdownFallback?.cancel();
     _uiTick?.cancel();
     unawaited(_sub?.cancel());
     unawaited(_socket?.close());
@@ -247,6 +253,8 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
       _match = null;
       _phase = 'COUNTDOWN';
       _countdown = null;
+      _countdownFinished = false;
+      _fallbackDigit = null;
       _goHapticDone = false;
       _thresholdHapticDone = false;
       _countdownReconnectAttempted = false;
@@ -329,6 +337,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
     await _sub?.cancel();
     await _socket?.close();
     _countdownWatch?.cancel();
+    _countdownFallback?.cancel();
     final NomadApi api = ref.read(nomadApiProvider);
     final WsTicket ticket = await api.wsTicket(matchId);
     if (_isHuman) {
@@ -340,9 +349,14 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
     _socket = socket;
     // Attach BEFORE any await so buffered Countdown/StickState flush immediately.
     _sub = socket.messages.listen(_onFrame, onError: (_) {}, onDone: () {
+      if (!mounted || _consentedLeave || _isTerminal) {
+        return;
+      }
       if (_isHuman) {
         unawaited(_onSocketLost());
+        return;
       }
+      unawaited(_reconnectBotSocket());
     });
     socket.flushBufferedFrames();
     _armCountdownWatch();
@@ -364,6 +378,91 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
         return;
       }
       unawaited(_connectWs(id));
+    });
+  }
+
+  /// Bot matches used to ignore a closed socket, so the overlay stayed on 3.
+  Future<void> _reconnectBotSocket() async {
+    if (_botReconnectInFlight || _botReconnects >= 3 || _phase == 'LIVE') {
+      return;
+    }
+    final String? id = _activeMatchId;
+    if (id == null || id.isEmpty) {
+      return;
+    }
+    _botReconnectInFlight = true;
+    _botReconnects += 1;
+    try {
+      await _connectWs(id);
+    } catch (_) {
+      // Next close can try again until the cap.
+    } finally {
+      _botReconnectInFlight = false;
+    }
+  }
+
+  /// Server digits are 1s apart. If the next one is late, keep the overlay moving.
+  /// A repeat of the same digit must not postpone GO.
+  void _armCountdownFallback() {
+    if (_countdownFinished || _phase == 'LIVE' || _isTerminal) {
+      _countdownFallback?.cancel();
+      return;
+    }
+    final String? current = _countdown;
+    if (current == null || current == 'GO') {
+      _countdownFallback?.cancel();
+      return;
+    }
+    if (_countdownFallback?.isActive == true && _fallbackDigit == current) {
+      return;
+    }
+    _countdownFallback?.cancel();
+    _fallbackDigit = current;
+    const List<String> steps = <String>['3', '2', '1', 'GO'];
+    final int index = steps.indexOf(current);
+    if (index < 0 || index + 1 >= steps.length) {
+      return;
+    }
+    final String next = steps[index + 1];
+    _countdownFallback = Timer(const Duration(milliseconds: 1300), () {
+      if (!mounted || _countdown != current || _countdownFinished || _isTerminal) {
+        return;
+      }
+      setState(() => _countdown = next);
+      if (next == 'GO') {
+        _finishCountdown();
+        return;
+      }
+      _armCountdownFallback();
+    });
+  }
+
+  /// GO — from the server or from the local step — leaves the blocking overlay
+  /// and opens the pull button. A later "1" must not rewind this.
+  void _finishCountdown() {
+    _countdownWatch?.cancel();
+    _countdownFallback?.cancel();
+    if (_countdownFinished) {
+      if (_phase != 'LIVE' && mounted) {
+        setState(() => _phase = 'LIVE');
+      }
+      return;
+    }
+    _countdownFinished = true;
+    if (!_goHapticDone) {
+      _goHapticDone = true;
+      try {
+        HapticFeedback.mediumImpact();
+      } catch (_) {}
+    }
+    if (mounted) {
+      setState(() => _phase = 'LIVE');
+    }
+    _countdownClearTimer?.cancel();
+    _countdownClearTimer = Timer(const Duration(milliseconds: 700), () {
+      if (mounted) {
+        setState(() => _countdown = null);
+      }
     });
   }
 
@@ -489,21 +588,23 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
       case 'Countdown':
         final String? value = StickPullWs.countdownValue(frame);
         _countdownWatch?.cancel();
+        if (_countdownFinished && value != 'GO') {
+          break;
+        }
+        final String? phase = StickPullWs.phaseOf(frame);
+        if (value == 'GO' || phase == 'LIVE') {
+          setState(() => _countdown = value ?? 'GO');
+          _finishCountdown();
+          break;
+        }
         _countdownClearTimer?.cancel();
         setState(() {
           _countdown = value;
-          _phase = 'COUNTDOWN';
+          if (!_countdownFinished) {
+            _phase = 'COUNTDOWN';
+          }
         });
-        if (value == 'GO' && !_goHapticDone) {
-          _goHapticDone = true;
-          HapticFeedback.mediumImpact();
-          setState(() => _phase = 'LIVE');
-          _countdownClearTimer = Timer(const Duration(milliseconds: 700), () {
-            if (mounted && _countdown == 'GO') {
-              setState(() => _countdown = null);
-            }
-          });
-        }
+        _armCountdownFallback();
         break;
       case 'StickState':
       case 'TapResolved':
@@ -516,6 +617,8 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
             HapticFeedback.heavyImpact();
           }
         }
+        var falseStart = false;
+        var enteredLive = false;
         setState(() {
           final double host = StickPullWs.staminaHost(frame);
           final double joiner = StickPullWs.staminaJoiner(frame);
@@ -532,23 +635,39 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
           _clockSeconds = StickPullWs.clockSecondsLeft(frame);
           final String? phase = StickPullWs.phaseOf(frame);
           if (phase != null) {
-            _phase = phase;
-            if (phase == 'LIVE' && _countdown != 'GO') {
-              _countdown = null;
+            final String resolved =
+                _countdownFinished && phase == 'COUNTDOWN' ? 'LIVE' : phase;
+            enteredLive = resolved == 'LIVE' && _phase != 'LIVE';
+            _phase = resolved;
+            if (resolved == 'LIVE') {
+              _countdownFallback?.cancel();
+              if (_countdown != 'GO') {
+                _countdown = null;
+              }
+            }
+            if (phase == 'SETTLED') {
+              _falseStart = false;
+              _falseStartTimer?.cancel();
             }
           }
-          if (type == 'TapResolved' &&
+          falseStart = type == 'TapResolved' &&
               !StickPullWs.accepted(frame) &&
-              (_phase == 'COUNTDOWN' ||
-                  _countdown != null && _countdown != 'GO')) {
-            _showFalseStart();
-          }
+              _phase != 'SETTLED' &&
+              _phase != 'LIVE';
         });
+        if (falseStart) {
+          _showFalseStart();
+        }
+        if (enteredLive) {
+          _finishCountdown();
+        }
         break;
       case 'MatchSettled':
         final Map<String, dynamic>? match = StickPullWs.matchOf(frame);
         if (match != null) {
           final String status = match['status'] as String? ?? 'DRAW';
+          _falseStartTimer?.cancel();
+          _countdownFallback?.cancel();
           setState(() {
             _match = MatchStart(
               matchId: _activeMatchId ?? '',
@@ -569,6 +688,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
             );
             _phase = 'SETTLED';
             _countdown = null;
+            _falseStart = false;
             _opponentDroppedAt = null;
             _showRejoin = false;
             if (status == 'HOST_WIN' || status == 'JOINER_WIN') {
@@ -598,7 +718,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
     if (_tapDisabled) {
       return;
     }
-    if (_phase != 'LIVE' && _countdown != 'GO') {
+    if (_phase != 'LIVE') {
       _showFalseStart();
       _clientSeq += 1;
       _socket!.send(StickPullWs.tapInput(clientSeq: _clientSeq));
@@ -631,6 +751,8 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
       _activeMatchId = null;
       _phase = 'COUNTDOWN';
       _countdown = null;
+      _countdownFinished = false;
+      _fallbackDigit = null;
       _goHapticDone = false;
       _thresholdHapticDone = false;
       _countdownReconnectAttempted = false;
@@ -756,6 +878,7 @@ class _StickPullMatchPageState extends ConsumerState<StickPullMatchPage> {
             if (_countdown != null && !_isTerminal && !_showRejoin)
               Positioned.fill(
                 child: IgnorePointer(
+                  ignoring: _phase == 'LIVE',
                   child: ColoredBox(
                     color: _wood.withValues(alpha: 0.55),
                     child: Center(

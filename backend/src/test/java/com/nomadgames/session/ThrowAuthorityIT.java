@@ -117,6 +117,11 @@ class ThrowAuthorityIT {
         }
         String pocketedId = pocketed.get(0);
 
+        mockMvc.perform(post("/v1/matches/" + matchId + "/bot-turn")
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.match.turn").value("PLAYER"));
+
         MvcResult second = mockMvc.perform(post("/v1/matches/" + matchId + "/throws")
                         .header("Authorization", "Bearer " + token)
                         .contentType(APPLICATION_JSON)
@@ -201,13 +206,21 @@ class ThrowAuthorityIT {
                   }
                   """;
 
-        MvcResult thrown = mockMvc.perform(post("/v1/matches/" + matchId + "/throws")
+        mockMvc.perform(post("/v1/matches/" + matchId + "/throws")
                         .header("Authorization", "Bearer " + token)
                         .contentType(APPLICATION_JSON)
                         .content(forged))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.botThrow").value(Matchers.nullValue()))
+                .andExpect(jsonPath("$.match.turn").value("BOT"))
+                .andExpect(jsonPath("$.match.botScore").value(0));
+
+        MvcResult thrown = mockMvc.perform(post("/v1/matches/" + matchId + "/bot-turn")
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.botThrow.input.aimAngleRad").exists())
                 .andExpect(jsonPath("$.botThrow.keyframes").isArray())
+                .andExpect(jsonPath("$.match.turn").value("PLAYER"))
                 .andExpect(jsonPath("$.match.botScore").value(Matchers.not(99)))
                 .andReturn();
 
@@ -229,21 +242,33 @@ class ThrowAuthorityIT {
                         .content(POCKETING_THROW))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.playerThrow.pocketedIds").isArray())
-                .andExpect(jsonPath("$.botThrow.keyframes").isArray())
+                .andExpect(jsonPath("$.match.turn").value("BOT"))
                 .andReturn();
 
-        String body = first.getResponse().getContentAsString();
-        List<String> pocketed = JsonPath.read(body, "$.playerThrow.pocketedIds");
+        String playerBody = first.getResponse().getContentAsString();
+        List<String> pocketed = JsonPath.read(playerBody, "$.playerThrow.pocketedIds");
         if (pocketed == null || pocketed.isEmpty()) {
             throw new AssertionError("throw1 must pocket at least one id");
         }
         String pocketedId = pocketed.get(0);
+        List<String> bonesLeft = JsonPath.read(playerBody, "$.match.bonesLeft");
+        if (bonesLeft.contains(pocketedId)) {
+            throw new AssertionError("match.bonesLeft must omit " + pocketedId);
+        }
+
+        MvcResult botTurn = mockMvc.perform(post("/v1/matches/" + matchId + "/bot-turn")
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.botThrow.keyframes").isArray())
+                .andReturn();
+
+        String body = botTurn.getResponse().getContentAsString();
         List<String> botPockets = JsonPath.read(body, "$.botThrow.pocketedIds");
         if (botPockets != null && botPockets.contains(pocketedId)) {
             throw new AssertionError("botThrow.pocketedIds must omit " + pocketedId);
         }
-        List<String> bonesLeft = JsonPath.read(body, "$.match.bonesLeft");
-        if (bonesLeft.contains(pocketedId)) {
+        List<String> bonesAfterBot = JsonPath.read(body, "$.match.bonesLeft");
+        if (bonesAfterBot.contains(pocketedId)) {
             throw new AssertionError("match.bonesLeft must omit " + pocketedId);
         }
         List<String> frameIds = JsonPath.read(body, "$.botThrow.keyframes[*].bodies[*].id");

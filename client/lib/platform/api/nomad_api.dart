@@ -152,6 +152,7 @@ class ThrowSubmitResult {
     this.botThrow,
     this.status = 'IN_PLAY',
     this.playerTurns = 0,
+    this.botTurns = 0,
     this.turnDeadlineEpochMs = 0,
     this.matchDeadlineEpochMs = 0,
     this.hardCapEpochMs = 0,
@@ -165,6 +166,7 @@ class ThrowSubmitResult {
   final List<String> bonesLeft;
   final String status;
   final int playerTurns;
+  final int botTurns;
   final int turnDeadlineEpochMs;
   final int matchDeadlineEpochMs;
   final int hardCapEpochMs;
@@ -433,25 +435,6 @@ class NomadApi {
 
   String? accessToken;
 
-  /// Round-trip to `/actuator/health` (no auth). Useful to separate cold UI hold from API.
-  Future<int> probeHealthMs({Duration timeout = const Duration(seconds: 15)}) async {
-    final Stopwatch sw = Stopwatch()..start();
-    try {
-      await _dio.get<dynamic>(
-        '/actuator/health',
-        options: Options(
-          sendTimeout: timeout,
-          receiveTimeout: timeout,
-          validateStatus: (int? code) => code != null && code < 500,
-        ),
-      );
-    } catch (_) {
-      // Still return elapsed — caller sees how long the attempt took.
-    }
-    sw.stop();
-    return sw.elapsedMilliseconds;
-  }
-
   void _installAuthInterceptor() {
     _dio.interceptors.add(
       QueuedInterceptorsWrapper(
@@ -687,6 +670,21 @@ class NomadApi {
     } on DioException catch (error) {
       throw NomadApiException(
         'Throw submit failed',
+        statusCode: error.response?.statusCode,
+      );
+    }
+  }
+
+  /// Bot half, after the player throw is already in flight on screen.
+  Future<ThrowSubmitResult> continueBot(String matchId) async {
+    try {
+      final Response<dynamic> response = await _dio.post<dynamic>(
+        '/v1/matches/$matchId/bot-turn',
+      );
+      return _parseThrowSubmit(response.data, null);
+    } on DioException catch (error) {
+      throw NomadApiException(
+        'Bot turn failed',
         statusCode: error.response?.statusCode,
       );
     }
@@ -1408,6 +1406,7 @@ class NomadApi {
       bonesLeft: _stringList(match['bonesLeft']),
       status: match['status'] as String? ?? 'IN_PLAY',
       playerTurns: (match['playerTurns'] as num?)?.toInt() ?? 0,
+      botTurns: (match['botTurns'] as num?)?.toInt() ?? 0,
       turnDeadlineEpochMs: (match['turnDeadlineEpochMs'] as num?)?.toInt() ?? 0,
       matchDeadlineEpochMs: (match['matchDeadlineEpochMs'] as num?)?.toInt() ?? 0,
       hardCapEpochMs: (match['hardCapEpochMs'] as num?)?.toInt() ?? 0,

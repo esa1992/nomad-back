@@ -158,6 +158,8 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
   bool _botsTurn = false;
   bool _privateIsPlayerTurn = false;
   bool _awaitingOwnResolve = false;
+  bool _authorityPending = false;
+  bool _botFollowUp = false;
   int _preview = 0;
   int? _scored;
   bool _sakaOut = false;
@@ -348,6 +350,8 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       !_throwing &&
       !_settled &&
       !_replaying &&
+      !_authorityPending &&
+      !_botFollowUp &&
       _isPlayerTurn &&
       !_paused &&
       !_turnExpired &&
@@ -1000,9 +1004,13 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       }
     });
     if (ownThrow) {
-      if (parsed.keyframes.isNotEmpty) {
+      _authorityPending = false;
+      if (parsed.keyframes.isNotEmpty && game.isLoaded) {
         game.startReplay(parsed);
       } else {
+        if (game.isLoaded) {
+          game.resetSakaToRim();
+        }
         setState(_revealDeferredTerminal);
         _ensureRematchWatch();
       }
@@ -1054,7 +1062,7 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
   }
 
   void _onGameSettled() {
-    if (!mounted) {
+    if (!mounted || _authorityPending || game.replaying || _botFollowUp) {
       return;
     }
     setState(() {
@@ -1072,7 +1080,16 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     final ThrowResolved? bot = _pendingBot;
     if (bot != null) {
       _pendingBot = null;
+      _botFollowUp = false;
       unawaited(playBotTurn(bot.input, bot));
+      return;
+    }
+    if (_botFollowUp) {
+      setState(() {
+        _replaying = false;
+        _throwing = false;
+        _botsTurn = true;
+      });
       return;
     }
     if (_botsTurn) {
@@ -1186,17 +1203,14 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       _throwing = true;
       _settled = false;
       _throwError = false;
+      _authorityPending = true;
       _chargeStart = null;
       _lastInput = input;
       _scored = null;
     });
     if (_isHuman) {
-      game.throwSaka(input);
       await _sendPrivateThrow(input);
     } else {
-      // Bot matches: skip local physics — server keyframes are the only flight.
-      // Local throwSaka + startReplay caused a double toss (wild then normal).
-      game.aimLocked = true;
       await _submitThrow(input);
     }
   }
@@ -1204,6 +1218,10 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
   Future<void> _sendPrivateThrow(ThrowInput input) async {
     final MatchSocket? socket = _socket;
     if (socket == null) {
+      _authorityPending = false;
+      if (game.isLoaded) {
+        game.resetSakaToRim();
+      }
       setState(() {
         _throwError = true;
         _throwing = false;
@@ -1215,6 +1233,10 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       socket.sendThrow(input);
     } catch (_) {
       _awaitingOwnResolve = false;
+      _authorityPending = false;
+      if (game.isLoaded) {
+        game.resetSakaToRim();
+      }
       if (!mounted) {
         return;
       }
@@ -1230,6 +1252,8 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
         _forfeitSent ||
         _paused ||
         _throwing ||
+        _authorityPending ||
+        _botFollowUp ||
         _isTerminal ||
         !_isPlayerTurn ||
         !_turnExpired) {
@@ -1249,7 +1273,7 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       botScore: result.botScore,
       status: result.status,
       playerTurns: result.playerTurns,
-      botTurns: current.botTurns,
+      botTurns: result.botTurns,
       turnDeadlineEpochMs: result.turnDeadlineEpochMs,
       matchDeadlineEpochMs: result.matchDeadlineEpochMs,
       hardCapEpochMs: result.hardCapEpochMs,
@@ -1280,15 +1304,18 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
       if (!mounted) {
         return;
       }
+      _authorityPending = false;
       final ThrowResolved resolved = result.playerThrow;
       final ThrowResolved? botThrow = result.botThrow;
       final MatchStart next = _matchFromThrow(match, result);
       final bool willPlayerReplay =
           !forfeit && resolved.keyframes.isNotEmpty;
-      final bool willBotReplay = botThrow != null;
+      final bool owesBot = result.turn == 'BOT';
+      final bool willBotReplay = botThrow != null || owesBot;
       setState(() {
         _resolved = resolved;
-        _pendingBot = botThrow;
+        _pendingBot = owesBot ? null : botThrow;
+        _botFollowUp = owesBot;
         if (isAlchikiTerminalStatus(result.status) &&
             (willPlayerReplay || willBotReplay)) {
           _deferTerminalOverlay(next);
@@ -1302,20 +1329,27 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
         _sakaOut = resolved.sakaOut;
         _throwError = false;
         if (forfeit || resolved.keyframes.isEmpty) {
-          _turnTimeout = true;
+          _turnTimeout = forfeit;
           _throwing = false;
           _replaying = false;
         } else {
           _replaying = true;
         }
       });
-      if (!forfeit && resolved.keyframes.isNotEmpty) {
+      if (owesBot) {
+        unawaited(_pullBotThrow(match.matchId));
+      }
+      if (!forfeit && resolved.keyframes.isNotEmpty && game.isLoaded) {
         game.startReplay(resolved);
       } else if (botThrow != null) {
         _pendingBot = null;
         unawaited(playBotTurn(botThrow.input, botThrow));
       }
     } catch (_) {
+      _authorityPending = false;
+      if (!forfeit && game.isLoaded) {
+        game.resetSakaToRim();
+      }
       if (!mounted) {
         return;
       }
@@ -1329,7 +1363,73 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     }
   }
 
+  /// Bot sim runs while the player's saka is already in the air.
+  Future<void> _pullBotThrow(String matchId) async {
+    try {
+      final ThrowSubmitResult result =
+          await ref.read(nomadApiProvider).continueBot(matchId);
+      if (!mounted) {
+        return;
+      }
+      final MatchStart? current = _match;
+      if (current == null || current.matchId != matchId) {
+        return;
+      }
+      final ThrowResolved? bot = result.botThrow;
+      final MatchStart next = _matchFromThrow(current, result);
+      final bool flightStillGoing = game.replaying || _replaying;
+      setState(() {
+        _pendingBot = bot;
+        _botFollowUp = bot != null;
+        _throwError = false;
+        if (isAlchikiTerminalStatus(result.status) &&
+            (flightStillGoing || bot != null)) {
+          _deferTerminalOverlay(next);
+        } else {
+          _terminalAfterReplay = null;
+          _applyMatch(next);
+        }
+        _youScore = result.playerScore;
+        _botScore = result.botScore;
+      });
+      if (bot == null) {
+        if (!_replaying && mounted) {
+          setState(() {
+            _botsTurn = false;
+            _revealDeferredTerminal();
+          });
+        }
+        return;
+      }
+      if (!game.replaying && !_replaying) {
+        _pendingBot = null;
+        _botFollowUp = false;
+        unawaited(playBotTurn(bot.input, bot));
+      }
+    } catch (_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _throwError = true;
+        _botFollowUp = true;
+        if (!game.replaying) {
+          _throwing = false;
+          _replaying = false;
+          _botsTurn = false;
+        }
+      });
+    }
+  }
+
   Future<void> _retryThrow() async {
+    if (_botFollowUp && _match != null && !_authorityPending) {
+      setState(() {
+        _throwError = false;
+      });
+      await _pullBotThrow(_match!.matchId);
+      return;
+    }
     final ThrowInput? input = _lastInput;
     if (input == null) {
       return;
@@ -1337,9 +1437,9 @@ class AlchikiMatchPageState extends ConsumerState<AlchikiMatchPage>
     setState(() {
       _throwError = false;
       _throwing = true;
+      _authorityPending = true;
     });
     if (_isHuman) {
-      game.throwSaka(input);
       await _sendPrivateThrow(input);
       return;
     }

@@ -161,7 +161,7 @@ public class MatchService {
                 diff,
                 true,
                 (session, label) -> broadcastJson(
-                        matchId, Map.of("type", "Countdown", "value", label, "phase", "COUNTDOWN")),
+                        matchId, Map.of("type", "Countdown", "value", label, "phase", session.sim().phase().name())),
                 (session, result) -> {
                     broadcastJson(matchId, stickPull.tapResolvedPayload(result, 0));
                     broadcastJson(matchId, stickPull.stickStatePayload(session, Instant.now()));
@@ -438,7 +438,7 @@ public class MatchService {
                 "NORMAL",
                 false,
                 (session, label) -> broadcastJson(
-                        matchId, Map.of("type", "Countdown", "value", label, "phase", "COUNTDOWN")),
+                        matchId, Map.of("type", "Countdown", "value", label, "phase", session.sim().phase().name())),
                 (session, result) -> {
                     broadcastJson(matchId, stickPull.tapResolvedPayload(result, 0));
                     broadcastJson(matchId, stickPull.stickStatePayload(session, Instant.now()));
@@ -540,14 +540,45 @@ public class MatchService {
         persistLeftoverPoses(match, scored.playerThrow().keyframes(), scored.sakaOut(), scored.pocketedIds());
         match.setPlayerScore(match.getPlayerScore() + scored.displayedScore());
         match.setPlayerTurns(match.getPlayerTurns() + 1);
-        match.setTurnDeadline(now.plus(engine.turnClock()));
-        BotThrowView bot = resolveAndContinue(match, now);
+        match.setStatus(engine.resolve(scoreClock(match), now).name());
+        if (MatchStatus.IN_PLAY.name().equals(match.getStatus())) {
+            // Bot sim is POST /bot-turn so the saka can fly while it runs.
+            match.setTurn("BOT");
+            match.setTurnDeadline(now.plus(Duration.ofSeconds(90)));
+        }
         matches.save(match);
         Map<UUID, RewardGrant> grants = terminalGrants(match);
         if (isTerminalStatus(match.getStatus())) {
             broadcastSettled(match.getId(), snapshot(match, null, grants), grants);
         }
-        return new ThrowResponse(scored.playerThrow(), bot, snapshot(match, playerId, grants));
+        return new ThrowResponse(scored.playerThrow(), null, snapshot(match, playerId, grants));
+    }
+
+    /**
+     * Bot half of a bot-match throw. The player response is already committed;
+     * this runs while the client plays that flight.
+     */
+    @Transactional
+    public ThrowResponse continueBot(UUID playerId, UUID matchId) {
+        MatchEntity match = requireOwner(playerId, matchId);
+        if (!"BOT".equals(match.getMode()) || !"ALCHIKI".equals(match.getGame())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "not a bot match");
+        }
+        if (!"BOT".equals(match.getTurn()) || !MatchStatus.IN_PLAY.name().equals(match.getStatus())) {
+            return new ThrowResponse(
+                    forfeitThrowView(), null, snapshot(match, playerId, terminalGrants(match)));
+        }
+        Instant now = Instant.now();
+        BotThrowView bot = afterPlayerHalfIfInPlay(match, now);
+        if (MatchStatus.IN_PLAY.name().equals(match.getStatus())) {
+            match.setTurn("PLAYER");
+        }
+        matches.save(match);
+        Map<UUID, RewardGrant> grants = terminalGrants(match);
+        if (isTerminalStatus(match.getStatus())) {
+            broadcastSettled(match.getId(), snapshot(match, null, grants), grants);
+        }
+        return new ThrowResponse(forfeitThrowView(), bot, snapshot(match, playerId, grants));
     }
 
     @Transactional(readOnly = true)

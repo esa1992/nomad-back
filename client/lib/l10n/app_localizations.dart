@@ -293,13 +293,13 @@ abstract class AppLocalizations {
   /// No description provided for @howtoWinTitle.
   ///
   /// In en, this message translates to:
-  /// **'First to 5'**
+  /// **'Clear the circle'**
   String get howtoWinTitle;
 
   /// No description provided for @howtoWinBody.
   ///
   /// In en, this message translates to:
-  /// **'Reach 5 points to win. If time or turns run out, the higher score wins.'**
+  /// **'Knock every bone fully outside. When the circle is empty or the match clock ends, the higher score wins.'**
   String get howtoWinBody;
 
   /// No description provided for @howtoStickSitTitle.
@@ -404,25 +404,25 @@ abstract class AppLocalizations {
   /// **'Tap'**
   String get stickTapHint;
 
-  /// Label while countdown has not reached GO.
+  /// No description provided for @stickWaitGo.
   ///
   /// In en, this message translates to:
   /// **'Wait for GO'**
   String get stickWaitGo;
 
-  /// Label when taps pull the stick.
+  /// No description provided for @stickPullNow.
   ///
   /// In en, this message translates to:
   /// **'Pull!'**
   String get stickPullNow;
 
-  /// Shown while match is settling after threshold / clock.
+  /// No description provided for @stickSettlingResult.
   ///
   /// In en, this message translates to:
   /// **'Please wait… tallying result'**
   String get stickSettlingResult;
 
-  /// Backend round-trip shown on splash / lobby load.
+  /// No description provided for @apiLatencyMs.
   ///
   /// In en, this message translates to:
   /// **'API {ms} ms'**
@@ -449,7 +449,7 @@ abstract class AppLocalizations {
   /// No description provided for @firstToFive.
   ///
   /// In en, this message translates to:
-  /// **'First to 5'**
+  /// **'Clear circle'**
   String get firstToFive;
 
   /// No description provided for @yourTurn.
@@ -704,13 +704,13 @@ abstract class AppLocalizations {
   /// **'Loading…'**
   String get loadingLobby;
 
-  /// Shown while catalog/wallet requests are in flight after health probe.
+  /// No description provided for @loadingCatalog.
   ///
   /// In en, this message translates to:
   /// **'Loading catalog…'**
   String get loadingCatalog;
 
-  /// Shown while measuring backend RTT.
+  /// No description provided for @checkingApi.
   ///
   /// In en, this message translates to:
   /// **'Checking connection…'**

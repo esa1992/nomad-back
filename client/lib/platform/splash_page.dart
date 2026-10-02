@@ -14,8 +14,8 @@ class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   /// Branded splash stays at least this long after mint starts.
-  /// Kept short — paid Render is warm; long hold felt like a slow API.
-  static const Duration minHold = Duration(milliseconds: 1200);
+  /// Covers a cold API so the lobby does not appear mid-load.
+  static const Duration minHold = Duration(seconds: 5);
 
   @override
   ConsumerState<SplashPage> createState() => _SplashPageState();
@@ -25,7 +25,6 @@ class _SplashPageState extends ConsumerState<SplashPage>
     with SingleTickerProviderStateMixin {
   bool _inFlight = false;
   bool _mintFailed = false;
-  int? _apiMs;
   Timer? _timeout;
   late final AnimationController _fade = AnimationController(
     vsync: this,
@@ -54,7 +53,6 @@ class _SplashPageState extends ConsumerState<SplashPage>
     setState(() {
       _inFlight = true;
       _mintFailed = false;
-      _apiMs = null;
     });
     final DateTime started = DateTime.now();
     _timeout = Timer(const Duration(seconds: 55), () {
@@ -68,14 +66,17 @@ class _SplashPageState extends ConsumerState<SplashPage>
     try {
       final SessionStore session = ref.read(sessionStoreProvider);
       final NomadApi api = ref.read(nomadApiProvider);
-      // Health first — surfaces real RTT independent of mint/auth.
-      final int healthMs = await api.probeHealthMs();
-      if (mounted) {
-        setState(() => _apiMs = healthMs);
-      }
       final String? existing = await session.playerId();
       if (existing == null || existing.isEmpty) {
         await api.mintGuest();
+      } else {
+        // Access token lives only in memory. Restore it here so the lobby
+        // does not spend a 401 plus a second refresh after the splash.
+        try {
+          await api.refresh();
+        } on NomadApiException {
+          // Lobby still loads; a dead session is cleared on the next 401.
+        }
       }
       if (!mounted) {
         return;
@@ -170,14 +171,6 @@ class _SplashPageState extends ConsumerState<SplashPage>
                           color: SteppeOps.accent,
                         ),
                       ),
-                      if (_apiMs != null) ...[
-                        const SizedBox(height: 12),
-                        Text(
-                          l10n.apiLatencyMs(_apiMs!),
-                          style: SteppeOps.labelMuted.copyWith(fontSize: 12),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
                     ],
                     if (_mintFailed) ...[
                       const SizedBox(height: 28),
@@ -186,14 +179,6 @@ class _SplashPageState extends ConsumerState<SplashPage>
                         retryLabel: l10n.retry,
                         onRetry: _startMint,
                       ),
-                      if (_apiMs != null) ...[
-                        const SizedBox(height: 12),
-                        Text(
-                          l10n.apiLatencyMs(_apiMs!),
-                          style: SteppeOps.labelMuted.copyWith(fontSize: 12),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
                     ],
                   ],
                 ),

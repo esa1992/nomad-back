@@ -182,7 +182,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get stickSettlingResult => 'Ожидайте… подсчитываем результат';
 
   @override
-  String apiLatencyMs(int ms) => 'Бэк $ms мс';
+  String apiLatencyMs(int ms) {
+    return 'Бэк $ms мс';
+  }
 
   @override
   String get errorStickPullStart =>
